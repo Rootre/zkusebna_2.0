@@ -1,2 +1,11 @@
-# zkusebna_2.0
-Prototyp nového rezervačního systému kobyliské zkušebny
+# Zkušebna Kobylisy
+Vítejte v projektu kobyliské zkušebny.
+
+## Použité technologie
+- dependency management: **yarn**
+- frontend: **React**
+- state management: **mobx**
+- versioning: **Git**
+
+## Příkazy
+

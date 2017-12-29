@@ -2,10 +2,10 @@
   "name": "zkusebna_2.0",
   "version": "1.0.0",
   "description": "Zkusebna new generation",
-  "main": "index.js",
+  "main": "pages/index.js",
   "repository": "git@github.com:Rootre/zkusebna_2.0.git",
   "author": "Ondřej Tůma",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "next": "^4.2.1",
     "react": "^16.2.0",

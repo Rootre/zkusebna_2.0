@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import DevTools from "mobx-react-devtools"
+import DevTools from 'mobx-react-devtools'
 
 export default () => <div>
 	<Head>
 		<title>{`Kobyliská zkušebna 2.0`}</title>
-		<meta charset={`UTF-8`}/>
+		<meta charSet={`UTF-8`}/>
 		<meta name={`viewport`} content={`initial-scale=1.0, width=device-width`} />
 	</Head>
 	<DevTools/>

@@ -1,34 +1,17 @@
 const express = require('express')
 const next = require('next')
 
-const Database = require('./components/Database')
-
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const api = require('./api')
+
 app.prepare()
 	.then(() => {
 		const server = express()
-		const router = express.Router()
 
-		router.get('/:action', (req, res) => {
-			let { action } = req.params
-
-			if (!action) {
-				return false
-			}
-
-			Database.connect('localhost', 'root', '', 'zkusebna_2.0')
-
-			Database.get('SELECT * FROM item', (rows, fields) => {
-				res.json(JSON.stringify(rows))
-
-				Database.end()
-			})
-		})
-
-		server.use('/api', router)
+		server.use('/api', api)
 
 		server.get('*', (req, res) => {
 			return handle(req, res)

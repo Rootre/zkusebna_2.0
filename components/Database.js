@@ -19,20 +19,26 @@ const end = () => {
 const get = (query, callback) => {
 	connection_pool.getConnection((err, connection) => {
 		if (err) {
-			connection.release()
+			connection && connection.release()
 			return console.log("Error in connection database")
 		}
 
-		connection.query(query, (err, rows, fields) => {
-			connection.release()
+		try {
+			connection.query(query, (err, rows, fields) => {
+				connection.release()
 
-			if (err) {
-				throw err
-			}
-			if (typeof callback === 'function') {
-				callback.call(null, rows, fields)
-			}
-		})
+				if (err) {
+					throw err
+					return false
+				}
+				if (typeof callback === 'function') {
+					callback.call(null, rows, fields)
+				}
+			})
+		}
+		catch(err) {
+			console.error('query error', err);
+		}
 	})
 }
 

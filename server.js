@@ -1,5 +1,7 @@
 const express = require('express')
+const graphQLHTTP = require('express-graphql')
 const next = require('next')
+const schema = require('./data/schema')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -12,6 +14,10 @@ app.prepare()
 		const server = express()
 
 		server.use('/api', api)
+		server.use(graphQLHTTP({
+			schema,
+			graphiql: true,
+		}))
 
 		server.get('*', (req, res) => {
 			return handle(req, res)

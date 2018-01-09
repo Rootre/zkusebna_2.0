@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import Head from 'next/head'
 import DevTools from 'mobx-react-devtools'
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react'
+
+import withData from '../lib/withData'
 
 import {setStore, ObservableItems as Store} from '../mobx/ObservableItems'
 
@@ -11,7 +13,7 @@ const store = new Store()
 setStore(store)
 
 @observer
-export default class Index extends Component {
+class Index extends Component {
 	state = {
 		item_id: 1
 	}
@@ -44,3 +46,5 @@ export default class Index extends Component {
 		</div>
 	}
 }
+
+export default withData(props => <Index/>)

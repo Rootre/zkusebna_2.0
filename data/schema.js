@@ -5,6 +5,10 @@ const typeDefs = `
 type Query {
   reservation(id: ID!): Reservation
   allReservation: [Reservation]
+  user(id: ID!): User
+  category(id: ID!): Category
+  item(id: ID!): Item
+  action(id: ID!): Action
 }
 type Action {
   id: ID!
@@ -15,7 +19,7 @@ type Action {
 type Reservation {
   id: ID!
   discount: Discount
-  owner: User
+  user: User
   approved: Boolean
   archived: Boolean
   since: String
@@ -53,7 +57,7 @@ type Category {
   id: ID!
   name: String
   parent: Category
-  categories: [Category]
+  children: [Category]
 }
 type User {
   id: ID!

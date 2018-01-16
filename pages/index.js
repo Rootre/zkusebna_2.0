@@ -7,19 +7,13 @@ import withData from '../lib/withData'
 
 import {setStore, ObservableItems as Store} from '../mobx/ObservableItems'
 
-import Item from '../components/Item'
+import ItemList from '../components/ItemList'
 
 const store = new Store()
 setStore(store)
 
 @observer
 class Index extends Component {
-	state = {
-		item_id: 1
-	}
-	componentDidMount() {
-		store.setItems()
-	}
 	render() {
 		return <div>
 			<Head>
@@ -29,20 +23,7 @@ class Index extends Component {
 			</Head>
 			<DevTools/>
 			<h1>Vítej, Zkušebno!</h1>
-			<input type="text" value={this.state.item_id}
-				   onChange={e => {
-					   let item_id = e.target.value
-
-					   store.setActiveItem(item_id)
-
-					   this.setState({ item_id })
-				   }}/>
-			{store.activeItem && <div>
-				<h3>Active item:</h3> <Item name={store.activeItem.name}/>
-			</div>}
-			<ul>
-				{store.items.length > 0 && store.items.map((item, key) => <li key={key} style={{ textDecoration: item.active ? '' : 'line-through'}}>{item.name}</li>)}
-			</ul>
+			<ItemList/>
 		</div>
 	}
 }

@@ -2,6 +2,7 @@ import { observable, action, reaction } from 'mobx';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+require('babel-polyfill');
 
 let store
 
@@ -12,6 +13,7 @@ export class ObservableItems {
 	@observable activeItem
 
 	@action async setActiveItem(item_id) {
+		/*
 		try {
 			await fetch(`/api/items/${item_id}`)
 				.then(response => {
@@ -27,8 +29,10 @@ export class ObservableItems {
 		catch(err) {
 			console.error(err)
 		}
+		*/
 	}
 	@action async setItems() {
+		/*
 		try {
 			await fetch(`/api/items`)
 				.then(response => {
@@ -44,5 +48,6 @@ export class ObservableItems {
 		catch(err) {
 			console.error(err)
 		}
+		*/
 	}
 }

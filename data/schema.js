@@ -3,12 +3,13 @@ import resolvers from './resolvers'
 
 const typeDefs = `
 type Query {
-  reservation(id: ID!): Reservation
+  allItems: [Item]
   allReservation: [Reservation]
-  user(id: ID!): User
+  action(id: ID!): Action
   category(id: ID!): Category
   item(id: ID!): Item
-  action(id: ID!): Action
+  reservation(id: ID!): Reservation
+  user(id: ID!): User
 }
 type Action {
   id: ID!

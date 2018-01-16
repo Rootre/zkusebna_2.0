@@ -1,24 +1,27 @@
-import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors';
+import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors'
 
 const resolvers = {
 	Query: {
-		reservation(_, args) {
-			return Reservation.find({ where: args });
+		allItems() {
+			return Item.findAll()
 		},
-		allReservation(_, args) {
-			return Reservation.findAll();
+		allReservation() {
+			return Reservation.findAll()
+		},
+		reservation(_, args) {
+			return Reservation.find({ where: args })
 		},
 		user(_, args) {
-			return User.findById(args.id);
+			return User.findById(args.id)
 		},
 		category(_, args) {
-			return Category.findById(args.id);
+			return Category.findById(args.id)
 		},
 		item(_, args) {
-			return Item.findById(args.id);
+			return Item.findById(args.id)
 		},
 		action(_, args) {
-			return Action.findById(args.id);
+			return Action.findById(args.id)
 		},
 	},
 

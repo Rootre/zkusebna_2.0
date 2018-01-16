@@ -90,6 +90,8 @@ const ImageModel = db.define('image', {
 
 ReservationModel.belongsToMany(ItemModel, {through: ReservationItemModel, foreignKey: 'reservation_id'})
 ItemModel.belongsToMany(ReservationModel, {through: ReservationItemModel, foreignKey: 'item_id'})
+ReservationItemModel.belongsTo(ReservationModel)
+ReservationItemModel.belongsTo(ItemModel)
 DiscountModel.hasMany(ReservationModel)
 ReservationModel.belongsTo(DiscountModel, {foreignKey: 'discount_id'})
 UserModel.hasMany(ReservationModel)

@@ -3,7 +3,7 @@ import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Act
 const resolvers = {
 	Query: {
 		reservation(_, args) {
-			return Reservation.find({ where: args,/* include: [ReservationItem, Item] */});
+			return Reservation.find({ where: args });
 		},
 		allReservation(_, args) {
 			return Reservation.findAll();
@@ -21,6 +21,7 @@ const resolvers = {
 			return Action.findById(args.id);
 		},
 	},
+
 	Action: {
 		user(action) {
 			return User.findById(action.user_id)
@@ -50,15 +51,20 @@ const resolvers = {
 			return User.find({ where: { id: reservation.user_id } })
 		},
 		reservationItems(reservation) {
-			return ReservationItem.findAll({ where: { reservation_id: reservation.id } })
+			return ReservationItem.findAll({
+				where: { reservation_id: reservation.id },
+				include: [Reservation, Item],
+			})
 		},
 	},
 	ReservationItem: {
 		item(reservation_item) {
-			return Item.find({ where: { id: reservation_item.item_id } })
+			return reservation_item.item
+			//return Item.find({ where: { id: reservation_item.item_id } })
 		},
 		reservation(reservation_item) {
-			return Reservation.find({ where: { id: reservation_item.reservation_id } })
+			return reservation_item.reservation
+			//return Reservation.find({ where: { id: reservation_item.reservation_id } })
 		}
 	},
 	User: {

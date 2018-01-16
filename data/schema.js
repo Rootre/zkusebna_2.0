@@ -3,17 +3,17 @@ import resolvers from './resolvers'
 
 const typeDefs = `
 type Query {
-  reservation(id: Int!): Reservation
+  reservation(id: ID!): Reservation
   allReservation: [Reservation]
 }
 type Action {
-  id: Int!
+  id: ID!
   user: User
   description: String
   time: String
 }
 type Reservation {
-  id: Int!
+  id: ID!
   discount: Discount
   owner: User
   approved: Boolean
@@ -26,39 +26,37 @@ type Reservation {
   reservationItems: [ReservationItem]
 }
 type Discount {
-  id: Int!
+  id: ID!
   name: String
   value: Float
-  reservations: [Reservation]
 }
 type ReservationItem {
-  id: Int!
+  id: ID!
   item: Item
   reservation: Reservation
 }
 type Item {
-  id: Int!
+  id: ID!
   image: Image
   category: Category
   name: String
   price: Int
   active: Boolean
-  reservationItems: [ReservationItem]
 }
 type Image {
-  id: Int!
+  id: ID!
   main: String
   thumb: String
   description: String
 }
 type Category {
-  id: Int!
+  id: ID!
   name: String
   parent: Category
   categories: [Category]
 }
 type User {
-  id: Int!
+  id: ID!
   name: String
   phone: String
   email: String
@@ -67,7 +65,7 @@ type User {
   actions: [Action]
 }
 type Admin {
-  id: Int!
+  id: ID!
   password: String
   hash: String
 }

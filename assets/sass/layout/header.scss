@@ -1,0 +1,101 @@
+.header {
+	background-color: color(white);
+	left: 0;
+	padding: 15px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: z-index(header);
+
+	#header-triangle {
+		@include dim(100%, layout-value(header, arrow-height));
+		bottom: -#{layout-value(header, arrow-height) - 1};
+		fill: color(white);
+		left: 0;
+		position: absolute;
+	}
+	.loaded & {
+		.wrapper:before {
+			display: none;
+		}
+	}
+	.loading & {
+		.logo {
+			z-index: z-index(loading-logo);
+		}
+		.wrapper:before {
+			bottom: 0;
+			left: 0;
+			opacity: 1;
+			position: fixed;
+			right: 0;
+			top: 0;
+			z-index: z-index(loading);
+		}
+	}
+
+	.fb {
+		$side: 17px;
+
+		@include square($side);
+		background-color: rgba(74, 74, 74, 0.6);
+		border-radius: 3px;
+		color: color(white);
+		display: inline-block;
+		font-size: 15px;
+		line-height: $side + 2;
+		padding: 0;
+		text-align: center;
+		text-indent: -1px;
+		text-transform: none;
+		vertical-align: middle;
+	}
+	.hamburger {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.logo {
+		@include graphic-acceleration();
+		position: fixed;
+		left: 50%;
+		top: 50px;
+		transform: translate3d(0, 0, 0) translate(-50%, 0);
+		z-index: z-index(logo);
+	}
+	.wrapper {
+		min-height: 15px;
+		max-width: none;
+		padding: 0;
+
+		&:before {
+			@include graphic-acceleration(opacity);
+			background-color: color(armadillo);
+			content: '';
+			opacity: 0;
+			transition: opacity 1s linear .3s;
+		}
+	}
+
+	@include breakpoint(tablet) {
+		padding: 30px 0;
+
+		.logo {
+			top: 80px;
+		}
+		.wrapper {
+			margin: 0 layout-value(bound, side);
+		}
+	}
+	@include breakpoint(desktop-hd) {
+		.wrapper {
+			margin: 0 layout-value(bound, side);
+		}
+	}
+	@include breakpoint(desktop-lg) {
+		&:before {
+			bottom: -#{layout-value(header, arrow-height) - 1};
+			height: layout-value(header, arrow-height);
+		}
+	}
+}

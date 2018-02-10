@@ -1,0 +1,217 @@
+// environment specific
+$mobile-layout: (
+		font-size: 14px,
+		aside: (
+				background-color: color(tawny-port),
+				color: color(white),
+				font-size: 18px,
+				padding: $padding--small $padding--big
+		),
+		buttons: (
+				background: color(armadillo),
+				border: 1px solid rgba(color(white), .5),
+				border-radius: 0,
+				color: color(white),
+				font-family: $font-bahno,
+				font-size: 18px,
+				font-style: italic,
+				font-weight: 400,
+				height: 50px,
+				padding: 0 $padding--big,
+				text-transform: none,
+				hover: (
+						background: color(armadillo),
+						color: color(white)
+				)
+		),
+		content: (
+				padding: 15px,
+		),
+		forms: (
+				background: none,
+				border-radius: 0,
+				color: color(white),
+				material-distance: 8px,
+				font-size: 16px,
+				font-size-helper: 12px,
+				font-family: Arial,
+				font-weight: 400,
+				height: 32px,
+				helper: (
+						color: color(white),
+						font-size: 12px,
+						line-height: 1.6,
+						small: (
+								color: rgba(color(white), .5)
+						)
+				)
+		),
+		header: (
+				arrow-height: 30px,
+		),
+		headings: (
+				font-family: $font-bahno,
+				font-weight: 700,
+				margin: 0 0 $margin--default,
+				text-transform: none,
+				h1: (
+						font-size: 30px,
+						line-height: 1.2,
+						margin: 0 0 .6em,
+						max-width: 100%
+				),
+				h2: (
+						font-size: 22px,
+						line-height: 1.36,
+						margin: 1.36em 0,
+						max-width: 100%
+				),
+				h3: (
+						font-size: 18px,
+						font-weight: 400
+				),
+				h4: (
+						font-size: 16px
+				),
+				h5: (
+						font-size: 14px
+				),
+				h6: (
+						font-size: 14px
+				)
+		),
+		links: (
+				color: color(armadillo),
+				text-decoration: underline,
+				active: (
+						color: color(tawny-port),
+						text-decoration: none
+				),
+				hover: (
+						color: color(tawny-port),
+						text-decoration: none
+				)
+		),
+		logo: (
+				side: 70px,
+		),
+		wrapper: (
+				margin: 0 auto,
+		)
+);
+$phablet-layout: (
+		aside: (
+				box: (
+						bigger-side-padding: 45%,
+						smaller-side-padding: $padding--big,
+						vertical-padding: 17%
+				)
+		),
+		buttons: (
+				font-size: 20px
+		),
+		headings: (
+				h1: (
+						max-width: 100%
+				),
+				h2: (
+						max-width: 100%
+				),
+		)
+);
+$tablet-layout: (
+		aside: (
+				box: (
+						bigger-side-padding: 30%,
+						smaller-side-padding: $padding--big,
+						vertical-padding: 13%
+				),
+				font-size: 20px,
+				min-height: 270px,
+				width: 80%,
+		),
+		bound: (
+				side: 30px
+		),
+		content: (
+				padding: 40px,
+		),
+		headings: (
+				h2: (
+						max-width: 100%
+				)
+		),
+		wrapper: (
+				margin: 0 30px,
+		)
+);
+$desktop-layout: (
+		aside: (
+				box: (
+						bigger-side-padding: 20%,
+						smaller-side-padding: $padding--big,
+						vertical-padding: 9%
+				),
+				width: 57%
+		),
+		headings: (
+				h1: (
+						font-size: 48px
+				),
+				h2: (
+						font-size: 26px,
+						max-width: 100%,
+				),
+				h3: (
+						font-size: 22px
+				),
+		),
+);
+$desktop-hd-layout: (
+		aside: (
+				box: (
+						bigger-side-padding: 20%,
+						smaller-side-padding: 5%,
+						vertical-padding: 9%
+				),
+				width: 48%
+		),
+		bound: (
+				side: 70px
+		),
+		headings: (
+				h1: (
+						max-width: 100%
+				),
+				h2: (
+						max-width: 100%,
+				),
+		),
+);
+$desktop-lg-layout: (
+		font-size: 17px,
+		content: (
+				padding: 0 200px,
+		),
+		header: (
+				arrow-height: 40px,
+		),
+		headings: (
+				h1: (
+						font-size: 64px
+				),
+				h2: (
+						font-size: 36px
+				)
+		),
+		logo: (
+				side: 110px,
+		),
+		wrapper: (
+				margin: 0 70px
+		),
+);
+
+// set layout: use as function ( background-color: layout-value(buttons, background); )
+$default-layout: $mobile-layout !default;
+$current-layout: $mobile-layout !default;

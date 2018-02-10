@@ -1,0 +1,13 @@
+.intro {
+	@extend %section-dark;
+
+	.wrapper {
+		z-index: 1;
+	}
+
+	@include breakpoint(desktop) {
+		.wrapper {
+			padding-top: 0;
+		}
+	}
+}

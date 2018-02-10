@@ -1,0 +1,57 @@
+.menu {
+	text-transform: uppercase;
+
+	a {
+		color: color(stack);
+		display: inline-block;
+		padding: 3px;
+		text-decoration: none;
+
+		&.active,
+		&:hover {
+			color: color(tawny-port);
+		}
+	}
+	ul {
+		list-style: none;
+		padding: 0 0 $padding--small;
+		margin: 0;
+
+		&.side {
+			margin-top: $margin--default;
+
+			li {
+				display: inline-block;
+			}
+		}
+	}
+
+	@include breakpoint(tablet) {
+		display: block !important;
+
+		li {
+			display: inline-block;
+			margin-right: $margin--default;
+		}
+		ul {
+			float: left;
+			padding-bottom: 0;
+
+			&.side {
+				float: right;
+				margin: 0;
+
+				li {
+					&:last-child {
+						margin-right: 0;
+					}
+					& + li:before {
+						content: '|';
+						margin-left: -$margin--default;
+						padding-right: $padding--small;
+					}
+				}
+			}
+		}
+	}
+}

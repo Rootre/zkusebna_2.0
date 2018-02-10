@@ -14,7 +14,6 @@ module.exports = {
 				exclude: /node_modules/,
 				use: 'graphql-tag/loader'
 			},
-			/*
 			{
 				test: /\.(css|scss)/,
 				loader: 'emit-file-loader',
@@ -42,7 +41,6 @@ module.exports = {
 					}
 				]
 			}
-			*/
 		)
 		return config
 	}

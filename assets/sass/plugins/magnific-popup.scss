@@ -1,0 +1,12 @@
+.mfp-fade {
+	@include graphic-acceleration(opacity);
+	opacity: 0;
+	transition: opacity .5s ease-in-out;
+
+	&.mfp-ready {
+		opacity: 1;
+	}
+	&.mfp-removing {
+		opacity: 0;
+	}
+}

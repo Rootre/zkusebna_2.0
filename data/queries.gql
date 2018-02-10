@@ -1,5 +1,0 @@
-query GetItem($id: Int!) {
-  item(id: $id) {
-  	name
-  }
-}

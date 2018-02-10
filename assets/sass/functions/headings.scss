@@ -1,0 +1,11 @@
+@mixin heading($space) {
+	padding-left: $space;
+
+	&:first-letter {
+		margin-left: -$space;
+	}
+	span {
+		display: block;
+		margin-left: -#{$space / 2};
+	}
+}

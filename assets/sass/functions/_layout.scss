@@ -1,0 +1,69 @@
+@mixin breakpoint($breakpoint) {
+	$_temp: $current-layout;
+
+	$media: _map-fetch($breakpoints, $breakpoint media-query);
+	$current-layout: _map-fetch($breakpoints, $breakpoint layout) !global;
+
+	@media #{$media} {
+		@content;
+	}
+
+	$current-layout: $_temp !global;
+}
+
+// Fetch from nested maps
+@function _map-fetch($map, $keys) {
+	$_length: length($keys);
+	$_value: map-get($map, nth($keys, 1));
+
+	@if (($_length > 1) and (type-of($_value) == map)) {
+		$_rest: ();
+
+		@for $i from 2 through $_length {
+			$_rest: append($_rest, nth($keys, $i));
+		}
+
+		@return _map-fetch($_value, $_rest);
+
+	} @else {
+		@return $_value;
+	}
+}
+
+// Get layout value from $current-layout map
+@function layout-value($args...) {
+	$_error-msg: 'There are no value that you are calling with layout-value() function';
+
+	@if($current-layout) {
+		$_value: _map-fetch($current-layout, $args);
+
+		@if($_value) {
+			@return $_value;
+		} @else {
+			// Fallback, if needed value of selected map is not defined
+			@if($current-layout == $default-layout) {
+				// Break, if it's not defined even on DEFAULT map
+				@warn $_error-msg;
+				@return false;
+			} @else {
+				// TRY to fetch a value from the DEFAULT map if it's not defined on given layout
+				@if($default-layout) {
+					@return _map-fetch($default-layout, $args);
+				} @else {
+					@warn $_error-msg;
+					@return false;
+				}
+			}
+		}
+	} @else {
+		@warn $_error-msg;
+		@return false;
+	}
+}
+
+// Get z-index values from $z-indexes list.
+@function z-index($name) {
+	$_starts-from: 10; // Safe, to prevent conflicts with plugins or local z-index values
+
+	@return (length($z-indexes) - index($z-indexes, $name)) + ($_starts-from - 1);
+}

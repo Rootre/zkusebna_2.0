@@ -1,0 +1,27 @@
+.form-sent {
+	@include child-middle;
+	background-color: rgba(color(armadillo), .9);
+	bottom: 0;
+	color: color(white);
+	left: 0;
+	position: fixed;
+	right: 0;
+	text-align: center;
+	top: 0;
+	z-index: z-index(popup);
+
+	h2, .h2 {
+		margin-bottom: $margin--small;
+		max-width: none;
+	}
+
+	.submit {
+		margin-top: $margin--big;
+	}
+
+	@include breakpoint(phablet) {
+		.wrapper {
+			width: 550px;
+		}
+	}
+}

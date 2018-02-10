@@ -1,0 +1,64 @@
+// names used from: http://chir.ag/projects/name-that-color/
+//
+// every color will be rendered as a class with color-- prefix for text coloring and bg-- prefix for backgrounds for quick use
+// color can be called via function color(name)
+
+$colors-map: (
+	alto: #d0d0d0,
+	aqua-spring: #eef7fa,
+	armadillo: #453c36,
+	black: #000,
+	boulder: #767676,
+	bright-sun: #fbc240,
+	california: #f5a007,
+	cerulean: #01a5df,
+	cerise-red: #e22764,
+	chambray: #3b5998,
+	christi: #24b30c,
+	cod-gray: #1a1a1a,
+	concrete: #f3f3f3,
+	deep-cerulean: #0078b0,
+	dove-gray: #666,
+	dusty-gray: #999,
+	emperor: #555,
+	gallery: #ededed,
+	gray: #808080,
+	laser: #c5ad6c,
+	lipstick: #c90060,
+	mantis: #82c156,
+	mercury: #e8e8e8,
+	mine-shaft: #333,
+	nobel: #b2b2b2,
+	red: #f00,
+	romantic: #ffc9b1,
+	sazerac: #fff2e0,
+	shark: #2b2b2c,
+	silver: #ccc,
+	stack: #8e8f8e,
+	tawny-port: #701b63,
+	tea-green: #c9e9b2,
+	trinidad: #e14b0a,
+	tundora: #4d4d4d,
+	white: #fff,
+
+	success: #5cb85c,
+	info: #5bc0de,
+	warning: #f0ad4e,
+	danger: #d9534f,
+
+	facebook: #3b5998,
+	twitter: #4099ff
+);
+
+@function color($name) {
+	@if (map-has-key($colors-map, $name)) {
+		@return map-get($colors-map, $name);
+	}
+}
+
+
+$base-color: color(tundora);
+$secondary-color: color(tawny-port);
+$bg-color: color(white);
+
+

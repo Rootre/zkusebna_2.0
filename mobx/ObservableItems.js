@@ -1,53 +1,53 @@
-import { observable, action, reaction } from 'mobx';
-
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 require('babel-polyfill');
+
+import {observable} from 'mobx'
+import graphql from 'mobx-apollo'
+import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-client-preset'
+
+import allItemsQuery from '../data/queries/allItems.gql'
+import updateItemNameMutation from '../data/queries/updateItemName.gql'
+import updateItemPriceMutation from '../data/queries/updateItemPrice.gql'
+
+
+const client = new ApolloClient({
+	link: new HttpLink({
+		uri: 'http://localhost:3003/graphql',
+		credentials: 'same-origin'
+	}),
+	cache: new InMemoryCache()
+});
 
 let store
 
 export const getStore = () => store
 export const setStore = (_store) => store = _store
+
 export class ObservableItems {
 	@observable items = []
 	@observable activeItem
+	@observable loading = false
 
-	@action async setActiveItem(item_id) {
-		/*
-		try {
-			await fetch(`/api/items/${item_id}`)
-				.then(response => {
-					if (response.status >= 400) {
-						throw new Error("Bad response from server");
-					}
-					return response.json()
-				})
-				.then(item => {
-					this.activeItem = JSON.parse(item)[0]
-				})
-		}
-		catch(err) {
-			console.error(err)
-		}
-		*/
+	get allItems() {
+		return graphql({client, query: allItemsQuery})
 	}
-	@action async setItems() {
-		/*
-		try {
-			await fetch(`/api/items`)
-				.then(response => {
-					if (response.status >= 400) {
-						throw new Error("Bad response from server");
-					}
-					return response.json()
-				})
-				.then(items => {
-					this.items = JSON.parse(items)
-				})
-		}
-		catch(err) {
-			console.error(err)
-		}
-		*/
-	}
+
+	updateItemName = (id, name) =>
+		this.updateItem({
+			mutation: updateItemNameMutation,
+			variables: {id, name},
+			refetchQueries: [{query: allItemsQuery}]
+		})
+	updateItemPrice = (id, price) =>
+		this.updateItem({
+			mutation: updateItemPriceMutation,
+			variables: {id, price},
+			refetchQueries: [{query: allItemsQuery}]
+		})
+	updateItem = (mutation) =>
+		client
+			.mutate(mutation)
+			.then(() => console.log('Updated item', mutation.variables))
+			.catch(error => console.error('Failed to update item', error.message))
 }

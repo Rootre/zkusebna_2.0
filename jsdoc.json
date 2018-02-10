@@ -1,0 +1,21 @@
+{
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "encoding": "utf-8",
+    "destination": "./docs/js",
+    "doc": "jsdoc -c jsdoc.json & sassdoc themes/default-bootstrap/assets/sass/ -c sassdoc.json"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": [
+      "components",
+    ],
+    "includePattern": ".+\\.js(doc|x)?$"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true
+  }
+}

@@ -1,0 +1,29 @@
+%radio {
+	&:after {
+		@include square(11px);
+		background-color: color(california);
+		border-radius: 50%;
+	}
+	&:before {
+		border-radius: 50%;
+	}
+}
+
+.radio {
+	position: relative;
+
+	input[type=radio] {
+		@extend %checkbox-radio-input;
+
+		& + label {
+			@extend %checkbox-radio;
+			@extend %radio;
+		}
+		&:focus + label:before {
+			border-color: color(california);
+		}
+		&:checked + label {
+			@extend %checkbox-radio-active;
+		}
+	}
+}

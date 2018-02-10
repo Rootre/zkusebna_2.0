@@ -14,7 +14,6 @@ const ReservationModel = db.define('reservation', {
 	repeated: { type: Sequelize.INTEGER},
 }, {
 	freezeTableName: true,
-	//tableName: 'reservation',
 	underscored: true,
 });
 

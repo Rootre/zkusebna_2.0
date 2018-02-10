@@ -9,7 +9,11 @@ type Query {
   category(id: ID!): Category
   item(id: ID!): Item
   reservation(id: ID!): Reservation
-  user(id: ID!): User
+  user(id: ID!): User 
+}
+type Mutation {
+  updateItemName(id: ID!, name: String!): Item
+  updateItemPrice(id: ID!, price: Int!): Item
 }
 type Action {
   id: ID!

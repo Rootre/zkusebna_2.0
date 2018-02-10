@@ -1,0 +1,107 @@
+.aside {
+	background-color: color(tawny-port);
+	clear: both;
+	color: layout-value(aside, color);
+	font-family: $font-bahno;
+	font-size: layout-value(aside, font-size);
+	font-style: italic;
+	font-weight: 400;
+	letter-spacing: 2px;
+	line-height: 1.4;
+	padding: layout-value(aside, padding);
+	position: relative;
+	text-align: left;
+	z-index: 1;
+
+	$triangle-height: 60px;
+	&:after,
+	&:before {
+		background-color: color(tawny-port);
+		content: '';
+		left: 0;
+		height: $triangle-height;
+		position: absolute;
+		right: 0;
+	}
+	&:after {
+		bottom: -$triangle-height + 1;
+		clip-path: url(#triangle-top-left);
+	}
+	&:before {
+		clip-path: url(#triangle-bottom-left);
+		top: -$triangle-height + 1;
+	}
+	.visual.right & {
+		&:after {
+			clip-path: url(#triangle-top-right);
+		}
+		&:before {
+			clip-path: url(#triangle-bottom-right);
+		}
+	}
+
+	.triangle {
+		@include square(100%);
+		fill: color(tawny-port);
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+
+	p {
+		@include heading(1em);
+		margin: 0;
+		max-width: 320px;
+		padding: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	@include breakpoint(phablet) {
+		background-color: transparent;
+		padding: layout-value(aside, box, vertical-padding) layout-value(aside, box, bigger-side-padding) layout-value(aside, box, vertical-padding) layout-value(aside, box, smaller-side-padding);
+
+		&:after,
+		&:before {
+			display: none;
+		}
+		.visual.right & {
+			padding-left: layout-value(aside, box, bigger-side-padding);
+			padding-right: layout-value(aside, box, smaller-side-padding);
+		}
+	}
+	@include breakpoint(tablet) {
+		font-size: layout-value(aside, font-size);
+		min-height: layout-value(aside, min-height);
+		padding: layout-value(aside, box, vertical-padding) layout-value(aside, box, bigger-side-padding) layout-value(aside, box, vertical-padding) layout-value(aside, box, smaller-side-padding);
+		width: layout-value(aside, width);
+		z-index: 2;
+
+		.visual.right & {
+			padding-left: layout-value(aside, box, bigger-side-padding);
+			padding-right: layout-value(aside, box, smaller-side-padding);
+
+			p {
+				float: right;
+			}
+		}
+	}
+	@include breakpoint(desktop) {
+		padding: layout-value(aside, box, vertical-padding) layout-value(aside, box, bigger-side-padding) layout-value(aside, box, vertical-padding) layout-value(aside, box, smaller-side-padding);
+		width: layout-value(aside, width);
+
+		.visual.right & {
+			padding-left: layout-value(aside, box, bigger-side-padding);
+			padding-right: layout-value(aside, box, smaller-side-padding);
+		}
+	}
+	@include breakpoint(desktop-hd) {
+		padding: layout-value(aside, box, vertical-padding) layout-value(aside, box, bigger-side-padding) layout-value(aside, box, vertical-padding) layout-value(aside, box, smaller-side-padding);
+		width: layout-value(aside, width);
+
+		.visual.right & {
+			padding-left: layout-value(aside, box, bigger-side-padding);
+			padding-right: layout-value(aside, box, smaller-side-padding);
+		}
+	}
+}

@@ -1,0 +1,5 @@
+mutation updateItemNameMutation($id: ID!, $name: String!) {
+	updateItemName(id: $id, name: $name) {
+		name
+	}
+}

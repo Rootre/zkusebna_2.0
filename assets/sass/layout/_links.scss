@@ -1,0 +1,17 @@
+a {
+	color: layout-value(links, color);
+	outline: 0;
+	text-decoration: layout-value(links, text-decoration);
+	transition: color .3s;
+
+	&:active,
+	&.active {
+		color: layout-value(links, active, color);
+		text-decoration: layout-value(links, active, text-decoration);
+	}
+
+	&:hover {
+		color: layout-value(links, hover, color);
+		text-decoration: layout-value(links, hover, text-decoration);
+	}
+}

@@ -1,0 +1,28 @@
+// google map info text
+.gm-style-pbt {
+	top: 80%;
+}
+.google-map {
+	clip-path: url(#path-google-map);
+	height: 400px;
+	margin: layout-value(wrapper, margin);
+
+	@include breakpoint(phablet) {
+		clip-path: url(#path-google-map-phablet);
+		height: 330px;
+	}
+	@include breakpoint(tablet) {
+		height: 400px;
+		margin: layout-value(wrapper, margin);
+	}
+	@include breakpoint(desktop) {
+		height: 500px;
+	}
+	@include breakpoint(desktop-hd) {
+		height: 600px;
+	}
+	@include breakpoint(desktop-lg) {
+		height: 800px;
+		margin: layout-value(wrapper, margin);
+	}
+}

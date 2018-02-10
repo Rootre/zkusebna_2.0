@@ -1,0 +1,52 @@
+.hamburger {
+	$color: color(tawny-port);
+	$line-thickness: 2px;
+	$line-margin-bottom: 4px;
+	$width: 30px;
+
+	width: $width;
+
+	&.open {
+
+		&:after,
+		&:before {
+			opacity: 0;
+		}
+
+		.lines {
+			&:after {
+				transform: rotate(-45deg);
+			}
+			&:before {
+				transform: rotate(45deg);
+			}
+		}
+
+	}
+
+	&:after,
+	&:before,
+	.lines:after,
+	.lines:before {
+		background: $color;
+		content: '';
+		display: block;
+		height: $line-thickness;
+		margin: 0 auto $line-margin-bottom;
+		position: relative;
+		top: 0;
+		transition: .5s ease-in-out;
+	}
+
+	.lines {
+		display: block;
+
+		&:after {
+			margin-top: -($line-thickness + $line-margin-bottom);
+		}
+	}
+
+	@include breakpoint(tablet) {
+		display: none;
+	}
+}

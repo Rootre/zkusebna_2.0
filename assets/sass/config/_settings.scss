@@ -1,0 +1,11 @@
+// set font face
+@include font-face($font-bahno, 'Bahno-Italic', $fonts-url) {
+	font-style: italic;
+};
+@include font-face($font-bahno, 'Bahno-Bold', $fonts-url) {
+	font-weight: 700;
+};
+@include font-face($font-caravel, 'Caravel-Regular', $fonts-url);
+@include font-face($font-caravel, 'Caravel-Medium', $fonts-url) {
+	font-weight: 500;
+};

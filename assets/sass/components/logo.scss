@@ -1,0 +1,105 @@
+.logo {
+	$loading-interval: 1;	// s
+
+	@include square(layout-value(logo, side));
+	background-color: color(tawny-port);
+	color: color(stack) !important;
+	display: block;
+	font-family: $font-bahno;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1;
+	overflow: hidden;
+	padding-top: 1em;
+	text-align: center;
+	text-decoration: none;
+	top: 0;
+
+	&.animating {
+		//transition: all 1s;
+	}
+	.loading & {
+		background-color: color(armadillo);
+		color: transparent !important;
+		padding-top: 1.5em;
+		position: fixed;
+		transform: translate(-50%, -50%) scale(2);
+		top: 50%;
+		z-index: z-index(loading);
+
+		.arrows {
+			.point {
+				animation-name: flash;
+				animation-duration: #{$loading-interval}s;
+				animation-iteration-count: infinite;
+
+				&.right {
+					fill: color(white);
+				}
+			}
+		}
+	}
+
+	.arrows {
+		@include square(33px);
+		display: block;
+		position: relative;
+		margin: 0 auto $margin--small;
+
+		.point {
+			@include dim(25%, 50%);
+			fill: color(white);
+			display: block;
+			position: absolute;
+
+			&.top {
+				animation-delay: #{$loading-interval/4*3}s;
+				left: 50%;
+				top: 0;
+				transform: translateX(100%) rotate(90deg);
+				transform-origin: 0 0;
+			}
+			&.right {
+				animation-delay: #{$loading-interval/4*0}s;
+				fill: color(stack);
+				right: 0;
+				top: 50%;
+				transform: translateY(-50%) rotate(180deg);
+			}
+			&.bottom {
+				animation-delay: #{$loading-interval/4*1}s;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-100%) rotate(-90deg);
+				transform-origin: 100% 50%;
+			}
+			&.left {
+				animation-delay: #{$loading-interval/4*2}s;
+				left: 0;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+	}
+
+	@include breakpoint(desktop-lg) {
+		@include square(layout-value(logo, side));
+		font-size: 20px;
+
+		.arrows {
+			@include square(52px);
+		}
+	}
+}
+
+@keyframes flash {
+	0% {
+		fill: color(white);
+	}
+	40% {
+		fill: color(stack);
+	}
+	80% {
+		fill: color(white);
+	}
+}

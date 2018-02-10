@@ -1,0 +1,14 @@
+.contact {
+	@extend %section-dark;
+
+	@include breakpoint(desktop) {
+		.form-field--inline,
+		.submit {
+			padding-left: 30px;
+		}
+
+		.submit .button {
+			margin-left: -30px;
+		}
+	}
+}

@@ -1,0 +1,7 @@
+.surroundings {
+	@extend %section-light;
+
+	.heading {
+		@include heading(1em);
+	}
+}

@@ -8,7 +8,7 @@ const GRAPHQL_PORT = 3003
 
 const graphQLServer = express()
 
-graphQLServer.use(cors())
+graphQLServer.use('*', cors({ origin: `http://localhost:3000` }))
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
 graphQLServer.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
 

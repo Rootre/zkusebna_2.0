@@ -1,0 +1,28 @@
+.checkbox {
+	position: relative;
+
+	input[type=checkbox] {
+		@extend %checkbox-radio-input;
+
+		& + label {
+			@extend %checkbox-radio;
+		}
+		&:focus + label:before {
+
+		}
+		&:checked + label {
+			@extend %checkbox-radio-active;
+		}
+	}
+}
+.fake-checkbox {
+	color: inherit;
+	@extend %checkbox-radio;
+
+	&.open {
+		@extend %checkbox-radio-active;
+	}
+	&:focus:before {
+
+	}
+}

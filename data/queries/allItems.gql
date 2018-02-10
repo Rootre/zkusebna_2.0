@@ -1,0 +1,8 @@
+query allItemsQuery {
+	allItems {
+		id
+		active
+		name
+		price
+	}
+}

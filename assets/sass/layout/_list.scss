@@ -1,0 +1,88 @@
+ol {
+	counter-reset: section;
+	list-style: none;
+	padding-left: 0;
+
+	& > li {
+		padding-left: 30px;
+		position: relative;
+
+		&:before {
+			content: counters(section,".") ". ";
+			counter-increment: section;
+			position: absolute;
+			left: 0;
+		}
+	}
+}
+ul {
+	&.reset {
+		list-style: none;
+		padding-left: 0;
+	}
+	&.border-list {
+		@include reset-ul;
+		border-top: 2px solid color(mercury);
+		padding-top: $padding--big;
+		margin-bottom: $margin--big;
+
+		& > li {
+			@include clearfix;
+			border-bottom: 2px solid color(mercury);
+			margin-bottom: $margin--big;
+			padding-bottom: $padding--big;
+		}
+	}
+	&.hyphen-list {
+		list-style: none;
+		padding-left: 0;
+
+		& > li {
+			padding-left: 20px;
+			position: relative;
+
+			&:before {
+				content: "-";
+				color: color(california);
+				font-size: 20px;
+				line-height: 1;
+				position: absolute;
+				left: 0;
+			}
+		}
+	}
+	&.inline-list {
+		@include reset-ul;
+
+		li {
+			display: inline-block;
+			margin-right: 4px;
+		}
+	}
+	&.pipe-list {
+		@include reset-ul;
+		margin: $margin--big 0;
+
+		li {
+			padding: 0 12px;
+			display: inline-block;
+
+			& + li {
+				border-left: 1px solid $base-color;
+			}
+		}
+	}
+	&.slash-list {
+		@include reset-ul;
+
+		li {
+			display: inline-block;
+
+			& + li:before {
+				content: '/';
+				display: inline-block;
+				margin: 0 5px;
+			}
+		}
+	}
+}

@@ -8,11 +8,8 @@ const resolvers = {
 		allReservation() {
 			return Reservation.findAll()
 		},
-		reservation(_, args) {
-			return Reservation.find({ where: args })
-		},
-		user(_, args) {
-			return User.findById(args.id)
+		action(_, args) {
+			return Action.findById(args.id)
 		},
 		category(_, args) {
 			return Category.findById(args.id)
@@ -20,8 +17,21 @@ const resolvers = {
 		item(_, args) {
 			return Item.findById(args.id)
 		},
-		action(_, args) {
-			return Action.findById(args.id)
+		reservation(_, args) {
+			return Reservation.find({ where: args })
+		},
+		user(_, args) {
+			return User.findById(args.id)
+		},
+	},
+	Mutation: {
+		updateItemName(_, args) {
+			const {id, name} = args
+			return Item.update({ name }, { where: { id }})
+		},
+		updateItemPrice(_, args) {
+			const {id, price} = args
+			return Item.update({ price }, { where: { id }})
 		},
 	},
 
@@ -63,11 +73,9 @@ const resolvers = {
 	ReservationItem: {
 		item(reservation_item) {
 			return reservation_item.item
-			//return Item.find({ where: { id: reservation_item.item_id } })
 		},
 		reservation(reservation_item) {
 			return reservation_item.reservation
-			//return Reservation.find({ where: { id: reservation_item.reservation_id } })
 		}
 	},
 	User: {

@@ -5,6 +5,9 @@ const resolvers = {
 		allItems() {
 			return Item.findAll()
 		},
+		allCategories() {
+			return Category.findAll()
+		},
 		allReservation() {
 			return Reservation.findAll()
 		},
@@ -43,6 +46,9 @@ const resolvers = {
 	Category: {
 		children(category) {
 			return Category.findAll({ where: { category_id: category.id } })
+		},
+		items(category) {
+			return Item.findAll({ where: { category_id: category.id } })
 		},
 		parent(category) {
 			return Category.findById(category.category_id)

@@ -4,11 +4,33 @@ require('babel-polyfill');
 
 import {observable} from 'mobx'
 import graphql from 'mobx-apollo'
+import gql from 'graphql-tag'
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-client-preset'
 
+
 import allItemsQuery from '../data/queries/allItems.gql'
+//import allCategoriesQuery from '../data/queries/allCategories.gql'
 import updateItemNameMutation from '../data/queries/updateItemName.gql'
 import updateItemPriceMutation from '../data/queries/updateItemPrice.gql'
+
+const allCategoriesQuery = gql`
+query allCategoriesQuery {
+	allCategories {
+		id
+		name
+		items {
+			id
+			active
+			name
+			price
+		}
+		parent {
+			id
+			name
+		}
+	}
+}
+`
 
 
 const client = new ApolloClient({
@@ -31,6 +53,9 @@ export class ObservableItems {
 
 	get allItems() {
 		return graphql({client, query: allItemsQuery})
+	}
+	get allCategories() {
+		return graphql({client, query: allCategoriesQuery})
 	}
 
 	updateItemName = (id, name) =>

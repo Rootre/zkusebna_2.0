@@ -16,21 +16,27 @@ const Index = inject(`store`)(
 			render() {
 				const {store} = this.props
 
-				let output
+				let output_html = []
 				if (store) {
-					const {allItems, updateItemName, updateItemPrice} = store
+					const {allItems, allCategories, updateItemName, updateItemPrice} = store
 
 					if (allItems) {
 						const {data, error} = allItems
 
-						output = error ? <p>{error.message}</p> :
-							<ItemList updateName={updateItemName} updatePrice={updateItemPrice} items={data.allItems}/>
+						output_html.push(error ? <p>{error.message}</p> :
+							<ItemList updateName={updateItemName} updatePrice={updateItemPrice} items={data.allItems}/>)
+					}
+					if (allCategories) {
+						const {data, error} = allCategories
+						/*
+						output_html.push(error ? <p>{error.message}</p> :
+							<ItemList updateName={updateItemName} updatePrice={updateItemPrice} items={data.allItems}/>)
+							*/
 					}
 				}
 				else {
-					output = <p>{`store is not defined`}</p>
+					output_html.push(<p>{`store is not defined`}</p>)
 				}
-
 
 				return <div>
 					<Head>
@@ -40,7 +46,7 @@ const Index = inject(`store`)(
 					</Head>
 					<DevTools/>
 					<h1 style={{marginTop: 50}}>Vítej, Zkušebno!</h1>
-					{output}
+					{output_html}
 				</div>
 			}
 		}

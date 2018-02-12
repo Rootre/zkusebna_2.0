@@ -4,7 +4,9 @@ import resolvers from './resolvers'
 const typeDefs = `
 type Query {
   allItems: [Item]
+  allCategories: [Category]
   allReservation: [Reservation]
+  categoryList: [Category]
   action(id: ID!): Action
   category(id: ID!): Category
   item(id: ID!): Item
@@ -15,11 +17,43 @@ type Mutation {
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
 }
+
 type Action {
   id: ID!
   user: User
   description: String
   time: String
+}
+type Admin {
+  id: ID!
+  password: String
+  hash: String
+}
+type Category {
+  id: ID!
+  name: String
+  parent: Category
+  children: [Category]
+  items: [Item]
+}
+type Discount {
+  id: ID!
+  name: String
+  value: Float
+}
+type Image {
+  id: ID!
+  main: String
+  thumb: String
+  description: String
+}
+type Item {
+  id: ID!
+  image: Image
+  category: Category
+  name: String
+  price: Int
+  active: Boolean
 }
 type Reservation {
   id: ID!
@@ -34,35 +68,10 @@ type Reservation {
   repeated: Int
   reservationItems: [ReservationItem]
 }
-type Discount {
-  id: ID!
-  name: String
-  value: Float
-}
 type ReservationItem {
   id: ID!
   item: Item
   reservation: Reservation
-}
-type Item {
-  id: ID!
-  image: Image
-  category: Category
-  name: String
-  price: Int
-  active: Boolean
-}
-type Image {
-  id: ID!
-  main: String
-  thumb: String
-  description: String
-}
-type Category {
-  id: ID!
-  name: String
-  parent: Category
-  children: [Category]
 }
 type User {
   id: ID!
@@ -72,11 +81,6 @@ type User {
   admin: Admin
   reservations: [Reservation]
   actions: [Action]
-}
-type Admin {
-  id: ID!
-  password: String
-  hash: String
 }
 `;
 

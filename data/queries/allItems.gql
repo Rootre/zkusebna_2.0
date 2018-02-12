@@ -4,5 +4,9 @@ query allItemsQuery {
 		active
 		name
 		price
+		category {
+			id
+			name
+		}
 	}
 }

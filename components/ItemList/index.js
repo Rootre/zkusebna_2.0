@@ -8,7 +8,7 @@ class ItemList extends Component {
 
 		return items && items.length
 			?
-			items.map((item, i) => <Item key={i} editable={false} updateName={updateName} updatePrice={updatePrice} {...item}/>)
+			items.map((item, i) => <Item key={i} editable={true} updateName={updateName} updatePrice={updatePrice} {...item}/>)
 			:
 			<Item active name={`loading...`}/>
 	}

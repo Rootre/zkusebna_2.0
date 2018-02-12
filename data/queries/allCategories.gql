@@ -1,0 +1,16 @@
+query allCategoriesQuery {
+	allCategories {
+		id
+		name
+		items {
+			id
+			active
+			name
+			price
+		}
+		parent {
+			id
+			name
+		}
+	}
+}

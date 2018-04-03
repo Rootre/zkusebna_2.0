@@ -5,6 +5,7 @@ const typeDefs = `
 type Query {
   allItems: [Item]
   allCategories: [Category]
+  structuredCategories: [Category]
   allReservation: [Reservation]
   categoryList: [Category]
   action(id: ID!): Action

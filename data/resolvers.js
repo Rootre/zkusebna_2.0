@@ -26,6 +26,13 @@ const resolvers = {
 		user(_, args) {
 			return User.findById(args.id)
 		},
+		structuredCategories() {
+			return Category.findAll({
+				where: {
+					category_id: null
+				}
+			})
+		},
 	},
 	Mutation: {
 		updateItemName(_, args) {

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize'
 
-const db = new Sequelize('zkusebna', 'root', 'local', {
+const db = new Sequelize('zkusebna', 'root', '', {
 	dialect: 'mysql',
 })
 

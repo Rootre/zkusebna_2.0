@@ -1,0 +1,22 @@
+query structuredCategoriesQuery {
+	structuredCategories {
+        id
+        name
+        items {
+            id
+            active
+            name
+            price
+        }
+        children {
+            id
+            name
+            items {
+                id
+                active
+                name
+                price
+            }
+        }
+    }
+}

@@ -46,6 +46,9 @@ class Calendar extends Component {
                 console.error(err)
             })
     }
+    dayClick(day) {
+        console.log(day);
+    }
     eventSelected(eventDetail) {
         this.setState({ eventDetail })
     }
@@ -72,9 +75,11 @@ class Calendar extends Component {
                     items: event.reservationItems.map(item => item.item)
                 }))}
                 defaultDate={new Date()}
-                defaultView={`month`}
+                views={['month']}
                 onNavigate={day => this.dateChanged(new Date(day))}
                 onSelectEvent={event => this.eventSelected(event)}
+                onSelectSlot={slotInfo => this.dayClick(slotInfo)}
+                popup
             />
         </div>
     }

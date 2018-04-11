@@ -1,4 +1,5 @@
 import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors'
+import {Op} from 'sequelize'
 
 const resolvers = {
 	Query: {
@@ -10,6 +11,18 @@ const resolvers = {
 		},
 		allReservation() {
 			return Reservation.findAll()
+		},
+        reservationRange(_, args) {
+			return Reservation.findAll({
+				where: {
+					since: {
+						[Op.gte]: args.since
+					},
+					until: {
+						[Op.lte]: args.until
+					},
+				}
+			})
 		},
 		action(_, args) {
 			return Action.findById(args.id)

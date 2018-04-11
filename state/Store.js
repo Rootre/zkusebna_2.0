@@ -4,8 +4,9 @@ import {
 	getAllItems,
 	getAllCategories,
 	getStructuredCategories,
-	updateItemName,
-	updateItemPrice
+    reservationRange,
+    updateItemName,
+    updateItemPrice
 } from '../data/apollo'
 
 export class Store {
@@ -22,6 +23,7 @@ export class Store {
 		return getStructuredCategories
 	}
 
+	reservationRange = (since, until) => reservationRange(since, until)
 	updateItemName = (id, name) => updateItemName(id, name)
 	updateItemPrice = (id, price) => updateItemPrice(id, price)
 }

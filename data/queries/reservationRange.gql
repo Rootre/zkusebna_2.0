@@ -1,0 +1,16 @@
+query reservationRangeQuery($since: String!, $until: String!) {
+	reservationRange(since: $since, until: $until) {
+		id
+		name
+		since
+        until
+        user {
+            name
+        }
+        reservationItems {
+            item {
+                name
+            }
+        }
+	}
+}

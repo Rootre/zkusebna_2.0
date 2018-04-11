@@ -1,9 +1,14 @@
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+require('babel-polyfill');
+
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-client-preset'
 import graphql from 'mobx-apollo'
 
 import allItemsQuery from '../data/queries/allItems.gql'
 import allCategoriesQuery from '../data/queries/allCategories.gql'
 import structuredCategoriesQuery from '../data/queries/structuredCategories.gql'
+import reservationRangeQuery from '../data/queries/reservationRange.gql'
 import updateItemNameMutation from '../data/queries/updateItemName.gql'
 import updateItemPriceMutation from '../data/queries/updateItemPrice.gql'
 
@@ -18,6 +23,10 @@ const client = new ApolloClient({
 export const getAllItems = graphql({client, query: allItemsQuery})
 export const getAllCategories = graphql({client, query: allCategoriesQuery})
 export const getStructuredCategories = graphql({client, query: structuredCategoriesQuery})
+export const reservationRange = (since, until) => client.query({
+    query: reservationRangeQuery,
+    variables: {since, until},
+})
 
 export const updateItemName = (id, name) =>
     _updateColumn({

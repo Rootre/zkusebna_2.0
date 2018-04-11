@@ -7,12 +7,13 @@ type Query {
   allCategories: [Category]
   structuredCategories: [Category]
   allReservation: [Reservation]
+  reservationRange(since: String, until: String): [Reservation]
   categoryList: [Category]
   action(id: ID!): Action
   category(id: ID!): Category
   item(id: ID!): Item
   reservation(id: ID!): Reservation
-  user(id: ID!): User 
+  user(id: ID!): User
 }
 type Mutation {
   updateItemName(id: ID!, name: String!): Item

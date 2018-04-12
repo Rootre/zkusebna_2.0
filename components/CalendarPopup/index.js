@@ -1,53 +1,20 @@
-import React, {Component} from 'react'
-import moment from 'moment'
+import React from 'react'
 import Modal from 'react-modal'
 
-class CalendarPopup extends Component {
-    get dayTimeFormat() {
-        return "DD.MM.YYYY HH:mm"
-    }
-    get hourTimeFormat() {
-        return "HH:mm"
-    }
+import DateRange from '../DateRange/index'
+import Popup from '../Popup/index'
 
-    componentWillMount() {
-        if (typeof document !== 'undefined') {
-            Modal.setAppElement('#app')
-        }
-    }
-
+export default class CalendarPopup extends Popup {
     render() {
-        const {event: {end, items, start, title, user: {name}}, onClose} = this.props
-
-        const since = moment(new Date(start))
-        const until = moment(new Date(end))
+        const {event: {end, items, start, title, user: {name}}} = this.props
 
         return <Modal
             isOpen={true}
-            style={{
-                overlay: {
-                    zIndex: 99,
-                }
-            }}
+            style={{ overlay: this.overlayStyles }}
         >
-            <span
-                style={{
-                    cursor: 'pointer',
-                    fontSize: '1.7em',
-                    position: 'absolute',
-                    right: '10px',
-                    top: 0,
-                }}
-                onClick={e => onClose()}
-            >&times;</span>
+            {this.CloseButton}
             <div style={{ float: 'right' }}>
-                {since.isSame(until, 'day')
-                    ? <p><i>{since.format(this.dayTimeFormat)} - {until.format(this.hourTimeFormat)}</i></p>
-                    : <div>
-                        <p>Od: {since.format(this.dayTimeFormat)}</p>
-                        <p>Do: {until.format(this.dayTimeFormat)}</p>
-                    </div>
-                }
+                <DateRange showTime start={start} end={end}/>
             </div>
             <h2>{title}</h2>
             <p>Rezervoval: <strong>{name}</strong></p>
@@ -58,5 +25,3 @@ class CalendarPopup extends Component {
         </Modal>
     }
 }
-
-export default CalendarPopup

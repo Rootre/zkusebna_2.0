@@ -4,6 +4,7 @@ import {inject} from 'mobx-react'
 import moment from 'moment'
 
 import CalendarPopup from '../CalendarPopup/index'
+import ReservationPopup from '../ReservationPopup/index'
 
 import css from 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -12,7 +13,9 @@ BigCalendar.momentLocalizer(moment)
 @inject('store')
 class Calendar extends Component {
     state = {
+        currentDay: new Date(),
         eventDetail: null,
+        reservationDetail: null,
         events: []
     }
     get dbTimeFormat() {
@@ -23,11 +26,20 @@ class Calendar extends Component {
         this.dateChanged(new Date())
     }
 
-    dateChanged(today) {
+    _closeEventPopup() {
+        this.setState({ eventDetail: null })
+    }
+    _closeReservationPopup() {
+        this.setState({ reservationDetail: null })
+    }
+    _setEvents(events) {
+        this.setState({events})
+    }
+    _switchMonths(day) {
         const {store: {reservationRange}} = this.props
 
-        const firstDay = moment(today).startOf('month')
-        const lastDay = moment(today).endOf('month')
+        const firstDay = moment(day).startOf('month')
+        const lastDay = moment(day).endOf('month')
 
         reservationRange(
             firstDay.format(this.dbTimeFormat),
@@ -46,25 +58,40 @@ class Calendar extends Component {
                 console.error(err)
             })
     }
-    dayClick(day) {
-        console.log(day);
+
+    dateChanged(today) {
+        const {currentDay} = this.state
+
+        if (moment(today).isSame(currentDay, 'month')) {
+            this.reserve(today.toString())
+        }
+        else {
+            this._switchMonths(today)
+        }
+
+        this.setState({currentDay: today})
+    }
+    reserve(start, end = null) {
+        this.setState({
+            reservationDetail: {
+                start,
+                end: end || start,
+            }
+        })
     }
     eventSelected(eventDetail) {
         this.setState({ eventDetail })
     }
-
-    _closePopup() {
-        this.setState({ eventDetail: null })
-    }
-    _setEvents(events) {
-        this.setState({events})
+    slotSelected(slots) {
+        this.reserve(slots.start, slots.end)
     }
 
     render() {
-        const {eventDetail, events} = this.state
+        const {currentDay, eventDetail, events, reservationDetail} = this.state
 
-        return <div style={{height: '400px'}}>
-            {!!eventDetail && <CalendarPopup onClose={e => this._closePopup()} event={eventDetail}/>}
+        return <div style={{height: '500px'}}>
+            {!!eventDetail && <CalendarPopup onClose={e => this._closeEventPopup()} event={eventDetail}/>}
+            {!!reservationDetail && <ReservationPopup onClose={e => this._closeReservationPopup()} reservation={reservationDetail}/>}
             <style>{css}</style>
             <BigCalendar
                 events={events.map(event => ({
@@ -74,12 +101,13 @@ class Calendar extends Component {
                     user: event.user,
                     items: event.reservationItems.map(item => item.item)
                 }))}
-                defaultDate={new Date()}
+                defaultDate={currentDay}
                 views={['month']}
                 onNavigate={day => this.dateChanged(new Date(day))}
                 onSelectEvent={event => this.eventSelected(event)}
-                onSelectSlot={slotInfo => this.dayClick(slotInfo)}
+                onSelectSlot={slots => this.slotSelected(slots)}
                 popup
+                selectable
             />
         </div>
     }

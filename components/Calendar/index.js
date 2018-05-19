@@ -36,18 +36,18 @@ class Calendar extends Component {
         this.setState({events})
     }
     _switchMonths(day) {
-        const {store: {reservationRange}} = this.props
+        const {store: {getReservationsWithinRange}} = this.props
 
         const firstDay = moment(day).startOf('month')
         const lastDay = moment(day).endOf('month')
 
-        reservationRange(
+        getReservationsWithinRange(
             firstDay.format(this.dbTimeFormat),
             lastDay.format(this.dbTimeFormat),
         )
             .then(result => {
-                if (result.data && result.data.reservationRange) {
-                    this._setEvents(result.data.reservationRange)
+                if (result.data && result.data.reservationsWithinRange) {
+                    this._setEvents(result.data.reservationsWithinRange)
                 }
                 else {
                     console.error('reservation range error', result)

@@ -5,12 +5,12 @@ require('babel-polyfill');
 import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-client-preset'
 import graphql from 'mobx-apollo'
 
-import allItemsQuery from '../data/queries/allItems.gql'
-import allCategoriesQuery from '../data/queries/allCategories.gql'
-import structuredCategoriesQuery from '../data/queries/structuredCategories.gql'
-import reservationRangeQuery from '../data/queries/reservationRange.gql'
-import updateItemNameMutation from '../data/queries/updateItemName.gql'
-import updateItemPriceMutation from '../data/queries/updateItemPrice.gql'
+import getAllItemsQuery from '../data/queries/getAllItemsQuery.gql'
+import getAllCategoriesQuery from '../data/queries/getAllCategoriesQuery.gql'
+import getStructuredCategoriesQuery from '../data/queries/getStructuredCategoriesQuery.gql'
+import getReservationsWithinRangeQuery from '../data/queries/getReservationsWithinRangeQuery.gql'
+import updateItemNameMutation from '../data/queries/updateItemNameMutation.gql'
+import updateItemPriceMutation from '../data/queries/updateItemPriceMutation.gql'
 
 const client = new ApolloClient({
     link: new HttpLink({
@@ -20,11 +20,11 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-export const getAllItems = graphql({client, query: allItemsQuery})
-export const getAllCategories = graphql({client, query: allCategoriesQuery})
-export const getStructuredCategories = graphql({client, query: structuredCategoriesQuery})
-export const reservationRange = (since, until) => client.query({
-    query: reservationRangeQuery,
+export const getAllItems = graphql({client, query: getAllItemsQuery})
+export const getAllCategories = graphql({client, query: getAllCategoriesQuery})
+export const getStructuredCategories = graphql({client, query: getStructuredCategoriesQuery})
+export const getReservationsWithinRange = (since, until) => client.query({
+    query: getReservationsWithinRangeQuery,
     variables: {since, until},
 })
 

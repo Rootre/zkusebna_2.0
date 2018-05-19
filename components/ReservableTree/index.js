@@ -3,17 +3,18 @@ import {inject, observer} from 'mobx-react'
 
 import CategoryList from '../CategoryList/index'
 
-@inject(`store`) @observer
+@inject('store')
+@observer
 class ReservableTree extends Component {
     render () {
-        const { store: {structuredCategories} } = this.props
+        const { store: {getStructuredCategories} } = this.props
         let data
 
         try {
-            data = structuredCategories.data.structuredCategories
+            data = getStructuredCategories().data.structuredCategories;
         }
         catch (err) {
-            console.error(err.message)
+            console.error('DAMN...', err.message);
         }
 
         return <div className={`ReservableTree`}>

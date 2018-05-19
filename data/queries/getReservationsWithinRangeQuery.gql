@@ -1,5 +1,5 @@
-query reservationRangeQuery($since: String!, $until: String!) {
-	reservationRange(since: $since, until: $until) {
+query getReservationsWithinRangeQuery($since: String!, $until: String!) {
+	reservationsWithinRange(since: $since, until: $until) {
 		id
 		name
 		since

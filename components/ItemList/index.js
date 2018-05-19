@@ -3,7 +3,8 @@ import {inject, observer} from 'mobx-react'
 
 import Item from "../Item/index"
 
-@inject(`store`) @observer
+@inject('store')
+@observer
 class ItemList extends Component {
 	render () {
 		const { items, store: {updateName, updatePrice} } = this.props

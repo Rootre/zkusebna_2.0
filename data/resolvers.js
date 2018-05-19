@@ -9,10 +9,10 @@ const resolvers = {
 		allCategories() {
 			return Category.findAll()
 		},
-		allReservation() {
+		allReservations() {
 			return Reservation.findAll()
 		},
-        reservationRange(_, args) {
+        reservationsWithinRange(_, args) {
 			return Reservation.findAll({
 				where: {
 					since: {
@@ -24,22 +24,22 @@ const resolvers = {
 				}
 			})
 		},
-		action(_, args) {
+        actionById(_, args) {
 			return Action.findById(args.id)
 		},
-		category(_, args) {
+        categoryById(_, args) {
 			return Category.findById(args.id)
 		},
-		item(_, args) {
+        itemById(_, args) {
 			return Item.findById(args.id)
 		},
-		reservation(_, args) {
+        reservationById(_, args) {
 			return Reservation.find({ where: args })
 		},
-		user(_, args) {
+        userById(_, args) {
 			return User.findById(args.id)
 		},
-		structuredCategories() {
+        structuredCategories() {
 			return Category.findAll({
 				where: {
 					category_id: null

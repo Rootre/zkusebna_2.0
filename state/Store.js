@@ -4,7 +4,7 @@ import {
 	getAllItems,
 	getAllCategories,
 	getStructuredCategories,
-    reservationRange,
+    getReservationsWithinRange,
     updateItemName,
     updateItemPrice
 } from '../data/apollo'
@@ -13,17 +13,17 @@ export class Store {
 	@observable items = []
 	@observable idle = false
 
-	get allItems() {
+	getAllItems() {
 		return getAllItems
 	}
-	get allCategories() {
+	getAllCategories() {
 		return getAllCategories
 	}
-	get structuredCategories() {
-		return getStructuredCategories
-	}
+	getStructuredCategories() {
+		return getStructuredCategories;
+    }
 
-	reservationRange = (since, until) => reservationRange(since, until)
+    getReservationsWithinRange = (since, until) => getReservationsWithinRange(since, until)
 	updateItemName = (id, name) => updateItemName(id, name)
 	updateItemPrice = (id, price) => updateItemPrice(id, price)
 }

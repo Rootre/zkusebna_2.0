@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools'
+import {makeExecutableSchema} from 'graphql-tools'
 import resolvers from './resolvers'
 
 const typeDefs = `
@@ -6,14 +6,14 @@ type Query {
   allItems: [Item]
   allCategories: [Category]
   structuredCategories: [Category]
-  allReservation: [Reservation]
-  reservationRange(since: String, until: String): [Reservation]
+  allReservations: [Reservation]
+  reservationsWithinRange(since: String, until: String): [Reservation]
   categoryList: [Category]
-  action(id: ID!): Action
-  category(id: ID!): Category
-  item(id: ID!): Item
-  reservation(id: ID!): Reservation
-  user(id: ID!): User
+  actionById(id: ID!): Action
+  categoryById(id: ID!): Category
+  itemById(id: ID!): Item
+  reservationById(id: ID!): Reservation
+  userById(id: ID!): User
 }
 type Mutation {
   updateItemName(id: ID!, name: String!): Item
@@ -86,6 +86,6 @@ type User {
 }
 `;
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({typeDefs, resolvers});
 
 export default schema;

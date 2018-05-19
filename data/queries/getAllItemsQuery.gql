@@ -1,4 +1,4 @@
-query allItemsQuery {
+query getAllItemsQuery {
 	allItems {
 		id
 		active

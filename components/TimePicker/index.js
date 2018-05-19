@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Picker from 'rc-time-picker'
-import moment from 'moment'
+import moment from 'moment/moment'
 
 import css from 'rc-time-picker/assets/index.css'
 

@@ -44,7 +44,11 @@ export default class DateRange extends Component {
         let format = showTime ? this.dayTimeFormat : this.dayFormat
 
         if (since.isSame(until, 'day')) {
-            html = this.getHtml(since.format(format) + (showTime && ` - ${until.format(this.timeFormat)}`))
+            html = this.getHtml(
+                showTime
+                    ? `${since.format(format)} - ${until.format(this.timeFormat)}`
+                    : since.format(this.dayFormat)
+            )
         }
         else {
             html = this.getHtml(

@@ -1,11 +1,44 @@
 {
+  "env": {
+    "production": {
+      "presets": [
+        [
+          "next/babel",
+          {
+            "targets": {
+              "browsers": [
+                "ie >= 10",
+                "chrome >= 55",
+                "ff >= 55",
+                "safari >= 9"
+              ]
+            }
+          }
+        ]
+      ]
+    },
+    "development": {
+      "presets": [
+        [
+          "next/babel",
+          {
+            "targets": {
+              "browsers": [
+                "chrome >= 55",
+                "ff >= 57"
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
   "presets": [
-    "es2015",
-    "stage-0",
-    "react"
+    "next/babel"
   ],
   "plugins": [
     "transform-decorators-legacy",
+    "transform-class-properties",
     "babel-plugin-inline-import-graphql-ast"
   ]
 }

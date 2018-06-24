@@ -6,9 +6,9 @@ import moment from 'moment'
 import CalendarPopup from '../CalendarPopup/index'
 import ReservationPopup from '../ReservationPopup/index'
 
-import css from 'react-big-calendar/lib/css/react-big-calendar.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-BigCalendar.momentLocalizer(moment)
+BigCalendar.momentLocalizer(moment);
 
 @inject('store')
 class Calendar extends Component {
@@ -26,10 +26,10 @@ class Calendar extends Component {
         this.dateChanged(new Date())
     }
 
-    _closeEventPopup() {
+    _closeEventPopup = () => {
         this.setState({ eventDetail: null })
     }
-    _closeReservationPopup() {
+    _closeReservationPopup = () => {
         this.setState({ reservationDetail: null })
     }
     _setEvents(events) {
@@ -90,9 +90,8 @@ class Calendar extends Component {
         const {currentDay, eventDetail, events, reservationDetail} = this.state
 
         return <div style={{height: '500px'}}>
-            {!!eventDetail && <CalendarPopup onClose={e => this._closeEventPopup()} event={eventDetail}/>}
-            {!!reservationDetail && <ReservationPopup onClose={e => this._closeReservationPopup()} reservation={reservationDetail}/>}
-            <style>{css}</style>
+            {!!eventDetail && <CalendarPopup onClose={this._closeEventPopup} event={eventDetail}/>}
+            {!!reservationDetail && <ReservationPopup onClose={this._closeReservationPopup} reservation={reservationDetail}/>}
             <BigCalendar
                 events={events.map(event => ({
                     title: event.name,

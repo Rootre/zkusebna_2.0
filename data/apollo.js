@@ -1,32 +1,47 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-require('babel-polyfill');
 
-import {ApolloClient, HttpLink, InMemoryCache} from 'apollo-client-preset'
-import graphql from 'mobx-apollo'
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {HttpLink} from 'apollo-link-http';
+import {onError} from 'apollo-link-error';
+import {ApolloLink} from 'apollo-link';
+import {graphql} from 'react-apollo';
 
-import getAllItemsQuery from '../data/queries/getAllItemsQuery.gql'
-import getAllCategoriesQuery from '../data/queries/getAllCategoriesQuery.gql'
-import getStructuredCategoriesQuery from '../data/queries/getStructuredCategoriesQuery.gql'
-import getReservationsWithinRangeQuery from '../data/queries/getReservationsWithinRangeQuery.gql'
-import updateItemNameMutation from '../data/queries/updateItemNameMutation.gql'
-import updateItemPriceMutation from '../data/queries/updateItemPriceMutation.gql'
+import getAllItemsQuery from '../data/queries/getAllItemsQuery.graphql'
+import getAllCategoriesQuery from '../data/queries/getAllCategoriesQuery.graphql'
+import getStructuredCategoriesQuery from '../data/queries/getStructuredCategoriesQuery.graphql'
+import getReservationsWithinRangeQuery from '../data/queries/getReservationsWithinRangeQuery.graphql'
+import updateItemNameMutation from '../data/queries/updateItemNameMutation.graphql'
+import updateItemPriceMutation from '../data/queries/updateItemPriceMutation.graphql'
+
 
 const client = new ApolloClient({
-    link: new HttpLink({
-        uri: 'http://localhost:3003/graphql',
-        credentials: 'same-origin'
-    }),
+    link: ApolloLink.from([
+        onError(({graphQLErrors, networkError}) => {
+            if (graphQLErrors)
+                graphQLErrors.map(({message, locations, path}) =>
+                    console.log(
+                        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+                    ),
+                );
+            if (networkError) console.log(`[Network error]: ${networkError}`);
+        }),
+        new HttpLink({
+            uri: 'http://localhost:3003/graphql',
+            credentials: 'same-origin'
+        })
+    ]),
     cache: new InMemoryCache()
 });
 
-export const getAllItems = graphql({client, query: getAllItemsQuery})
-export const getAllCategories = graphql({client, query: getAllCategoriesQuery})
-export const getStructuredCategories = graphql({client, query: getStructuredCategoriesQuery})
+export const getAllItems = client.query({query: getAllItemsQuery});
+export const getAllCategories = client.query({query: getAllCategoriesQuery});
+export const getStructuredCategories = client.query({query: getStructuredCategoriesQuery});
 export const getReservationsWithinRange = (since, until) => client.query({
     query: getReservationsWithinRangeQuery,
     variables: {since, until},
-})
+});
 
 export const updateItemName = (id, name) =>
     _updateColumn({

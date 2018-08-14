@@ -1,14 +1,17 @@
-import React from 'react'
-import Modal from 'react-modal'
+import React from 'react';
+import {inject, observer} from 'mobx-react';
+import Modal from 'react-modal';
 
 import DateRange from '../DateRange/index'
 import Popup from '../Popup/index'
 import ReservableTree from '../ReservableTree/index'
 import TimePicker from '../TimePicker/index'
 
+@inject('categoryStore')
+@observer
 class ReservationPopup extends Popup {
     render() {
-        const {reservation: {start, end}} = this.props
+        const {categoryStore, reservation: {start, end}} = this.props
 
         return <Modal
             isOpen={true}
@@ -23,7 +26,7 @@ class ReservationPopup extends Popup {
             <div>
                 Do:<TimePicker/>
             </div>
-            <ReservableTree/>
+            <ReservableTree categories={categoryStore.structuredCategories}/>
         </Modal>
     }
 }

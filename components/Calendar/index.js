@@ -1,16 +1,15 @@
-import React, {Component} from 'react'
-import BigCalendar from 'react-big-calendar'
-import {inject} from 'mobx-react'
-import moment from 'moment'
+import React, {Component} from 'react';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
 
 import CalendarPopup from '../CalendarPopup/index'
 import ReservationPopup from '../ReservationPopup/index'
 
+import {getReservationsWithinRange} from '../../data/apollo';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 BigCalendar.momentLocalizer(moment);
 
-@inject('store')
 class Calendar extends Component {
     state = {
         currentDay: new Date(),
@@ -20,10 +19,6 @@ class Calendar extends Component {
     }
     get dbTimeFormat() {
         return "YYYY-MM-DD HH:mm:ss"
-    }
-
-    componentDidMount() {
-        this.dateChanged(new Date())
     }
 
     _closeEventPopup = () => {
@@ -36,8 +31,6 @@ class Calendar extends Component {
         this.setState({events})
     }
     _switchMonths(day) {
-        const {store: {getReservationsWithinRange}} = this.props
-
         const firstDay = moment(day).startOf('month')
         const lastDay = moment(day).endOf('month')
 
@@ -83,7 +76,16 @@ class Calendar extends Component {
         this.setState({ eventDetail })
     }
     slotSelected(slots) {
+        if (moment(slots.start) < moment().startOf('day')) {
+            return;
+        }
+
         this.reserve(slots.start, slots.end)
+    }
+
+
+    componentDidMount() {
+        this.dateChanged(new Date())
     }
 
     render() {

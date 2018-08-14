@@ -48,12 +48,13 @@ export const updateItemName = (id, name) =>
         mutation: updateItemNameMutation,
         variables: {id, name},
         //refetchQueries: [{query: allItemsQuery}]
-    })
+    });
+
 export const updateItemPrice = (id, price) =>
     _updateColumn({
         mutation: updateItemPriceMutation,
         variables: {id, price},
-    })
+    });
 
 const _updateColumn = mutation => client
     .mutate(mutation)

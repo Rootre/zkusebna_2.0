@@ -1,11 +1,11 @@
 const withCss = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const path = require('path');
-const glob = require('glob');
 
 module.exports = withCss(withSass({
-    cssModules: true,
+    //cssModules: true, //TODO: figure out how to import non-local css from node_modules
     cssLoaderOptions: {
+        importLoaders: 1,
         localIdentName: "[local]___[hash:base64:5]",
     },
     exportPathMap: function () {
@@ -21,6 +21,21 @@ module.exports = withCss(withSass({
                 use: 'graphql-tag/loader'
             }
         );
+        config.module.rules.push(
+            {
+                test: /\.svg$/,
+                exclude: /node_modules/,
+                use: 'react-svg-loader'
+            }
+        );
+
+        Object.assign(config.resolve.alias, {
+            Data: path.resolve(__dirname, 'data'),
+            Helpers: path.resolve(__dirname, 'helpers'),
+            Components: path.resolve(__dirname, 'components'),
+            Sass: path.resolve(__dirname, 'static/sass'),
+            Svg: path.resolve(__dirname, 'static/svg'),
+        });
 
         return config;
     }

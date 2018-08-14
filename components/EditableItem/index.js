@@ -20,8 +20,9 @@ export default class extends Component {
 
 	_edit() {
 		if (!this.props.editable) {
-			return
+			return;
 		}
+
 		this.setState({editing: true})
 	}
 

@@ -1,20 +1,22 @@
 import React, {Component} from 'react'
-import {inject, observer} from 'mobx-react'
 
 import Item from "../Item/index"
 
-@inject('store')
-@observer
-class ItemList extends Component {
-	render () {
-		const { items, store: {updateName, updatePrice} } = this.props
+import {updateItemName, updateItemPrice} from '../../data/apollo';
 
-		return items && items.length
-			?
-			items.map((item, i) => <Item key={i} editable={true} updateName={updateName} updatePrice={updatePrice} {...item}/>)
-			:
-			<Item active name={`loading...`}/>
-	}
+class ItemList extends Component {
+    render() {
+        const {editable, items} = this.props
+
+        if (!items || !items.length) {
+            return 'loading...';
+        }
+
+        return items.map((item, i) => <Item key={i}
+                                            editable={editable}
+                                            updateName={updateItemName}
+                                            updatePrice={updateItemPrice} {...item}/>)
+    }
 }
 
 export default ItemList

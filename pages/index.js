@@ -3,21 +3,29 @@ import Head from 'next/head';
 import DevTools from 'mobx-react-devtools';
 import {Provider, inject} from 'mobx-react';
 
-import {Store} from '../state/Store';
+import {getStore} from '../state/generalStore';
+import {getStore as getCategoryStore} from '../state/categories/categoryStore';
 import Calendar from '../components/Calendar';
 
 import {getStructuredCategories} from '../data/apollo';
 
-const store = new Store();
+const generalStore = getStore();
+const categoryStore = getCategoryStore();
 
 const stores = {
-    store
+    categoryStore,
+    generalStore,
 };
 
-@inject('store')
+@inject('categoryStore')
 class Index extends Component {
+    componentWillMount() {
+        const {categoryStore, tree} = this.props;
+
+        categoryStore.setStructuredCategories(tree);
+    }
+
     render() {
-        console.log(this.props.tree);
         return (
             <div id={`app`}>
                 <Head>
@@ -40,6 +48,7 @@ export default class extends Component {
 
         try {
             tree = await getStructuredCategories;
+            tree = tree.data.structuredCategories;
         }
         catch (e) {
             console.error('Apollo error:', e.message);

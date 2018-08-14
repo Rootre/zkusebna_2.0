@@ -1,19 +1,20 @@
-import React, {Component} from 'react'
-import {inject, observer} from 'mobx-react'
+import React, {Component} from 'react';
 
-import CategoryList from '../CategoryList'
+import CategoryList from '../CategoryList';
 
-@inject('store')
-@observer
 class ReservableTree extends Component {
     render () {
-        let data
+        const {editable, categories} = this.props;
+
+        if (!categories || !categories.length) {
+            return null;
+        }
 
         return <div className={`ReservableTree`}>
-            {data && data.length && data.map(category => {
+            {categories.map(category => {
                 const {id} = category
 
-                return <CategoryList level={2} key={id} {...category}/>
+                return <CategoryList editable={editable} level={2} key={id} {...category}/>
             })}
         </div>
     }

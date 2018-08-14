@@ -8,7 +8,7 @@ export default class TimePicker extends Component {
     render() {
         const {defaultValue} = this.props
         return <div>
-            <Picker defaultValue={defaultValue || moment()} showSecond={false} minuteStep={15} />
+            <Picker defaultValue={defaultValue || moment().startOf('hour')} showSecond={false} minuteStep={15} />
         </div>
     }
 }

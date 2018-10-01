@@ -6,7 +6,8 @@ import CalendarPopup from '../CalendarPopup/index'
 import ReservationPopup from '../ReservationPopup/index'
 
 import {getReservationsWithinRange} from '../../data/apollo';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+//import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'Sass/calendar.scss';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -85,7 +86,7 @@ class Calendar extends Component {
 
 
     componentDidMount() {
-        this.dateChanged(new Date())
+        //this.dateChanged(new Date())
     }
 
     render() {

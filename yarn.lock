@@ -1140,7 +1140,7 @@
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
 
-"@zeit/next-css@0.2.0", "@zeit/next-css@^0.2.0":
+"@zeit/next-css@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@zeit/next-css/-/next-css-0.2.0.tgz#35da071256397b509b86ac7726ce0f7d3593e62b"
   dependencies:

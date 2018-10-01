@@ -1,0 +1,6 @@
+query getCategoryChildrenQuery($parent_id: number!) {
+	categoryChildren(parent_id: $parent_id) {
+		id
+		name
+	}
+}

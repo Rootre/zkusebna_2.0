@@ -2,11 +2,11 @@ const withCss = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const path = require('path');
 
-module.exports = withCss(withSass({
-    //cssModules: true, //TODO: figure out how to import non-local css from node_modules
+module.exports = withSass({
+    cssModules: true, //TODO: figure out how to import non-local css from node_modules
     cssLoaderOptions: {
         importLoaders: 1,
-        localIdentName: "[local]___[hash:base64:5]",
+        localIdentName: "[folder]_[local]_[hash:base64:5]",
     },
     exportPathMap: function () {
         return {
@@ -39,4 +39,4 @@ module.exports = withCss(withSass({
 
         return config;
     }
-}));
+});

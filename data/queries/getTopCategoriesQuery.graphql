@@ -1,0 +1,6 @@
+query getTopCategoriesQuery {
+	topCategories {
+		id
+		name
+	}
+}

@@ -1,12 +1,16 @@
 import {action, observable} from 'mobx';
 
 class GeneralStore {
-    @observable
-    idle = false;
+    @observable.shallow
+    fetching = new Map();
 
     @action
-    setIdle(idle) {
-        this.idle = idle;
+    setFetching(id) {
+        this.fetching.set(id, true);
+    }
+    @action
+    deleteFetching(id) {
+        this.fetching.delete(id);
     }
 }
 

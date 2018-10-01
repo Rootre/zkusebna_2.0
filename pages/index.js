@@ -27,11 +27,9 @@ class Index extends Component {
 
     render() {
         return (
-            <div id={`app`}>
+            <div>
                 <Head>
                     <title>{`Kobyliská zkušebna 2.0`}</title>
-                    <meta charSet={`UTF-8`}/>
-                    <meta name={`viewport`} content={`initial-scale=1.0, width=device-width`}/>
                 </Head>
                 <DevTools/>
                 <h1 style={{marginTop: 50}}>Vítej!</h1>

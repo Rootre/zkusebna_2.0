@@ -37,7 +37,7 @@
     "next/babel"
   ],
   "plugins": [
-    "transform-decorators-legacy",
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "transform-class-properties",
     "babel-plugin-inline-import-graphql-ast"
   ]

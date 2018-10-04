@@ -1,17 +1,12 @@
-import {action, computed, observable} from 'mobx';
+import {action, observable} from 'mobx';
 
 export class ReservationStore {
-    @observable
-    current_day = new Date();
-
-    @computed
-    get currentMonth() {
-        return this.current_day.getMonth();
-    }
+    @observable.shallow
+    current_reservations = [];
 
     @action
-    setCurrentDay(day) {
-        this.current_day = new Date(day);
+    setCurrentReservations(reservations) {
+        this.current_reservations = reservations;
     }
 }
 

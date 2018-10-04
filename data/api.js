@@ -1,22 +1,33 @@
 import {client} from './apollo';
+import {NETWORK_STATUS} from '../consts/apollo';
 
 import getTopCategoriesQuery from './queries/getTopCategoriesQuery.graphql';
 import getCalendarReservationsForRangeQuery from './queries/getCalendarReservationsForRangeQuery.graphql';
 
 export async function getTopCategories() {
-    return await client.query({
+    return await getQuery({
         query: getTopCategoriesQuery,
-    });
+    }).then(result => result.data.topCategories);
 }
 
 export async function getCalendarReservationsForRange(since, until) {
-    return await client.query({
+    return await getQuery({
         query: getCalendarReservationsForRangeQuery,
         variables: {
             since,
             until,
         },
-    });
+    }).then(result => result.data.calendarReservationsForRange);
+}
+
+async function getQuery(query) {
+    return await client.query(query).then(result => {
+        if (result.networkStatus !== NETWORK_STATUS.READY) {
+            console.log('Apollo fetch not ready', result);
+        }
+
+        return result;
+    }).catch(err => console.error('Apollo fetch error!', err));
 }
 
 

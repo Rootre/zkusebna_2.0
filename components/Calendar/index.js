@@ -1,113 +1,43 @@
-import React, {Component} from 'react';
+import {Component} from 'react';
+import {inject, observer} from 'mobx-react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
-import CalendarPopup from '../CalendarPopup/index'
-import ReservationPopup from '../ReservationPopup/index'
-
-import {getReservationsWithinRange} from '../../data/apollo';
 //import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'Sass/calendar.scss';
+import styles from './style.scss';
 
 BigCalendar.momentLocalizer(moment);
 
+@inject('calendarStore', 'reservationStore')
+@observer
 class Calendar extends Component {
-    state = {
-        currentDay: new Date(),
-        eventDetail: null,
-        reservationDetail: null,
-        events: []
-    }
-    get dbTimeFormat() {
-        return "YYYY-MM-DD HH:mm:ss"
-    }
 
-    _closeEventPopup = () => {
-        this.setState({ eventDetail: null })
-    }
-    _closeReservationPopup = () => {
-        this.setState({ reservationDetail: null })
-    }
-    _setEvents(events) {
-        this.setState({events})
-    }
-    _switchMonths(day) {
-        const firstDay = moment(day).startOf('month')
-        const lastDay = moment(day).endOf('month')
-
-        getReservationsWithinRange(
-            firstDay.format(this.dbTimeFormat),
-            lastDay.format(this.dbTimeFormat),
-        )
-            .then(result => {
-                if (result.data && result.data.reservationsWithinRange) {
-                    this._setEvents(result.data.reservationsWithinRange)
-                }
-                else {
-                    console.error('reservation range error', result)
-                    this._setEvents([])
-                }
-            })
-            .catch(err => {
-                console.error(err)
-            })
-    }
-
-    dateChanged(today) {
-        const {currentDay} = this.state
-
-        if (moment(today).isSame(currentDay, 'month')) {
-            this.reserve(today.toString())
-        }
-        else {
-            this._switchMonths(today)
-        }
-
-        this.setState({currentDay: today})
-    }
-    reserve(start, end = null) {
-        this.setState({
-            reservationDetail: {
-                start,
-                end: end || start,
-            }
-        })
-    }
-    eventSelected(eventDetail) {
-        this.setState({ eventDetail })
-    }
-    slotSelected(slots) {
-        if (moment(slots.start) < moment().startOf('day')) {
-            return;
-        }
-
-        this.reserve(slots.start, slots.end)
-    }
-
-
-    componentDidMount() {
-        //this.dateChanged(new Date())
-    }
+    onNavigate = day => {
+        console.log('onNavigate', day);
+    };
+    onSelectEvent = event => {
+        console.log('onSelectEvent', event);
+    };
+    onSelectSlot = slots => {
+        console.log('onSelectSlot', slots);
+    };
 
     render() {
-        const {currentDay, eventDetail, events, reservationDetail} = this.state
+        const {calendarStore: {current_day}, reservationStore: {current_reservations}} = this.props;
 
-        return <div style={{height: '500px'}}>
-            {!!eventDetail && <CalendarPopup onClose={this._closeEventPopup} event={eventDetail}/>}
-            {!!reservationDetail && <ReservationPopup onClose={this._closeReservationPopup} reservation={reservationDetail}/>}
+        return <div className={styles.wrapper}>
             <BigCalendar
-                events={events.map(event => ({
-                    title: event.name,
-                    start: event.since,
-                    end: event.until,
-                    user: event.user,
-                    items: event.reservationItems.map(item => item.item)
+                events={current_reservations.map(({id, name, since, until}) => ({
+                    id,
+                    title: name,
+                    start: since,
+                    end: until,
                 }))}
-                defaultDate={currentDay}
+                defaultDate={current_day}
                 views={['month']}
-                onNavigate={day => this.dateChanged(new Date(day))}
-                onSelectEvent={event => this.eventSelected(event)}
-                onSelectSlot={slots => this.slotSelected(slots)}
+                onNavigate={this.onNavigate}
+                onSelectEvent={this.onSelectEvent}
+                onSelectSlot={this.onSelectSlot}
                 popup
                 selectable
             />

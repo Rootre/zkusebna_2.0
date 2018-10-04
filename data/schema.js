@@ -14,6 +14,8 @@ type Query {
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
   userById(id: ID!): User
+  topCategories: [Category]
+  calendarReservationsForRange(since: String!, until: String!): [Reservation]
 }
 type Mutation {
   updateItemName(id: ID!, name: String!): Item

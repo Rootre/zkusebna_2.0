@@ -3,12 +3,15 @@ import {inject, observer} from 'mobx-react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
+import Popup from '../Popup';
+import ReservationDetail from '../ReservationDetail';
+import NewReservation from '../NewReservation';
+
 import {getCalendarReservationsForRange, getReservationById} from '../../api/reservation';
 
-import {EVENT_POPUP} from '../../consts/popup';
+import {EVENT_POPUP, NEW_RESERVATION_POPUP} from '../../consts/popup';
 
 import styles from './style.scss';
-import Popup from "../Popup";
 
 // TODO: get rid of this dependency
 BigCalendar.momentLocalizer(moment);
@@ -49,25 +52,34 @@ class Calendar extends Component {
     };
     onSelectSlot = slots => {
         console.log('onSelectSlot', slots);
+        const {reservationStore, visualStore} = this.props;
+
+        reservationStore.setStartDay(slots.start);
+        reservationStore.setEndDay(slots.end);
+        visualStore.setCurrentPopup(NEW_RESERVATION_POPUP);
     };
 
     render() {
         const {
             calendarStore: {current_day},
-            reservationStore: {current_reservations, current_reservation},
+            reservationStore: {
+                current_reservations,
+                current_reservation,
+                end_day,
+                start_day,
+            },
             visualStore,
         } = this.props;
 
         return <div className={styles.wrapper}>
             {visualStore.current_popup === EVENT_POPUP && (
                 <Popup>
-                    <h2>{current_reservation.name}</h2>
-                    <h3>{current_reservation.user.name}</h3>
-                    <ul>
-                        {current_reservation.reservationItems.map(({item: {id, name}}) => (
-                            <li key={id}>{name}</li>
-                        ))}
-                    </ul>
+                    <ReservationDetail reservation={current_reservation}/>
+                </Popup>
+            )}
+            {visualStore.current_popup === NEW_RESERVATION_POPUP && (
+                <Popup>
+                    <NewReservation {...{end_day, start_day}}/>
                 </Popup>
             )}
             <BigCalendar
@@ -89,4 +101,4 @@ class Calendar extends Component {
     }
 }
 
-export default Calendar
+export default Calendar;

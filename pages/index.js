@@ -52,11 +52,6 @@ class Index extends Component {
                 </Head>
                 <DevTools/>
                 <h1 style={{marginTop: 50}}>Vítej!</h1>
-                <ul>
-                    {this.props.reservationStore.current_reservations.map(({id, name}) => (
-                        <li key={id}>{name}</li>
-                    ))}
-                </ul>
 
                 <Calendar />
             </div>

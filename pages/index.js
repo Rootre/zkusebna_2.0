@@ -9,19 +9,23 @@ import {getStore as getCalendarStore} from '../state/calendarStore';
 import {getStore as getCategoryStore} from '../state/categoryStore';
 import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
+import {getStore as getVisualStore} from '../state/visualStore';
 
-import {getCalendarReservationsForRange, getTopCategories} from '../data/api';
+import {getTopCategories} from '../api/category';
+import {getCalendarReservationsForRange} from '../api/reservation';
 
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
 const generalStore = getGeneralStore();
 const reservationStore = getReservationStore();
+const visualStore = getVisualStore();
 
 const stores = {
     calendarStore,
     categoryStore,
     generalStore,
     reservationStore,
+    visualStore,
 };
 
 @inject('categoryStore', 'reservationStore')

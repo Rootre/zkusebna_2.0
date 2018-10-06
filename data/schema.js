@@ -5,9 +5,7 @@ const typeDefs = `
 type Query {
   allItems: [Item]
   allCategories: [Category]
-  structuredCategories: [Category]
   allReservations: [Reservation]
-  reservationsWithinRange(since: String, until: String): [Reservation]
   categoryList: [Category]
   actionById(id: ID!): Action
   categoryById(id: ID!): Category

@@ -1,0 +1,15 @@
+query getReservationByIdQuery($id: ID!) {
+	reservationById(id: $id) {
+		id
+		name
+        user {
+            name
+        }
+        reservationItems {
+            item {
+                id
+                name
+            }
+        }
+	}
+}

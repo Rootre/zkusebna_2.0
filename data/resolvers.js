@@ -12,18 +12,6 @@ const resolvers = {
         allReservations() {
             return Reservation.findAll()
         },
-        reservationsWithinRange(_, args) {
-            return Reservation.findAll({
-                where: {
-                    since: {
-                        [Op.gte]: args.since
-                    },
-                    until: {
-                        [Op.lte]: args.until
-                    },
-                }
-            })
-        },
         actionById(_, args) {
             return Action.findById(args.id)
         },
@@ -38,13 +26,6 @@ const resolvers = {
         },
         userById(_, args) {
             return User.findById(args.id)
-        },
-        structuredCategories() {
-            return Category.findAll({
-                where: {
-                    category_id: null
-                }
-            })
         },
         topCategories() {
             return Category.findAll({
@@ -66,6 +47,7 @@ const resolvers = {
             })
         },
     },
+
     Mutation: {
         updateItemName(_, args) {
             const {id, name} = args
@@ -76,7 +58,6 @@ const resolvers = {
             return Item.update({price}, {where: {id}})
         },
     },
-
     Action: {
         user(action) {
             return User.findById(action.user_id)

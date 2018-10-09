@@ -11,7 +11,7 @@ import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
 import {getStore as getVisualStore} from '../state/visualStore';
 
-import {getTopCategories} from '../api/category';
+import {getAllCategories} from '../api/category';
 import {getCalendarReservationsForRange} from '../api/reservation';
 
 const calendarStore = getCalendarStore();
@@ -34,10 +34,10 @@ class Index extends Component {
     constructor(props) {
         super(props);
 
-        const {categoryStore, reservationStore, calendar_reservations, top_categories} = this.props;
+        const {categories, categoryStore, reservationStore, calendar_reservations} = this.props;
 
-        if (Array.isArray(top_categories)) {
-            categoryStore.setTopCategories(top_categories);
+        if (Array.isArray(categories)) {
+            categoryStore.setCategories(categories);
         }
         if (Array.isArray(calendar_reservations)) {
             reservationStore.setCurrentReservations(calendar_reservations);
@@ -61,13 +61,13 @@ class Index extends Component {
 
 export default class extends Component {
     static async getInitialProps() {
-        const top_categories = await getTopCategories();
+        const categories = await getAllCategories();
         const calendar_reservations = await getCalendarReservationsForRange(
             calendarStore.currentMonthFirstDay.toString(),
             calendarStore.currentMonthLastDay.toString(),
         );
 
-        return {top_categories, calendar_reservations};
+        return {categories, calendar_reservations};
     }
     render() {
         return <Provider {...stores}>

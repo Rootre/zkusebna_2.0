@@ -1,17 +1,44 @@
-import {action, observable} from 'mobx';
+import {action, computed, observable} from 'mobx';
 
 class CategoryStore {
     /**
-     * @type {Object[]} top_categories - top level categories
+     * @type {Object[]} categories - all categories
      * @property {number} top_categories[].id
      * @property {string} top_categories[].name
      */
     @observable.shallow
-    top_categories = [];
+    categories = [];
+
+    /**
+     * @type {Map<level: number, id: number>}
+     */
+    @observable.shallow
+    active_categories = new Map();
+
+    @computed
+    get topCategories() {
+        return this.categories.filter(category => category.category_id === null);
+    }
+    @computed
+    get activeTopCategory() {
+        return this.active_categories.get(0);
+    }
+
+    getCategoriesByParentId(id) {
+        return this.categories.filter(category => category.category_id == id);
+    }
 
     @action
-    setTopCategories(categories) {
-        this.top_categories = categories;
+    setCategories(categories) {
+        this.categories = categories;
+    }
+    @action
+    setActiveCategory(level, id) {
+        this.active_categories.set(level, id);
+    }
+    @action
+    deleteActiveCategory(level) {
+        this.active_categories.delete(level);
     }
 }
 

@@ -1,10 +1,13 @@
-import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors'
-import {Op} from 'sequelize'
+import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors';
+import {Op} from 'sequelize';
 
 const resolvers = {
     Query: {
         actionById(_, {id}) {
             return Action.findById(id);
+        },
+        allCategories() {
+            return Category.findAll();
         },
         calendarReservationsForRange(_, args) {
             return Reservation.findAll({
@@ -18,25 +21,11 @@ const resolvers = {
                 }
             });
         },
-        categoriesByParentId(_, {parent_id: category_id}) {
-            return Category.findAll({
-                where: {
-                    category_id
-                }
-            });
-        },
         itemById(_, {id}) {
             return Item.findById(id);
         },
         reservationById(_, {id}) {
             return Reservation.findById(id);
-        },
-        topCategories() {
-            return Category.findAll({
-                where: {
-                    category_id: null
-                }
-            });
         },
         userById(_, {id}) {
             return User.findById(id);

@@ -4,11 +4,10 @@ import resolvers from './resolvers'
 const typeDefs = `
 type Query {
   actionById(id: ID!): Action
+  allCategories: [Category]
   calendarReservationsForRange(since: String!, until: String!): [Reservation]
-  categoriesByParentId(parent_id: ID!): [Category]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
-  topCategories: [Category]
   userById(id: ID!): User
 }
 type Mutation {
@@ -30,6 +29,7 @@ type Admin {
 type Category {
   id: ID!
   name: String
+  category_id: Int
   parent: Category
   children: [Category]
   items: [Item]

@@ -3,17 +3,13 @@ import resolvers from './resolvers'
 
 const typeDefs = `
 type Query {
-  allItems: [Item]
-  allCategories: [Category]
-  allReservations: [Reservation]
-  categoryList: [Category]
   actionById(id: ID!): Action
-  categoryById(id: ID!): Category
+  calendarReservationsForRange(since: String!, until: String!): [Reservation]
+  categoriesByParentId(parent_id: ID!): [Category]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
-  userById(id: ID!): User
   topCategories: [Category]
-  calendarReservationsForRange(since: String!, until: String!): [Reservation]
+  userById(id: ID!): User
 }
 type Mutation {
   updateItemName(id: ID!, name: String!): Item

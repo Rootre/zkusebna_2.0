@@ -16,12 +16,13 @@
 }
 .popup {
     background-color: #fff;
+    box-sizing: border-box;
     max-height: 100%;
     max-width: 100%;
     overflow: auto;
     padding: 30px;
     position: relative;
-    width: 500px;
+    width: 600px;
     z-index: 1;
 }
 .wrapper {

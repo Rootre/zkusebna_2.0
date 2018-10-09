@@ -1,6 +1,13 @@
 import {client} from '../data/apollo';
 import {NETWORK_STATUS} from '../consts/apollo';
 
+/**
+ * Apollo get query
+ * @param {object} query
+ * @param {GraphQL} query.query
+ * @param {object} query.variables
+ * @returns {Promise<ApolloQueryResult<any> | void>}
+ */
 export async function getQuery(query) {
     return await client.query(query).then(result => {
         if (result.networkStatus !== NETWORK_STATUS.READY) {
@@ -8,9 +15,21 @@ export async function getQuery(query) {
         }
 
         return result;
-    }).catch(err => console.error('Apollo fetch error!', err));
+    }).catch(error => console.error('Apollo fetch error', error));
 }
 
+/**
+ * Apollo get query
+ * @param {object} query
+ * @param {GraphQL} query.mutation
+ * @param {object} query.variables
+ * @returns {Promise<ApolloQueryResult<any> | void>}
+ */
+export async function mutateQuery(query) {
+    return await client
+        .mutate(query)
+        .catch(error => console.error('Apollo failed to update', error));
+}
 
 /*
 import getAllItemsQuery from '../data/queries/getAllItemsQuery.graphql'

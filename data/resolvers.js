@@ -3,36 +3,8 @@ import {Op} from 'sequelize'
 
 const resolvers = {
     Query: {
-        allItems() {
-            return Item.findAll()
-        },
-        allCategories() {
-            return Category.findAll()
-        },
-        allReservations() {
-            return Reservation.findAll()
-        },
-        actionById(_, args) {
-            return Action.findById(args.id)
-        },
-        categoryById(_, args) {
-            return Category.findById(args.id)
-        },
-        itemById(_, args) {
-            return Item.findById(args.id)
-        },
-        reservationById(_, args) {
-            return Reservation.find({where: args})
-        },
-        userById(_, args) {
-            return User.findById(args.id)
-        },
-        topCategories() {
-            return Category.findAll({
-                where: {
-                    category_id: null
-                }
-            })
+        actionById(_, {id}) {
+            return Action.findById(id);
         },
         calendarReservationsForRange(_, args) {
             return Reservation.findAll({
@@ -44,20 +16,42 @@ const resolvers = {
                         [Op.lte]: args.until
                     },
                 }
-            })
+            });
+        },
+        categoriesByParentId(_, {parent_id: category_id}) {
+            return Category.findAll({
+                where: {
+                    category_id
+                }
+            });
+        },
+        itemById(_, {id}) {
+            return Item.findById(id);
+        },
+        reservationById(_, {id}) {
+            return Reservation.findById(id);
+        },
+        topCategories() {
+            return Category.findAll({
+                where: {
+                    category_id: null
+                }
+            });
+        },
+        userById(_, {id}) {
+            return User.findById(id);
         },
     },
-
     Mutation: {
-        updateItemName(_, args) {
-            const {id, name} = args
+        updateItemName(_, {id, name}) {
             return Item.update({name}, {where: {id}})
         },
-        updateItemPrice(_, args) {
-            const {id, price} = args
+        updateItemPrice(_, {id, price}) {
             return Item.update({price}, {where: {id}})
         },
     },
+
+
     Action: {
         user(action) {
             return User.findById(action.user_id)

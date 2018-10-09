@@ -23,5 +23,5 @@ export const client = new ApolloClient({
             credentials: 'same-origin'
         })
     ]),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
 });

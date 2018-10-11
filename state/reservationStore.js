@@ -4,11 +4,13 @@ export class ReservationStore {
     @observable.shallow
     current_reservations = [];
     @observable.shallow
-    discounts = [];
-    @observable.shallow
     current_reservation = {};
-    @observable
-    current_discount_index = 7; // Osobní účel, 97%
+    @observable.shallow
+    reservation = {
+        from: null,
+        items: observable.map(new Map(), {deep: false}),
+        to: null,
+    };
 
     @observable
     start_day = null;
@@ -19,39 +21,58 @@ export class ReservationStore {
     @observable
     end_time = null;
 
+
     @computed
-    get currentDiscount() {
-        return this.discounts[this.current_discount_index];
+    get hasReservationItems() {
+        return this.reservation.items.size > 0;
+    }
+
+    @computed
+    get reservationItems() {
+        return [...this.reservation.items.values()];
+    }
+
+
+    @action
+    deleteReservationItem(id) {
+        this.reservation.items.delete(id);
     }
 
     @action
-    setCurrentDiscountIndex(current_discount_index) {
-        this.current_discount_index = current_discount_index;
+    deleteAllReservationItems() {
+        this.reservation.items.clear();
     }
+
     @action
     setCurrentReservations(reservations) {
         this.current_reservations = reservations;
     }
+
     @action
     setCurrentReservation(reservation) {
         this.current_reservation = reservation;
     }
-    @action
-    setDiscounts(discounts) {
-        this.discounts = discounts;
-    }
+
     @action
     setStartDay(start) {
         this.start_day = new Date(start);
     }
+
     @action
     setEndDay(end) {
         this.end_day = new Date(end);
     }
+
+    @action
+    setReservationItem(id, item) {
+        this.reservation.items.set(id, item);
+    }
+
     @action
     setStartTime(start) {
         this.start_time = new Date(start);
     }
+
     @action
     setEndTime(end) {
         this.end_time = new Date(end);

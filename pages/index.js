@@ -4,9 +4,11 @@ import DevTools from 'mobx-react-devtools';
 import {Provider, inject, observer} from 'mobx-react';
 
 import Calendar from '../components/Calendar';
+import Reservation from '../components/Reservation';
 
 import {getStore as getCalendarStore} from '../state/calendarStore';
 import {getStore as getCategoryStore} from '../state/categoryStore';
+import {getStore as getDiscountStore} from '../state/discountStore';
 import {getStore as getItemStore} from '../state/itemStore';
 import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
@@ -19,6 +21,7 @@ import {getCalendarReservationsForRange} from '../api/reservation';
 
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
+const discountStore = getDiscountStore();
 const itemStore = getItemStore();
 const generalStore = getGeneralStore();
 const reservationStore = getReservationStore();
@@ -27,13 +30,14 @@ const visualStore = getVisualStore();
 const stores = {
     calendarStore,
     categoryStore,
+    discountStore,
     itemStore,
     generalStore,
     reservationStore,
     visualStore,
 };
 
-@inject('categoryStore', 'itemStore', 'reservationStore')
+@inject('categoryStore', 'discountStore', 'itemStore', 'reservationStore')
 @observer
 class Index extends Component {
     constructor(props) {
@@ -43,6 +47,7 @@ class Index extends Component {
             categories,
             categoryStore,
             discounts,
+            discountStore,
             items,
             itemStore,
             reservationStore,
@@ -56,7 +61,7 @@ class Index extends Component {
             reservationStore.setCurrentReservations(calendar_reservations);
         }
         if (Array.isArray(discounts)) {
-            reservationStore.setDiscounts(discounts);
+            discountStore.setDiscounts(discounts);
         }
         if (Array.isArray(items)) {
             itemStore.setItems(items);
@@ -72,6 +77,7 @@ class Index extends Component {
                 <DevTools/>
                 <h1 style={{marginTop: 50}}>Vítej!</h1>
 
+                <Reservation/>
                 <Calendar/>
             </div>
         )

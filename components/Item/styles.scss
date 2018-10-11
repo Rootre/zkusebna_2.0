@@ -4,6 +4,10 @@
     display: flex;
     justify-content: space-between;
     margin: .5em 0;
+
+    &.inCart {
+        text-decoration: line-through;
+    }
 }
 .name {
     font-weight: 400;

@@ -28,17 +28,23 @@ class CategoryStore {
         return this.categories.filter(category => category.category_id == id);
     }
 
+    isCategoryActive(id) {
+        return [...this.active_categories.values()].indexOf(id) >= 0;
+    }
+
+    @action
+    deleteActiveCategory(level) {
+        this.active_categories.delete(level);
+    }
+
     @action
     setCategories(categories) {
         this.categories = categories;
     }
+
     @action
     setActiveCategory(level, id) {
         this.active_categories.set(level, id);
-    }
-    @action
-    deleteActiveCategory(level) {
-        this.active_categories.delete(level);
     }
 }
 

@@ -9,6 +9,12 @@ const resolvers = {
         allCategories() {
             return Category.findAll();
         },
+        allDiscounts() {
+            return Discount.findAll();
+        },
+        allItems() {
+            return Item.findAll();
+        },
         calendarReservationsForRange(_, args) {
             return Reservation.findAll({
                 where: {

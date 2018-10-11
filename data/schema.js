@@ -5,6 +5,8 @@ const typeDefs = `
 type Query {
   actionById(id: ID!): Action
   allCategories: [Category]
+  allDiscounts: [Discount]
+  allItems: [Item]
   calendarReservationsForRange(since: String!, until: String!): [Reservation]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
@@ -48,6 +50,7 @@ type Image {
 type Item {
   id: ID!
   image: Image
+  category_id: Int
   category: Category
   name: String
   price: Int

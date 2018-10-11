@@ -7,15 +7,19 @@ import Calendar from '../components/Calendar';
 
 import {getStore as getCalendarStore} from '../state/calendarStore';
 import {getStore as getCategoryStore} from '../state/categoryStore';
+import {getStore as getItemStore} from '../state/itemStore';
 import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
 import {getStore as getVisualStore} from '../state/visualStore';
 
 import {getAllCategories} from '../api/category';
+import {getAllDiscounts} from '../api/discounts';
+import {getAllItems} from '../api/item';
 import {getCalendarReservationsForRange} from '../api/reservation';
 
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
+const itemStore = getItemStore();
 const generalStore = getGeneralStore();
 const reservationStore = getReservationStore();
 const visualStore = getVisualStore();
@@ -23,24 +27,39 @@ const visualStore = getVisualStore();
 const stores = {
     calendarStore,
     categoryStore,
+    itemStore,
     generalStore,
     reservationStore,
     visualStore,
 };
 
-@inject('categoryStore', 'reservationStore')
+@inject('categoryStore', 'itemStore', 'reservationStore')
 @observer
 class Index extends Component {
     constructor(props) {
         super(props);
 
-        const {categories, categoryStore, reservationStore, calendar_reservations} = this.props;
+        const {
+            categories,
+            categoryStore,
+            discounts,
+            items,
+            itemStore,
+            reservationStore,
+            calendar_reservations,
+        } = this.props;
 
         if (Array.isArray(categories)) {
             categoryStore.setCategories(categories);
         }
         if (Array.isArray(calendar_reservations)) {
             reservationStore.setCurrentReservations(calendar_reservations);
+        }
+        if (Array.isArray(discounts)) {
+            reservationStore.setDiscounts(discounts);
+        }
+        if (Array.isArray(items)) {
+            itemStore.setItems(items);
         }
     }
 
@@ -53,7 +72,7 @@ class Index extends Component {
                 <DevTools/>
                 <h1 style={{marginTop: 50}}>Vítej!</h1>
 
-                <Calendar />
+                <Calendar/>
             </div>
         )
     }
@@ -62,13 +81,21 @@ class Index extends Component {
 export default class extends Component {
     static async getInitialProps() {
         const categories = await getAllCategories();
+        const discounts = await getAllDiscounts();
+        const items = await getAllItems();
         const calendar_reservations = await getCalendarReservationsForRange(
             calendarStore.currentMonthFirstDay.toString(),
             calendarStore.currentMonthLastDay.toString(),
         );
 
-        return {categories, calendar_reservations};
+        return {
+            categories,
+            calendar_reservations,
+            discounts,
+            items,
+        };
     }
+
     render() {
         return <Provider {...stores}>
             <Index {...this.props}/>

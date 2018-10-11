@@ -1,10 +1,14 @@
-import {action, observable} from 'mobx';
+import {action, computed, observable} from 'mobx';
 
 export class ReservationStore {
     @observable.shallow
     current_reservations = [];
     @observable.shallow
+    discounts = [];
+    @observable.shallow
     current_reservation = {};
+    @observable
+    current_discount_index = 7; // Osobní účel, 97%
 
     @observable
     start_day = null;
@@ -15,6 +19,15 @@ export class ReservationStore {
     @observable
     end_time = null;
 
+    @computed
+    get currentDiscount() {
+        return this.discounts[this.current_discount_index];
+    }
+
+    @action
+    setCurrentDiscountIndex(current_discount_index) {
+        this.current_discount_index = current_discount_index;
+    }
     @action
     setCurrentReservations(reservations) {
         this.current_reservations = reservations;
@@ -22,6 +35,10 @@ export class ReservationStore {
     @action
     setCurrentReservation(reservation) {
         this.current_reservation = reservation;
+    }
+    @action
+    setDiscounts(discounts) {
+        this.discounts = discounts;
     }
     @action
     setStartDay(start) {

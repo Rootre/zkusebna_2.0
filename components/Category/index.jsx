@@ -3,13 +3,25 @@ import {computed} from 'mobx';
 import classNames from 'classnames';
 import {inject, observer} from 'mobx-react';
 
+import ItemList from '../ItemList';
 import Subcategories from '../Subcategories';
 
 import styles from './styles.scss';
 
-@inject('categoryStore')
+@inject('categoryStore', 'itemStore')
 @observer
 class Category extends Component {
+
+    @computed
+    get items() {
+        if (!this.isActive) {
+            return [];
+        }
+
+        const {id, itemStore} = this.props;
+
+        return itemStore.getItemsByCategoryId(id);
+    }
 
     @computed
     get subcategories() {
@@ -21,6 +33,7 @@ class Category extends Component {
 
         return categoryStore.getCategoriesByParentId(id);
     }
+
     @computed
     get isActive() {
         const {categoryStore: {active_categories}, id, level} = this.props;
@@ -31,18 +44,22 @@ class Category extends Component {
     handleCategoryClick = async () => {
         const {categoryStore, id, level} = this.props;
 
-        categoryStore.setActiveCategory(level, id);
+        categoryStore.isCategoryActive(id)
+            ? categoryStore.deleteActiveCategory(level)
+            : categoryStore.setActiveCategory(level, id);
     };
 
     render() {
         const {className, level, name} = this.props;
 
         return (
-            <div className={classNames(className, styles.category)} onClick={this.handleCategoryClick}>
-                <span className={classNames({
+            <div className={classNames(className, styles.wrapper)}>
+                <span className={classNames(styles.category, {
                     [styles.active]: this.isActive,
-                })}>{name}</span>
+                    [styles.subcategory]: level > 0,
+                })} onClick={this.handleCategoryClick}>{name}</span>
                 <Subcategories level={level + 1} subcategories={this.subcategories}/>
+                <ItemList items={this.items}/>
             </div>
         );
     }

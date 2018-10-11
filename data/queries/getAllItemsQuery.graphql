@@ -1,0 +1,9 @@
+query getAllItemsQuery {
+	allItems {
+		id
+	    active
+		category_id
+		name
+		price
+	}
+}

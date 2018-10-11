@@ -1,7 +1,15 @@
-.active {
-    font-weight: 700;
-}
 .category {
+    font-size: 1.2em;
     cursor: pointer;
+    margin: .5em 0;
+
+    &.active {
+        font-weight: 700;
+    }
+    &.subcategory {
+        font-size: 1.1em;
+    }
+}
+.wrapper {
     margin: .5em 0;
 }

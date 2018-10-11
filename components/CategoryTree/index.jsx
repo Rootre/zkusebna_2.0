@@ -12,7 +12,7 @@ class CategoryTree extends Component {
         const {categoryStore: {topCategories}} = this.props;
 
         return (
-            <div>
+            <div className={styles.wrapper}>
                 {topCategories.map(category => (
                     <Category key={category.id} level={0} {...category}/>
                 ))}

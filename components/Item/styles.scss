@@ -1,0 +1,14 @@
+.item {
+    clear: both;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin: .5em 0;
+}
+.name {
+    font-weight: 400;
+    margin: 0;
+}
+.price {
+    font-weight: 700;
+}

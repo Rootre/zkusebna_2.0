@@ -1,5 +1,7 @@
 import {Component} from 'react';
 
+import {getDay, getTime, isSameDay} from '../../helpers/dates';
+
 import styles from './styles.scss';
 
 class ReservationDetail extends Component {
@@ -14,11 +16,17 @@ class ReservationDetail extends Component {
             }
         } = this.props;
 
+        const start = new Date(since);
+        const end = new Date(until);
+
         return (
             <div>
                 <h2>{name}</h2>
                 <h3>{user_name}</h3>
-                <p>od: {since.toString()} do: {until.toString()}</p>
+                <p>{isSameDay(start, end)
+                    ? <span>{getDay(start)} {getTime(start)} - {getTime(end)}</span>
+                    : <span>{getDay(start)} {getTime(start)} - {getDay(end)} {getTime(end)}</span>}
+                </p>
                 <ul>
                     {reservationItems.map(({item: {id, name}}) => (
                         <li key={id}>{name}</li>

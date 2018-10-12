@@ -7,24 +7,21 @@ export class ReservationStore {
     current_reservation = {};
     @observable.shallow
     reservation = {
-        from: null,
+        end_day: null,
+        end_time: null,
+        start_day: null,
+        start_time: null,
         items: observable.map(new Map(), {deep: false}),
-        to: null,
     };
-
-    @observable
-    start_day = null;
-    @observable
-    end_day = null;
-    @observable
-    start_time = null;
-    @observable
-    end_time = null;
-
 
     @computed
     get hasReservationItems() {
         return this.reservation.items.size > 0;
+    }
+
+    @computed
+    get isOneDayReservation() {
+        return this.reservation.start_day.getTime() === this.reservation.end_day.getTime();
     }
 
     @computed
@@ -54,28 +51,28 @@ export class ReservationStore {
     }
 
     @action
-    setStartDay(start) {
-        this.start_day = new Date(start);
+    setReservationEndDay(end) {
+        this.reservation.end_day = new Date(end);
     }
 
     @action
-    setEndDay(end) {
-        this.end_day = new Date(end);
+    setReservationEndTime(end) {
+        this.reservation.end_time = new Date(end);
+    }
+
+    @action
+    setReservationStartDay(start) {
+        this.reservation.start_day = new Date(start);
+    }
+
+    @action
+    setReservationStartTime(start) {
+        this.reservation.start_time = new Date(start);
     }
 
     @action
     setReservationItem(id, item) {
         this.reservation.items.set(id, item);
-    }
-
-    @action
-    setStartTime(start) {
-        this.start_time = new Date(start);
-    }
-
-    @action
-    setEndTime(end) {
-        this.end_time = new Date(end);
     }
 }
 

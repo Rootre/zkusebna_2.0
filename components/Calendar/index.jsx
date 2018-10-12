@@ -14,6 +14,7 @@ import {EVENT_POPUP, NEW_RESERVATION_POPUP} from '../../consts/popup';
 import styles from './style.scss';
 
 // TODO: get rid of this dependency
+moment.locale('cs');
 BigCalendar.momentLocalizer(moment);
 
 @inject('calendarStore', 'reservationStore', 'visualStore')
@@ -54,8 +55,8 @@ class Calendar extends Component {
         console.log('onSelectSlot', slots);
         const {reservationStore, visualStore} = this.props;
 
-        reservationStore.setStartDay(slots.start);
-        reservationStore.setEndDay(slots.end);
+        reservationStore.setReservationStartDay(slots.start);
+        reservationStore.setReservationEndDay(slots.end);
         visualStore.setCurrentPopup(NEW_RESERVATION_POPUP);
     };
 
@@ -65,8 +66,6 @@ class Calendar extends Component {
             reservationStore: {
                 current_reservations,
                 current_reservation,
-                end_day,
-                start_day,
             },
             visualStore,
         } = this.props;
@@ -79,7 +78,7 @@ class Calendar extends Component {
             )}
             {visualStore.current_popup === NEW_RESERVATION_POPUP && (
                 <Popup>
-                    <NewReservation {...{end_day, start_day}}/>
+                    <NewReservation/>
                 </Popup>
             )}
             <BigCalendar

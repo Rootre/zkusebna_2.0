@@ -33,7 +33,7 @@
     "mobx-react": "^4.4.3",
     "moment": "^2.22.0",
     "mysql": "^2.15.0",
-    "next": "7.0.1",
+    "next": "^7.0.2",
     "rc-time-picker": "^3.4.0",
     "react": "^16.3.0",
     "react-big-calendar": "^0.19.0",

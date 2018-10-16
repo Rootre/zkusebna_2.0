@@ -9,9 +9,10 @@ export class ReservationStore {
     reservation = {
         end_day: null,
         end_time: null,
+        items: observable.map(new Map(), {deep: false}),
+        name: '',
         start_day: null,
         start_time: null,
-        items: observable.map(new Map(), {deep: false}),
     };
 
     @computed
@@ -61,6 +62,16 @@ export class ReservationStore {
     }
 
     @action
+    setReservationItem(id, item) {
+        this.reservation.items.set(id, item);
+    }
+
+    @action
+    setReservationName(name) {
+        this.reservation.name = name;
+    }
+
+    @action
     setReservationStartDay(start) {
         this.reservation.start_day = new Date(start);
     }
@@ -68,11 +79,6 @@ export class ReservationStore {
     @action
     setReservationStartTime(start) {
         this.reservation.start_time = new Date(start);
-    }
-
-    @action
-    setReservationItem(id, item) {
-        this.reservation.items.set(id, item);
     }
 }
 

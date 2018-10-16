@@ -38,6 +38,10 @@ const resolvers = {
         },
     },
     Mutation: {
+        //TODO
+        createNewReservation(_, args) {
+            return Reservation.create(args);
+        },
         updateItemName(_, {id, name}) {
             return Item.update({name}, {where: {id}})
         },

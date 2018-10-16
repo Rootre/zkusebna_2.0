@@ -11,6 +11,7 @@ export async function getCalendarReservationsForRange(since, until) {
         },
     }).then(result => result.data.calendarReservationsForRange);
 }
+
 export async function getReservationById(id) {
     return await getQuery({
         query: getReservationByIdQuery,

@@ -1,0 +1,5 @@
+mutation createNewReservationMutation($discount_id: ID!) {
+	newReservation(discount_id: $discount_id) {
+		name
+	}
+}

@@ -7,7 +7,7 @@ import {getPriceWithDiscount} from '../../helpers/reservation';
 
 import styles from './styles.scss';
 
-@inject('discountStore', 'reservationStore')
+@inject('discountStore', 'reservationStore', 'userStore')
 @observer
 class Reservation extends Component {
     get priceSummary() {
@@ -17,6 +17,23 @@ class Reservation extends Component {
 
         return getPriceWithDiscount(priceSummary, discountStore.currentDiscount.value)
     }
+
+    createReservation = () => {
+        const {
+            discountStore: {currentDiscount: {id: discountId}},
+            reservationStore: {reservation: {
+                name: reservationName,
+            }, reservationItems},
+            userStore: {
+                name,
+                email,
+                phone,
+            },
+        } = this.props;
+        console.log('discount_id:', discountId);
+        console.log('user:', name, email, phone);
+        console.log('reservation:', reservationName, reservationItems);
+    };
 
     handleDeleteClick = () => {
         const {reservationStore} = this.props;
@@ -44,6 +61,7 @@ class Reservation extends Component {
                         <span className={styles.delete} onClick={this.handleDeleteClick}>&times;</span>
                     </span>
                 </p>
+                <button onClick={this.createReservation}>Rezervovat</button>
             </div>
         )
     }

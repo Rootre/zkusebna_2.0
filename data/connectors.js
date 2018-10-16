@@ -1,8 +1,8 @@
-import Sequelize from 'sequelize'
+import Sequelize from 'sequelize';
 
 const db = new Sequelize('zkusebna', 'root', '', {
 	dialect: 'mysql',
-})
+});
 
 const ReservationModel = db.define('reservation', {
 	approved: { type: Sequelize.BOOLEAN},

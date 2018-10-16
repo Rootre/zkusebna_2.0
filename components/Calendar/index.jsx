@@ -51,13 +51,19 @@ class Calendar extends Component {
             console.error(e.message);
         }
     };
-    onSelectSlot = slots => {
+    onSelectSlot = async slots => {
         console.log('onSelectSlot', slots);
         const {reservationStore, visualStore} = this.props;
 
         reservationStore.setReservationStartDay(slots.start);
         reservationStore.setReservationEndDay(slots.end);
         visualStore.setCurrentPopup(NEW_RESERVATION_POPUP);
+
+        try {
+            //const foo = await
+        } catch (e) {
+
+        }
     };
 
     render() {

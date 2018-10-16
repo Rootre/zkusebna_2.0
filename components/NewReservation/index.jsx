@@ -4,6 +4,7 @@ import {inject, observer} from 'mobx-react';
 import CategoryTree from '../CategoryTree';
 import Discount from '../Discount';
 import TimePicker from '../TimePicker';
+import UserForm from '../UserForm';
 
 import {getDay} from '../../helpers/dates';
 
@@ -43,7 +44,7 @@ class NewReservation extends Component {
                     <TimePicker
                         day={start_day}
                         onChange={this.handleStartTimeChange}/>
-                    -
+                    <span> - </span>
                     <TimePicker
                         day={end_day}
                         onChange={this.handleEndTimeChange}
@@ -51,6 +52,8 @@ class NewReservation extends Component {
                 </p>
                 <h3>Sleva</h3>
                 <Discount/>
+                <h3>Informace</h3>
+                <UserForm/>
                 <h3>Položky</h3>
                 <div className={styles.categories}>
                     <CategoryTree/>

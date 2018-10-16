@@ -12,6 +12,7 @@ import {getStore as getDiscountStore} from '../state/discountStore';
 import {getStore as getItemStore} from '../state/itemStore';
 import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
+import {getStore as getUserStore} from '../state/userStore';
 import {getStore as getVisualStore} from '../state/visualStore';
 
 import {getAllCategories} from '../api/category';
@@ -25,6 +26,7 @@ const discountStore = getDiscountStore();
 const itemStore = getItemStore();
 const generalStore = getGeneralStore();
 const reservationStore = getReservationStore();
+const userStore = getUserStore();
 const visualStore = getVisualStore();
 
 const stores = {
@@ -34,6 +36,7 @@ const stores = {
     itemStore,
     generalStore,
     reservationStore,
+    userStore,
     visualStore,
 };
 

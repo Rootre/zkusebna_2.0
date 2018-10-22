@@ -14,6 +14,7 @@ type Query {
   userById(id: ID!): User
 }
 type Mutation {
+  createNewReservation(name: String!, since: String!, until: String!, price: Int!): Reservation
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
 }

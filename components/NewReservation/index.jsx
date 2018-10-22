@@ -1,12 +1,12 @@
 import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
+import moment from 'moment';
 
 import CategoryTree from '../CategoryTree';
 import Discount from '../Discount';
+import ReservationDate from '../ReservationDate';
 import TimePicker from '../TimePicker';
 import UserForm from '../UserForm';
-
-import {getDay} from '../../helpers/dates';
 
 import styles from './styles.scss';
 
@@ -15,38 +15,45 @@ import styles from './styles.scss';
 class NewReservation extends Component {
     handleStartTimeChange = value => {
         const {reservationStore} = this.props;
+        const {reservation: {start}} = reservationStore;
 
-        reservationStore.setReservationStartTime(value.format('HH:mm'));
+        const change = moment(start);
+        change.hour(value.hour());
+        change.minute(value.minute());
+
+        reservationStore.setReservationStart(change);
     };
 
     handleEndTimeChange = value => {
         const {reservationStore} = this.props;
+        const {reservation: {end}} = reservationStore;
 
-        reservationStore.setReservationEndTime(value.format('HH:mm'));
+        const change = moment(end);
+        change.hour(value.hour());
+        change.minute(value.minute());
+
+        reservationStore.setReservationEnd(change);
     };
 
     render() {
-        const {reservationStore: {isOneDayReservation, reservation: {end_day, start_day}}} = this.props;
+        const {reservationStore: {reservation: {end, start}}} = this.props;
 
         return (
             <div className={styles.wrapper}>
                 <h2>
                     <span>Nová rezervace</span>&nbsp;
                     <small className={styles.date}>
-                        ({isOneDayReservation
-                        ? getDay(start_day)
-                        : <span>{getDay(start_day)} - {getDay(end_day)}</span>
-                    })
+                        (<ReservationDate start={start} end={end}/>)
                     </small>
                 </h2>
                 <h3>Čas</h3>
                 <p>
                     <TimePicker
-                        day={start_day}
+                        day={start}
                         onChange={this.handleStartTimeChange}/>
                     <span> - </span>
                     <TimePicker
-                        day={end_day}
+                        day={end}
                         onChange={this.handleEndTimeChange}
                     />
                 </p>

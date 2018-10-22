@@ -1,8 +1,18 @@
-export function getDay(date) {
+export function getDayFromMoment(date) {
+    return date.format('D.M.');
+}
+export function getTimeFromMoment(date) {
+    return date.format('HH:mm');
+}
+export function isSameDayFromMoment(date1, date2) {
+    return date1.isSame(date2, 'days');
+}
+
+export function getDayFromDate(date) {
     return `${date.getDate()}. ${date.getMonth() + 1}.`;
 }
 
-export function getTime(date) {
+export function getTimeFromDate(date) {
     return `${date.getHours()}:${date.getMinutes() < 10 ? 0 : ''}${date.getMinutes()}`;
 }
 

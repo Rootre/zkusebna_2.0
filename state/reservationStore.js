@@ -1,5 +1,7 @@
 import {action, computed, observable} from 'mobx';
 
+import {isSameDayFromMoment} from '../helpers/dates';
+
 export class ReservationStore {
     @observable.shallow
     current_reservations = [];
@@ -7,12 +9,10 @@ export class ReservationStore {
     current_reservation = {};
     @observable.shallow
     reservation = {
-        end_day: null,
-        end_time: null,
+        end: observable(null),
         items: observable.map(new Map(), {deep: false}),
         name: '',
-        start_day: null,
-        start_time: null,
+        start: observable(null),
     };
 
     @computed
@@ -22,7 +22,7 @@ export class ReservationStore {
 
     @computed
     get isOneDayReservation() {
-        return this.reservation.start_day.getTime() === this.reservation.end_day.getTime();
+        return isSameDayFromMoment(this.reservation.start, this.reservation.end);
     }
 
     @computed
@@ -51,14 +51,12 @@ export class ReservationStore {
         this.current_reservation = reservation;
     }
 
+    /**
+     * @param {moment} end
+     */
     @action
-    setReservationEndDay(end) {
-        this.reservation.end_day = new Date(end);
-    }
-
-    @action
-    setReservationEndTime(end) {
-        this.reservation.end_time = new Date(end);
+    setReservationEnd(end) {
+        this.reservation.end = end;
     }
 
     @action
@@ -71,14 +69,12 @@ export class ReservationStore {
         this.reservation.name = name;
     }
 
+    /**
+     * @param {moment} start
+     */
     @action
-    setReservationStartDay(start) {
-        this.reservation.start_day = new Date(start);
-    }
-
-    @action
-    setReservationStartTime(start) {
-        this.reservation.start_time = new Date(start);
+    setReservationStart(start) {
+        this.reservation.start = start;
     }
 }
 

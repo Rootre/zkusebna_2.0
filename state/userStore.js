@@ -1,12 +1,17 @@
-import {action, observable} from 'mobx';
+import {action, computed, observable} from 'mobx';
 
 export class UserStore {
     @observable
-    name = '';
+    name = 'Lama Su';
     @observable
-    phone = '';
+    phone = '123123123';
     @observable
-    email = '';
+    email = 'lama@su.email';
+
+    @computed
+    get hasFilledCredentials() {
+        return this.name && this.phone && this.email;
+    }
 
     @action
     setEmail(email) {

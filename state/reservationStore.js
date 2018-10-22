@@ -21,6 +21,11 @@ export class ReservationStore {
     }
 
     @computed
+    get hasFilledTimeAndName() {
+        return this.reservation.name && this.reservation.end.hour() > 0 && this.reservation.start.hour() > 0;
+    }
+
+    @computed
     get isOneDayReservation() {
         return isSameDayFromMoment(this.reservation.start, this.reservation.end);
     }

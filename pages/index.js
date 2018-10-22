@@ -40,6 +40,8 @@ const stores = {
     visualStore,
 };
 
+import '../static/sass/global.scss';
+
 @inject('categoryStore', 'discountStore', 'itemStore', 'reservationStore')
 @observer
 class Index extends Component {

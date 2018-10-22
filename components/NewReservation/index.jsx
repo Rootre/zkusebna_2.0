@@ -1,7 +1,9 @@
 import {Component} from 'react';
+import {computed} from 'mobx';
 import {inject, observer} from 'mobx-react';
 import moment from 'moment';
 
+import Button from '../Button';
 import CategoryTree from '../CategoryTree';
 import Discount from '../Discount';
 import ReservationDate from '../ReservationDate';
@@ -10,9 +12,20 @@ import UserForm from '../UserForm';
 
 import styles from './styles.scss';
 
-@inject('categoryStore', 'reservationStore')
+@inject('categoryStore', 'reservationStore', 'userStore', 'visualStore')
 @observer
 class NewReservation extends Component {
+    @computed
+    get canOrder() {
+        const {reservationStore, userStore} = this.props;
+
+        return reservationStore.hasFilledTimeAndName && userStore.hasFilledCredentials;
+    }
+
+    handleSelectItemsClick = () => {
+        this.props.visualStore.setShowOrderItems(true);
+    };
+
     handleStartTimeChange = value => {
         const {reservationStore} = this.props;
         const {reservation: {start}} = reservationStore;
@@ -36,7 +49,10 @@ class NewReservation extends Component {
     };
 
     render() {
-        const {reservationStore: {reservation: {end, start}}} = this.props;
+        const {
+            reservationStore: {reservation: {end, start}},
+            visualStore: {show_order_items}
+        } = this.props;
 
         return (
             <div className={styles.wrapper}>
@@ -61,10 +77,19 @@ class NewReservation extends Component {
                 <Discount/>
                 <h3>Informace</h3>
                 <UserForm/>
-                <h3>Položky</h3>
-                <div className={styles.categories}>
-                    <CategoryTree/>
-                </div>
+                {(!this.canOrder || !show_order_items) && (
+                    <p className={styles.button}>
+                        <Button disabled={!this.canOrder} label={'Vybrat položky'} onClick={this.handleSelectItemsClick}/>
+                    </p>
+                )}
+                {this.canOrder && show_order_items && (
+                    <div>
+                        <h3>Položky</h3>
+                        <div className={styles.categories}>
+                            <CategoryTree/>
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }

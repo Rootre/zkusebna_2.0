@@ -1,57 +1,22 @@
 import {Component} from 'react';
-import {computed} from 'mobx';
 import {inject, observer} from 'mobx-react';
-import moment from 'moment';
 
-import Button from '../Button';
-import CategoryTree from '../CategoryTree';
-import Discount from '../Discount';
 import ReservationDate from '../ReservationDate';
-import TimePicker from '../TimePicker';
-import UserForm from '../UserForm';
+import ReservationStep1 from '../ReservationStep1';
+import ReservationStep2 from '../ReservationStep2';
+import ReservationStep3 from '../ReservationStep3';
 
 import styles from './styles.scss';
 
 @inject('categoryStore', 'reservationStore', 'userStore', 'visualStore')
 @observer
 class NewReservation extends Component {
-    @computed
-    get canOrder() {
-        const {reservationStore, userStore} = this.props;
-
-        return reservationStore.hasFilledTimeAndName && userStore.hasFilledCredentials;
-    }
-
-    handleSelectItemsClick = () => {
-        this.props.visualStore.setShowOrderItems(true);
-    };
-
-    handleStartTimeChange = value => {
-        const {reservationStore} = this.props;
-        const {reservation: {start}} = reservationStore;
-
-        const change = moment(start);
-        change.hour(value.hour());
-        change.minute(value.minute());
-
-        reservationStore.setReservationStart(change);
-    };
-
-    handleEndTimeChange = value => {
-        const {reservationStore} = this.props;
-        const {reservation: {end}} = reservationStore;
-
-        const change = moment(end);
-        change.hour(value.hour());
-        change.minute(value.minute());
-
-        reservationStore.setReservationEnd(change);
-    };
-
     render() {
         const {
-            reservationStore: {reservation: {end, start}},
-            visualStore: {show_order_items}
+            reservationStore: {
+                reservation: {end, start},
+                reservation_step,
+            },
         } = this.props;
 
         return (
@@ -62,34 +27,9 @@ class NewReservation extends Component {
                         (<ReservationDate start={start} end={end}/>)
                     </small>
                 </h2>
-                <h3>Čas</h3>
-                <p>
-                    <TimePicker
-                        day={start}
-                        onChange={this.handleStartTimeChange}/>
-                    <span> - </span>
-                    <TimePicker
-                        day={end}
-                        onChange={this.handleEndTimeChange}
-                    />
-                </p>
-                <h3>Sleva</h3>
-                <Discount/>
-                <h3>Informace</h3>
-                <UserForm/>
-                {(!this.canOrder || !show_order_items) && (
-                    <p className={styles.button}>
-                        <Button disabled={!this.canOrder} label={'Vybrat položky'} onClick={this.handleSelectItemsClick}/>
-                    </p>
-                )}
-                {this.canOrder && show_order_items && (
-                    <div>
-                        <h3>Položky</h3>
-                        <div className={styles.categories}>
-                            <CategoryTree/>
-                        </div>
-                    </div>
-                )}
+                {reservation_step === 1 && <ReservationStep1/>}
+                {reservation_step === 2 && <ReservationStep2/>}
+                {reservation_step === 3 && <ReservationStep3/>}
             </div>
         )
     }

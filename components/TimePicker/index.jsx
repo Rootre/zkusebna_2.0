@@ -32,7 +32,6 @@ class TimePicker extends Component {
             disabledHours={this.getDisabledHours}
             disabledMinutes={this.getDisabledMinutes}
             minuteStep={15}
-            showSecond={false}
             {...this.props}
         />;
     }

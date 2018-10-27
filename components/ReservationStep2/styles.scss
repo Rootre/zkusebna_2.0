@@ -1,0 +1,11 @@
+.button {
+    text-align: center;
+}
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+
+    & > div {
+        flex-grow: 1;
+    }
+}

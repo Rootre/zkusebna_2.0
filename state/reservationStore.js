@@ -9,11 +9,13 @@ export class ReservationStore {
     current_reservation = {};
     @observable.shallow
     reservation = {
-        end: observable(null),
+        end: null,
         items: observable.map(new Map(), {deep: false}),
-        name: '',
-        start: observable(null),
+        name: 'Testovací',
+        start: null,
     };
+    @observable
+    reservation_step = 1;
 
     @computed
     get hasReservationItems() {
@@ -21,13 +23,13 @@ export class ReservationStore {
     }
 
     @computed
-    get hasFilledTimeAndName() {
-        return this.reservation.name && this.reservation.end.hour() > 0 && this.reservation.start.hour() > 0;
+    get isOneDayReservation() {
+        return isSameDayFromMoment(this.reservation.start, this.reservation.end);
     }
 
     @computed
-    get isOneDayReservation() {
-        return isSameDayFromMoment(this.reservation.start, this.reservation.end);
+    get priceSummary() {
+        return this.reservationItems.reduce((accumulator, item) => accumulator + item.price, 0);
     }
 
     @computed
@@ -54,6 +56,21 @@ export class ReservationStore {
     @action
     setCurrentReservation(reservation) {
         this.current_reservation = reservation;
+    }
+
+    @action
+    setReservationStep(step) {
+        this.reservation_step = step;
+    }
+
+    @action
+    setNextStep() {
+        this.setReservationStep(this.reservation_step + 1);
+    }
+
+    @action
+    setPrevStep() {
+        this.setReservationStep(this.reservation_step - 1);
     }
 
     /**

@@ -1,3 +1,6 @@
+export function getDatabseTimeFromMoment(date) {
+    return date.format('YYYY-MM-DD HH:mm:ss');
+}
 export function getDayFromMoment(date) {
     return date.format('D.M.');
 }

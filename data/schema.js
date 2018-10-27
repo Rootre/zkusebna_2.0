@@ -14,7 +14,8 @@ type Query {
   userById(id: ID!): User
 }
 type Mutation {
-  createNewReservation(name: String!, since: String!, until: String!, price: Int!): Reservation
+  createNewReservation(discount_id: ID!, name: String!, price: Int!, since: String!, until: String!, user_id: ID!): Reservation
+  createNewUser(name: String!, phone: String!, email: String!): User
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
 }
@@ -61,7 +62,9 @@ type Item {
 type Reservation {
   id: ID!
   discount: Discount
+  discount_id: ID
   user: User
+  user_id: ID
   approved: Boolean
   archived: Boolean
   since: String

@@ -1,5 +1,5 @@
-mutation createNewReservationMutation($discount_id: ID!) {
-	newReservation(discount_id: $discount_id) {
-		name
+mutation createNewReservationMutation($discount_id: ID!, $name: String!, $price: Int!, $since: String!, $until: String!, $user_id: ID!) {
+	createNewReservation(discount_id: $discount_id, name: $name, price: $price, since: $since, until: $until, user_id: $user_id) {
+		id
 	}
 }

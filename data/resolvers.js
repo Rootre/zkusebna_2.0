@@ -38,7 +38,6 @@ const resolvers = {
         },
     },
     Mutation: {
-        //TODO
         createNewReservation(_, args) {
             return Reservation.create(args);
         },

@@ -3,3 +3,9 @@ mutation createNewReservationMutation($discount_id: ID!, $name: String!, $price:
 		id
 	}
 }
+
+mutation createReservationItemsMutation($items: [ReservationItemInput!]!) {
+    createReservationItems(items: $items) {
+        item_id
+    }
+}

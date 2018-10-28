@@ -15,9 +15,15 @@ type Query {
 }
 type Mutation {
   createNewReservation(discount_id: ID!, name: String!, price: Int!, since: String!, until: String!, user_id: ID!): Reservation
+  createReservationItems(items: [ReservationItemInput!]!): [ReservationItem]
   createNewUser(name: String!, phone: String!, email: String!): User
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
+}
+
+input ReservationItemInput {
+  item_id: ID
+  reservation_id: ID    
 }
 
 type Action {
@@ -75,7 +81,8 @@ type Reservation {
   reservationItems: [ReservationItem]
 }
 type ReservationItem {
-  id: ID!
+  id: ID
+  item_id: ID
   item: Item
   reservation: Reservation
 }

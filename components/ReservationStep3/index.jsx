@@ -4,13 +4,13 @@ import {inject, observer} from 'mobx-react';
 import Button from '../Button';
 import CategoryTree from '../CategoryTree';
 
-import {createNewReservation} from '../../api/reservation';
+import {createNewReservation, createReservationItems} from '../../api/reservation';
 import {getDatabseTimeFromMoment} from '../../helpers/dates';
 
 import styles from './styles.scss';
 import {getPriceWithDiscount} from "../../helpers/reservation";
 
-@inject('discountStore', 'reservationStore')
+@inject('discountStore', 'reservationStore', 'visualStore')
 @observer
 class ReservationStep3 extends Component {
     handleButtonReserveClick = async () => {
@@ -24,7 +24,8 @@ class ReservationStep3 extends Component {
                     end,
                     name,
                     start,
-                }
+                },
+                reservationItems,
             }
         } = this.props;
 
@@ -38,9 +39,23 @@ class ReservationStep3 extends Component {
         };
 
         try {
-            const new_reservation_id = await createNewReservation(variables);
+            const new_reservation = await createNewReservation(variables);
 
-            console.log('new_reservation_id', new_reservation_id);
+            const items = reservationItems.map(item => ({
+                item_id: item.id,
+                reservation_id: new_reservation.id,
+            }));
+
+            await createReservationItems(items);
+
+            this.props.reservationStore.addCurrentReservation({
+                id: new_reservation.id,
+                name: variables.name,
+                since: variables.since,
+                until: variables.until,
+            });
+            this.props.reservationStore.resetReservation();
+            this.props.visualStore.deleteCurrentPopup();
         } catch (e) {
             console.error(e.message);
         }

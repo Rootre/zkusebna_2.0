@@ -15,14 +15,14 @@ const resolvers = {
         allItems() {
             return Item.findAll();
         },
-        calendarReservationsForRange(_, args) {
+        calendarReservationsForRange(_, {since, until}) {
             return Reservation.findAll({
                 where: {
                     since: {
-                        [Op.gte]: args.since
+                        [Op.gte]: since
                     },
                     until: {
-                        [Op.lte]: args.until
+                        [Op.lte]: until
                     },
                 }
             });
@@ -40,6 +40,9 @@ const resolvers = {
     Mutation: {
         createNewReservation(_, args) {
             return Reservation.create(args);
+        },
+        createReservationItems(_, {items}) {
+            return ReservationItem.bulkCreate(items);
         },
         updateItemName(_, {id, name}) {
             return Item.update({name}, {where: {id}})

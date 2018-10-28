@@ -39,6 +39,11 @@ export class ReservationStore {
 
 
     @action
+    addCurrentReservation(reservation) {
+        this.current_reservations.push(reservation);
+    }
+
+    @action
     deleteReservationItem(id) {
         this.reservation.items.delete(id);
     }
@@ -46,6 +51,11 @@ export class ReservationStore {
     @action
     deleteAllReservationItems() {
         this.reservation.items.clear();
+    }
+
+    @action
+    resetReservation() {
+        this.deleteAllReservationItems();
     }
 
     @action

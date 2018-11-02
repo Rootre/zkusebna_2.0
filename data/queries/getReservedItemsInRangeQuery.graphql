@@ -1,0 +1,7 @@
+query getReservedItemsInRangeQuery($since: String!, $until: String!) {
+	reservationsInRange(since: $since, until: $until) {
+	    reservationItems {
+	        item_id
+        }
+	}
+}

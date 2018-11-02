@@ -1,0 +1,8 @@
+query getCalendarReservationsInRangeQuery($since: String!, $until: String!) {
+	reservationsInRange(since: $since, until: $until) {
+		id
+		name
+		since
+        until
+	}
+}

@@ -29,6 +29,7 @@ module.exports = withSass({
         );
 
         Object.assign(config.resolve.alias, {
+            Api: path.resolve(__dirname, 'api'),
             Data: path.resolve(__dirname, 'data'),
             Helpers: path.resolve(__dirname, 'helpers'),
             Components: path.resolve(__dirname, 'components'),

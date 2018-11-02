@@ -1,6 +1,7 @@
 import {createNewReservationMutation, createReservationItemsMutation} from '../data/queries/createNewReservationMutation.graphql';
-import {getCalendarReservationsForRangeQuery} from '../data/queries/getCalendarReservationsForRangeQuery.graphql';
+import {getCalendarReservationsInRangeQuery} from '../data/queries/getCalendarReservationsInRangeQuery.graphql';
 import {getReservationByIdQuery} from '../data/queries/getReservationByIdQuery.graphql';
+import {getReservedItemsInRangeQuery} from '../data/queries/getReservedItemsInRangeQuery.graphql';
 import {getQuery, mutateQuery} from './api';
 
 /**
@@ -11,7 +12,7 @@ import {getQuery, mutateQuery} from './api';
  * @param {string} variables.since
  * @param {string} variables.until
  * @param {number} variables.user_id
- * @returns {Promise<resolvers.Query.calendarReservationsForRange>}
+ * @returns {Promise<resolvers.Mutation.createNewReservation>}
  */
 export function createNewReservation(variables) {
     return mutateQuery({
@@ -38,16 +39,31 @@ export function createReservationItems(items) {
 /**
  * @param {string} since
  * @param {string} until
- * @returns {Promise<resolvers.Query.calendarReservationsForRange>}
+ * @returns {Promise<resolvers.Query.reservationsInRange>}
  */
 export function getCalendarReservationsForRange(since, until) {
     return getQuery({
-        query: getCalendarReservationsForRangeQuery,
+        query: getCalendarReservationsInRangeQuery,
         variables: {
             since,
             until,
         },
-    }).then(result => result.data.calendarReservationsForRange);
+    }).then(result => result.data.reservationsInRange);
+}
+
+/**
+ * @param {string} since
+ * @param {string} until
+ * @returns {Promise<resolvers.Query.reservationsInRange>}
+ */
+export function getReservedItemsForRange(since, until) {
+    return getQuery({
+        query: getReservedItemsInRangeQuery,
+        variables: {
+            since,
+            until,
+        },
+    }).then(result => result.data.reservationsInRange);
 }
 
 /**

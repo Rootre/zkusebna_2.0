@@ -15,15 +15,23 @@ const resolvers = {
         allItems() {
             return Item.findAll();
         },
-        calendarReservationsForRange(_, {since, until}) {
+        reservationsInRange(_, {since, until}) {
             return Reservation.findAll({
                 where: {
-                    since: {
-                        [Op.gte]: since
-                    },
-                    until: {
-                        [Op.lte]: until
-                    },
+                    [Op.or]: [
+                        {
+                            since: {
+                                [Op.gt]: since,
+                                [Op.lt]: until,
+                            },
+                        },
+                        {
+                            until: {
+                                [Op.gt]: since,
+                                [Op.lt]: until,
+                            },
+                        },
+                    ]
                 }
             });
         },

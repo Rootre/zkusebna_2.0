@@ -1,8 +1,0 @@
-query getReservedItemsForRangeQuery($since: String!, $until: String!) {
-	reservedItemsForRange(since: $since, until: $until) {
-		id
-		name
-		since
-        until
-	}
-}

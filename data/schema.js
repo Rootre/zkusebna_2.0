@@ -7,10 +7,9 @@ type Query {
   allCategories: [Category]
   allDiscounts: [Discount]
   allItems: [Item]
-  calendarReservationsForRange(since: String!, until: String!): [Reservation]
+  reservationsInRange(since: String!, until: String!): [Reservation]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
-  reservedItemsForRange(since: String!, until: String!): [Item]
   userById(id: ID!): User
 }
 type Mutation {

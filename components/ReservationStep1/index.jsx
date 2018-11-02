@@ -6,6 +6,8 @@ import moment from 'moment';
 import Button from '../Button';
 import TimePicker from '../TimePicker';
 
+import {getReservedItemsForRange} from 'Api/reservation';
+
 import {END_DATE, START_DATE} from '../../consts/forms';
 import {isTimeEmptyFromMoment} from '../../helpers/dates';
 import {validate} from '../../helpers/forms';
@@ -15,7 +17,7 @@ import styles from './styles.scss';
 @inject('formStore', 'reservationStore')
 @observer
 class ReservationStep1 extends Component {
-    handleButtonClick = () => {
+    handleButtonClick = async () => {
         const {reservationStore} = this.props;
         const {reservation: {end, start}} = reservationStore;
 
@@ -24,6 +26,10 @@ class ReservationStep1 extends Component {
         }
 
         reservationStore.setNextStep();
+
+        const reserved_items = await getReservedItemsForRange(start.toString(), end.toString());
+
+        console.log(reserved_items);
     };
 
     handleStartTimeChange = value => {

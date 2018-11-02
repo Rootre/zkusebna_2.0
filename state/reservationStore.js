@@ -3,13 +3,26 @@ import {action, computed, observable} from 'mobx';
 import {isSameDayFromMoment} from '../helpers/dates';
 
 export class ReservationStore {
+    /**
+     * calendar reservations
+     * @type {object[]}
+     */
     @observable.shallow
     current_reservations = [];
+    /**
+     * calendar detail reservation
+     * @type {{}}
+     */
     @observable.shallow
     current_reservation = {};
+    /**
+     * user created reservation
+     * @type {{end: null, excluded_items: IObservableArray<int>, items: ObservableMap<any>, name: string, start: null}}
+     */
     @observable.shallow
     reservation = {
         end: null,
+        excluded_items: observable.array([], {deep: false}),
         items: observable.map(new Map(), {deep: false}),
         name: 'Testovací',
         start: null,

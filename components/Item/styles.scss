@@ -8,6 +8,11 @@
     &.inCart {
         text-decoration: line-through;
     }
+    &.reserved {
+        cursor: default;
+        color: #ccc;
+        text-decoration: line-through;
+    }
 }
 .name {
     font-weight: 400;

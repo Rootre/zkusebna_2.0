@@ -2,6 +2,7 @@ import Sequelize from 'sequelize';
 
 const db = new Sequelize('zkusebna', 'root', '', {
 	dialect: 'mysql',
+    timezone: '+01:00',
 });
 
 const ReservationModel = db.define('reservation', {

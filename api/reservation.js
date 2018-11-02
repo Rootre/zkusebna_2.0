@@ -41,7 +41,7 @@ export function createReservationItems(items) {
  * @param {string} until
  * @returns {Promise<resolvers.Query.reservationsInRange>}
  */
-export function getCalendarReservationsForRange(since, until) {
+export function getCalendarReservationsInRange(since, until) {
     return getQuery({
         query: getCalendarReservationsInRangeQuery,
         variables: {

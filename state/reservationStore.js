@@ -17,12 +17,12 @@ export class ReservationStore {
     current_reservation = {};
     /**
      * user created reservation
-     * @type {{end: null, excluded_items: IObservableArray<int>, items: ObservableMap<any>, name: string, start: null}}
+     * @type {{end: null, excluded_items: ObservableMap<any>, items: ObservableMap<any>, name: string, start: null}}
      */
     @observable.shallow
     reservation = {
         end: null,
-        excluded_items: observable.array([], {deep: false}),
+        excluded_items: observable.map([], {deep: false}),
         items: observable.map(new Map(), {deep: false}),
         name: 'Testovací',
         start: null,
@@ -50,6 +50,14 @@ export class ReservationStore {
         return [...this.reservation.items.values()];
     }
 
+    @computed
+    get reservationExcludedItems() {
+        return [...this.reservation.excluded_items.values()];
+    }
+
+    hasReservationExcludedItem(item_id) {
+        return this.reservation.excluded_items.has(item_id);
+    }
 
     @action
     addCurrentReservation(reservation) {
@@ -64,6 +72,11 @@ export class ReservationStore {
     @action
     deleteAllReservationItems() {
         this.reservation.items.clear();
+    }
+
+    @action
+    deleteAllExcludedReservationItems() {
+        this.reservation.excluded_items.clear();
     }
 
     @action
@@ -102,6 +115,11 @@ export class ReservationStore {
     @action
     setReservationEnd(end) {
         this.reservation.end = end;
+    }
+
+    @action
+    setReservationExcludedItem(item_id) {
+        this.reservation.excluded_items.set(item_id, true);
     }
 
     @action

@@ -18,7 +18,7 @@ import {getStore as getVisualStore} from '../state/visualStore';
 import {getAllCategories} from '../api/category';
 import {getAllDiscounts} from '../api/discounts';
 import {getAllItems} from '../api/item';
-import {getCalendarReservationsForRange} from '../api/reservation';
+import {getCalendarReservationsInRange} from '../api/reservation';
 
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
@@ -95,7 +95,7 @@ export default class extends Component {
         const categories = await getAllCategories();
         const discounts = await getAllDiscounts();
         const items = await getAllItems();
-        const calendar_reservations = await getCalendarReservationsForRange(
+        const calendar_reservations = await getCalendarReservationsInRange(
             calendarStore.currentMonthFirstDay.toString(),
             calendarStore.currentMonthLastDay.toString(),
         );

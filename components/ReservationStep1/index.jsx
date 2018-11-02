@@ -27,9 +27,17 @@ class ReservationStep1 extends Component {
 
         reservationStore.setNextStep();
 
-        const reserved_items = await getReservedItemsForRange(start.toString(), end.toString());
+        try {
+            const reserved_items = await getReservedItemsForRange(start.toString(), end.toString());
 
-        console.log(reserved_items);
+            if (Array.isArray(reserved_items)) {
+                reserved_items.forEach(({reservationItems}) => {
+                    reservationItems.forEach(({item_id}) => reservationStore.setReservationExcludedItem(item_id));
+                });
+            }
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     handleStartTimeChange = value => {

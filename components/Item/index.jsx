@@ -26,17 +26,22 @@ class Item extends Component {
     handleItemClick = async e => {
         const {reservationStore, item} = this.props;
 
+        if (reservationStore.hasReservationExcludedItem(item.id)) {
+            return;
+        }
+
         this.isInCart
             ? reservationStore.deleteReservationItem(item.id)
             : reservationStore.setReservationItem(item.id, item);
     };
 
     render() {
-        const {item: {name}} = this.props;
+        const {item: {id, name}, reservationStore} = this.props;
 
         return (
             <div className={classNames(styles.item, {
                 [styles.inCart]: this.isInCart,
+                [styles.reserved]: reservationStore.hasReservationExcludedItem(id),
             })} onClick={this.handleItemClick}>
                 <h4 className={styles.name}>{name}</h4>
                 <strong className={styles.price}>{this.actualPrice},-</strong>

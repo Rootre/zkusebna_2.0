@@ -7,7 +7,7 @@ import Popup from '../Popup';
 import ReservationDetail from '../ReservationDetail';
 import NewReservation from '../NewReservation';
 
-import {getCalendarReservationsForRange, getReservationById} from '../../api/reservation';
+import {getCalendarReservationsInRange, getReservationById} from '../../api/reservation';
 
 import {EVENT_POPUP, NEW_RESERVATION_POPUP} from '../../consts/popup';
 
@@ -28,7 +28,7 @@ class Calendar extends Component {
         calendarStore.setCurrentDay(day);
 
         try {
-            const calendar_reservations = await getCalendarReservationsForRange(
+            const calendar_reservations = await getCalendarReservationsInRange(
                 calendarStore.currentMonthFirstDay.toString(),
                 calendarStore.currentMonthLastDay.toString(),
             );

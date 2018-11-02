@@ -7,7 +7,7 @@ import Button from '../Button';
 import TimePicker from '../TimePicker';
 
 import {END_DATE, START_DATE} from '../../consts/forms';
-import {isTimeFilledFromMoment} from '../../helpers/dates';
+import {isTimeEmptyFromMoment} from '../../helpers/dates';
 
 import styles from './styles.scss';
 
@@ -15,20 +15,21 @@ import styles from './styles.scss';
 @observer
 class ReservationStep1 extends Component {
     handleButtonClick = () => {
-        const {reservationStore: {reservation: {end, start}}} = this.props;
+        const {reservationStore} = this.props;
+        const {reservation: {end, start}} = reservationStore;
 
         if (!this.validate(start, START_DATE) || !this.validate(end, END_DATE)) {
             return;
         }
 
-        this.props.reservationStore.setNextStep();
+        reservationStore.setNextStep();
     };
 
     handleStartTimeChange = value => {
         const {reservationStore} = this.props;
         const {reservation: {start}} = reservationStore;
 
-        if (!this.validate(start, START_DATE)) {
+        if (!this.validate(value, START_DATE)) {
             return;
         }
 
@@ -43,7 +44,7 @@ class ReservationStep1 extends Component {
         const {reservationStore} = this.props;
         const {reservation: {end}} = reservationStore;
 
-        if (!this.validate(end, END_DATE)) {
+        if (!this.validate(value, END_DATE)) {
             return;
         }
 
@@ -55,13 +56,16 @@ class ReservationStep1 extends Component {
     };
 
     validate(time, input_id) {
-        if (!isTimeFilledFromMoment(time)) {
-            this.props.formStore.setError(input_id);
+        const {formStore} = this.props;
+        const error = isTimeEmptyFromMoment(time);
 
-            return false;
+        if (error) {
+            formStore.setError(input_id);
+        } else {
+            formStore.deleteError(input_id);
         }
 
-        return true;
+        return !error;
     }
 
     render() {

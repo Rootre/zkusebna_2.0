@@ -10,8 +10,8 @@ export function getTimeFromMoment(date) {
 export function isSameDayFromMoment(date1, date2) {
     return date1.isSame(date2, 'days');
 }
-export function isTimeFilledFromMoment(time) {
-    return false;
+export function isTimeEmptyFromMoment(time) {
+    return time.hour() === 0 && time.minute() === 0;
 }
 
 export function getDayFromDate(date) {

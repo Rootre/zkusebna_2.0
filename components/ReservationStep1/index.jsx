@@ -8,6 +8,7 @@ import TimePicker from '../TimePicker';
 
 import {END_DATE, START_DATE} from '../../consts/forms';
 import {isTimeEmptyFromMoment} from '../../helpers/dates';
+import {validate} from '../../helpers/forms';
 
 import styles from './styles.scss';
 
@@ -57,7 +58,7 @@ class ReservationStep1 extends Component {
 
     validate(time, input_id) {
         const {formStore} = this.props;
-        const error = isTimeEmptyFromMoment(time);
+        const error = validate(isTimeEmptyFromMoment, time);
 
         if (error) {
             formStore.setError(input_id);
@@ -87,6 +88,7 @@ class ReservationStep1 extends Component {
                         day={start}
                         onChange={this.handleStartTimeChange}
                         showSecond={false}
+                        value={start}
                     />
                     <span> - </span>
                     <TimePicker
@@ -96,6 +98,7 @@ class ReservationStep1 extends Component {
                         day={end}
                         onChange={this.handleEndTimeChange}
                         showSecond={false}
+                        value={end}
                     />
                 </p>
                 <p className={styles.button}>

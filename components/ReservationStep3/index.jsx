@@ -6,12 +6,13 @@ import CategoryTree from '../CategoryTree';
 import Reservation from '../Reservation';
 
 import {createNewReservation, createReservationItems} from '../../api/reservation';
+import {getUserByCredentials, createNewUser} from '../../api/user';
 import {getDatabseTimeFromMoment} from '../../helpers/dates';
 
 import styles from './styles.scss';
 import {getPriceWithDiscount} from "../../helpers/reservation";
 
-@inject('discountStore', 'reservationStore', 'visualStore')
+@inject('discountStore', 'reservationStore', 'userStore', 'visualStore')
 @observer
 class ReservationStep3 extends Component {
     handleButtonReserveClick = async () => {
@@ -27,19 +28,30 @@ class ReservationStep3 extends Component {
                     start,
                 },
                 reservationItems,
+            },
+            userStore: {
+                name: user_name,
+                phone,
+                email,
             }
         } = this.props;
 
-        const variables = {
-            discount_id: currentDiscount.id,
-            name,
-            price: getPriceWithDiscount(priceSummary, currentDiscount.value),
-            since: getDatabseTimeFromMoment(start),
-            until: getDatabseTimeFromMoment(end),
-            user_id: 1,
-        };
-
         try {
+            let user = await getUserByCredentials(email, phone, user_name);
+
+            if (!user) {
+                user = await createNewUser(email, phone, user_name);
+            }
+
+            const variables = {
+                discount_id: currentDiscount.id,
+                name,
+                price: getPriceWithDiscount(priceSummary, currentDiscount.value),
+                since: getDatabseTimeFromMoment(start),
+                until: getDatabseTimeFromMoment(end),
+                user_id: user.id,
+            };
+
             const new_reservation = await createNewReservation(variables);
 
             const items = reservationItems.map(item => ({

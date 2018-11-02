@@ -2,8 +2,11 @@ import {getAllCategoriesQuery} from '../data/queries/getAllCategoriesQuery.graph
 
 import {getQuery} from './api';
 
-export async function getAllCategories() {
-    return await getQuery({
+/**
+ * @returns {Promise<resolvers.Query.allCategories>}
+ */
+export function getAllCategories() {
+    return getQuery({
         query: getAllCategoriesQuery,
     }).then(result => result.data.allCategories);
 }

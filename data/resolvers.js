@@ -41,6 +41,15 @@ const resolvers = {
         reservationById(_, {id}) {
             return Reservation.findById(id);
         },
+        userByCredentials(_, {email, phone, name}) {
+            return User.find({
+                where: {
+                    email,
+                    phone,
+                    name,
+                }
+            });
+        },
         userById(_, {id}) {
             return User.findById(id);
         },
@@ -48,6 +57,9 @@ const resolvers = {
     Mutation: {
         createNewReservation(_, args) {
             return Reservation.create(args);
+        },
+        createNewUser(_, args) {
+            return User.create(args);
         },
         createReservationItems(_, {items}) {
             return ReservationItem.bulkCreate(items);

@@ -10,12 +10,13 @@ type Query {
   reservationsInRange(since: String!, until: String!): [Reservation]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
+  userByCredentials(email: String!, phone: String!, name: String): User
   userById(id: ID!): User
 }
 type Mutation {
   createNewReservation(discount_id: ID!, name: String!, price: Int!, since: String!, until: String!, user_id: ID!): Reservation
   createReservationItems(items: [ReservationItemInput!]!): [ReservationItem]
-  createNewUser(name: String!, phone: String!, email: String!): User
+  createNewUser(email: String!, phone: String!, name: String!): User
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
 }

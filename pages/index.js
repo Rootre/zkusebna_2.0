@@ -4,7 +4,6 @@ import DevTools from 'mobx-react-devtools';
 import {Provider, inject, observer} from 'mobx-react';
 
 import Calendar from '../components/Calendar';
-import Reservation from '../components/Reservation';
 
 import {getStore as getCalendarStore} from '../state/calendarStore';
 import {getStore as getCategoryStore} from '../state/categoryStore';
@@ -85,7 +84,6 @@ class Index extends Component {
                 <DevTools/>
                 <h1 style={{marginTop: 50}}>Vítej!</h1>
 
-                <Reservation/>
                 <Calendar/>
             </div>
         )

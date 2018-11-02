@@ -5,9 +5,11 @@ import ReservationItem from '../ReservationItem';
 
 import {getPriceWithDiscount} from '../../helpers/reservation';
 
+import Cart from 'Svg/cart.svg';
+
 import styles from './styles.scss';
 
-@inject('discountStore', 'reservationStore', 'userStore')
+@inject('discountStore', 'reservationStore', 'userStore', 'visualStore')
 @observer
 class Reservation extends Component {
     get priceSummary() {
@@ -18,21 +20,10 @@ class Reservation extends Component {
         return getPriceWithDiscount(priceSummary, discountStore.currentDiscount.value)
     }
 
-    createReservation = () => {
-        const {
-            discountStore: {currentDiscount: {id: discountId}},
-            reservationStore: {reservation: {
-                name: reservationName,
-            }, reservationItems},
-            userStore: {
-                name,
-                email,
-                phone,
-            },
-        } = this.props;
-        console.log('discount_id:', discountId);
-        console.log('user:', name, email, phone);
-        console.log('reservation:', reservationName, reservationItems);
+    handleCartClick = () => {
+        const {visualStore} = this.props;
+
+        visualStore.setReservationExpanded(!visualStore.reservation_expanded);
     };
 
     handleDeleteClick = () => {
@@ -42,7 +33,7 @@ class Reservation extends Component {
     };
 
     render() {
-        const {reservationStore} = this.props;
+        const {reservationStore, visualStore} = this.props;
 
         if (!reservationStore.hasReservationItems) {
             return null;
@@ -50,18 +41,24 @@ class Reservation extends Component {
 
         return (
             <div className={styles.wrapper}>
-                {reservationStore.reservationItems.map(item => (
-                    <ReservationItem key={item.id} item={item}/>
-                ))}
+                <Cart onClick={this.handleCartClick}/>
+                {visualStore.reservation_expanded ? (
+                    <div className={styles.reservationItems}>
+                        {reservationStore.reservationItems.map(item => (
+                            <ReservationItem key={item.id} item={item}/>
+                        ))}
+                        <p className={styles.summary}>
+                            <span>Celkem</span>
+                            <span>
+                                <strong>{this.priceSummary},-</strong>
+                                <span className={styles.delete} onClick={this.handleDeleteClick}>&times;</span>
+                            </span>
+                        </p>
+                    </div>
+                ) : (
+                    <strong>{this.priceSummary},-</strong>
+                )}
 
-                <p className={styles.summary}>
-                    <span>Celkem</span>
-                    <span>
-                        <strong>{this.priceSummary},-</strong>
-                        <span className={styles.delete} onClick={this.handleDeleteClick}>&times;</span>
-                    </span>
-                </p>
-                <button onClick={this.createReservation}>Rezervovat</button>
             </div>
         )
     }

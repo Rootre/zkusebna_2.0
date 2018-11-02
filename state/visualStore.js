@@ -3,10 +3,17 @@ import {action, computed, observable} from 'mobx';
 class VisualStore {
     @observable
     current_popup = '';
+    @observable
+    reservation_expanded = false;
 
     @computed
     get popup_visible() {
         return this.current_popup !== '';
+    }
+
+    @action
+    deleteCurrentPopup() {
+        this.current_popup = '';
     }
 
     @action
@@ -15,8 +22,8 @@ class VisualStore {
     }
 
     @action
-    deleteCurrentPopup() {
-        this.current_popup = '';
+    setReservationExpanded(expanded) {
+        this.reservation_expanded = expanded;
     }
 }
 

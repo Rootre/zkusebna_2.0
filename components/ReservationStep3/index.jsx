@@ -3,6 +3,7 @@ import {inject, observer} from 'mobx-react';
 
 import Button from '../Button';
 import CategoryTree from '../CategoryTree';
+import Reservation from '../Reservation';
 
 import {createNewReservation, createReservationItems} from '../../api/reservation';
 import {getDatabseTimeFromMoment} from '../../helpers/dates';
@@ -69,6 +70,7 @@ class ReservationStep3 extends Component {
             <div>
                 <h3>Položky</h3>
                 <CategoryTree/>
+                <Reservation/>
                 <p className={styles.button}>
                     <Button label={'Zpět'} onClick={this.handleButtonPrevClick}/>
                     <Button label={'Rezervovat'} onClick={this.handleButtonReserveClick}/>

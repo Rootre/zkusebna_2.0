@@ -11,7 +11,7 @@ class Button extends Component {
 
         return (
             <button disabled={disabled} type={type} className={styles.button} onClick={onClick}>
-                {busy ? <SpinnerSVG width={20} height={20} className={classNames('spinner', styles.spinner)}/> : label}
+                {busy ? <SpinnerSVG className={classNames('spinner', styles.spinner)}/> : label}
             </button>
         );
     }

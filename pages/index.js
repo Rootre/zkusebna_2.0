@@ -9,6 +9,7 @@ import Reservation from '../components/Reservation';
 import {getStore as getCalendarStore} from '../state/calendarStore';
 import {getStore as getCategoryStore} from '../state/categoryStore';
 import {getStore as getDiscountStore} from '../state/discountStore';
+import {getStore as getFormStore} from '../state/formStore';
 import {getStore as getItemStore} from '../state/itemStore';
 import {getStore as getGeneralStore} from '../state/generalStore';
 import {getStore as getReservationStore} from '../state/reservationStore';
@@ -23,6 +24,7 @@ import {getCalendarReservationsForRange} from '../api/reservation';
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
 const discountStore = getDiscountStore();
+const formStore = getFormStore();
 const itemStore = getItemStore();
 const generalStore = getGeneralStore();
 const reservationStore = getReservationStore();
@@ -33,6 +35,7 @@ const stores = {
     calendarStore,
     categoryStore,
     discountStore,
+    formStore,
     itemStore,
     generalStore,
     reservationStore,

@@ -28,7 +28,10 @@ class TimePicker extends Component {
     };
 
     render() {
+        const {className} = this.props;
+
         return <RcTimePicker
+            className={className}
             disabledHours={this.getDisabledHours}
             disabledMinutes={this.getDisabledMinutes}
             minuteStep={15}

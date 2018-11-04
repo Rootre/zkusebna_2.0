@@ -9,8 +9,7 @@ import TimePicker from '../TimePicker';
 import {getReservedItemsForRange} from 'Api/reservation';
 
 import {END_DATE, START_DATE} from '../../consts/forms';
-import {isTimeEmptyFromMoment} from '../../helpers/dates';
-import {validate} from '../../helpers/forms';
+import {VALIDATE, Validation} from '../../helpers/validation';
 
 import styles from './styles.scss';
 
@@ -21,7 +20,10 @@ class ReservationStep1 extends Component {
         const {reservationStore} = this.props;
         const {reservation: {end, start}} = reservationStore;
 
-        if (!this.validate(start, START_DATE) || !this.validate(end, END_DATE)) {
+        if (
+            !this.validate(start, START_DATE)
+            || !this.validate(end, END_DATE)
+        ) {
             return;
         }
 
@@ -72,15 +74,17 @@ class ReservationStep1 extends Component {
 
     validate(time, input_id) {
         const {formStore} = this.props;
-        const error = validate(isTimeEmptyFromMoment, time);
 
-        if (error) {
-            formStore.setError(input_id);
-        } else {
+        const isTimeFilledValidation = new Validation(VALIDATE.IS_TIME_FILLED);
+        const passed = isTimeFilledValidation.validate(time);
+
+        if (passed) {
             formStore.deleteError(input_id);
+        } else {
+            formStore.setError(input_id, isTimeFilledValidation.message);
         }
 
-        return !error;
+        return passed;
     }
 
     render() {
@@ -94,27 +98,32 @@ class ReservationStep1 extends Component {
         return (
             <div>
                 <h3>Čas</h3>
-                <p className={styles.timeWrapper}>
-                    <TimePicker
-                        className={classNames({
-                            [styles.error]: formStore.hasError(START_DATE),
-                        })}
-                        day={start}
-                        onChange={this.handleStartTimeChange}
-                        showSecond={false}
-                        value={start}
-                    />
-                    <span> - </span>
-                    <TimePicker
-                        className={classNames({
-                            [styles.error]: formStore.hasError(END_DATE),
-                        })}
-                        day={end}
-                        onChange={this.handleEndTimeChange}
-                        showSecond={false}
-                        value={end}
-                    />
-                </p>
+                <div className={styles.timeWrapper}>
+                    <p>
+                        <TimePicker
+                            className={classNames({
+                                [styles.error]: formStore.hasError(START_DATE),
+                            })}
+                            day={start}
+                            onChange={this.handleStartTimeChange}
+                            showSecond={false}
+                            value={start}
+                        />
+                        <small>{formStore.getError(START_DATE)}</small>
+                    </p>
+                    <p>
+                        <TimePicker
+                            className={classNames({
+                                [styles.error]: formStore.hasError(END_DATE),
+                            })}
+                            day={end}
+                            onChange={this.handleEndTimeChange}
+                            showSecond={false}
+                            value={end}
+                        />
+                        <small>{formStore.getError(END_DATE)}</small>
+                    </p>
+                </div>
                 <p className={styles.button}>
                     <Button label={'Pokračovat'} onClick={this.handleButtonClick}/>
                 </p>

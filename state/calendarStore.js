@@ -2,8 +2,7 @@ import {action, computed, observable} from 'mobx';
 
 export class CalendarStore {
     @observable
-    current_day = new Date('01-06-2018');
-    //current_day = new Date();
+    current_day = new Date();
 
     @computed
     get currentMonth() {

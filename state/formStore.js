@@ -8,12 +8,15 @@ export class FormStore {
     deleteError(id) {
         this.errors.delete(id);
     }
+    getError(id) {
+        return this.errors.get(id);
+    }
     hasError(id) {
         return this.errors.has(id);
     }
     @action
-    setError(id) {
-        this.errors.set(id, true);
+    setError(id, message = '') {
+        this.errors.set(id, message);
     }
 }
 

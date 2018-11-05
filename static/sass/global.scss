@@ -1,7 +1,9 @@
+@import "~Sass/_helpers.scss";
+
 body {
-    background-color: #eee;
-    font-family: 'Hind', sans-serif;
-    font-size: 14px;
+    background-color: $gallery;
+    font-family: $font-family-hind;
+    font-size: $font-size;
 }
 
 :global {

@@ -1,6 +1,5 @@
 import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
-import classNames from 'classnames';
 import moment from 'moment';
 
 import Button from '../Button';
@@ -17,12 +16,12 @@ import styles from './styles.scss';
 @observer
 class ReservationStep1 extends Component {
     handleButtonClick = async () => {
-        const {reservationStore} = this.props;
+        const {formStore, reservationStore} = this.props;
         const {reservation: {end, start}} = reservationStore;
 
         if (
-            !this.validate(start, START_DATE)
-            || !this.validate(end, END_DATE)
+            formStore.hasError(START_DATE)
+            || formStore.hasError(END_DATE)
         ) {
             return;
         }
@@ -43,10 +42,10 @@ class ReservationStep1 extends Component {
     };
 
     handleStartTimeChange = value => {
-        const {reservationStore} = this.props;
+        const {formStore, reservationStore} = this.props;
         const {reservation: {start}} = reservationStore;
 
-        if (!this.validate(value, START_DATE)) {
+        if (formStore.hasError(START_DATE)) {
             return;
         }
 
@@ -58,10 +57,10 @@ class ReservationStep1 extends Component {
     };
 
     handleEndTimeChange = value => {
-        const {reservationStore} = this.props;
+        const {formStore, reservationStore} = this.props;
         const {reservation: {end}} = reservationStore;
 
-        if (!this.validate(value, END_DATE)) {
+        if (formStore.hasError(END_DATE)) {
             return;
         }
 
@@ -71,21 +70,6 @@ class ReservationStep1 extends Component {
 
         reservationStore.setReservationEnd(change);
     };
-
-    validate(time, input_id) {
-        const {formStore} = this.props;
-
-        const isTimeFilledValidation = new Validation(VALIDATE.IS_TIME_FILLED);
-        const passed = isTimeFilledValidation.validate(time);
-
-        if (passed) {
-            formStore.deleteError(input_id);
-        } else {
-            formStore.setError(input_id, isTimeFilledValidation.message);
-        }
-
-        return passed;
-    }
 
     render() {
         const {
@@ -101,24 +85,22 @@ class ReservationStep1 extends Component {
                 <div className={styles.timeWrapper}>
                     <p>
                         <TimePicker
-                            className={classNames({
-                                [styles.error]: formStore.hasError(START_DATE),
-                            })}
                             day={start}
+                            id={START_DATE}
                             onChange={this.handleStartTimeChange}
                             showSecond={false}
+                            validation={new Validation(VALIDATE.IS_TIME_FILLED)}
                             value={start}
                         />
                         <small>{formStore.getError(START_DATE)}</small>
                     </p>
                     <p>
                         <TimePicker
-                            className={classNames({
-                                [styles.error]: formStore.hasError(END_DATE),
-                            })}
                             day={end}
+                            id={END_DATE}
                             onChange={this.handleEndTimeChange}
                             showSecond={false}
+                            validation={new Validation(VALIDATE.IS_TIME_FILLED)}
                             value={end}
                         />
                         <small>{formStore.getError(END_DATE)}</small>

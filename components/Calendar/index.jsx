@@ -55,6 +55,7 @@ class Calendar extends Component {
         console.log('onSelectSlot', slots);
         const {reservationStore, visualStore} = this.props;
 
+        reservationStore.setReservationStep(1);
         reservationStore.setReservationEnd(moment(slots.end));
         reservationStore.setReservationStart(moment(slots.start));
 

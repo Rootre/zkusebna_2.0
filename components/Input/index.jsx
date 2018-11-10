@@ -2,7 +2,6 @@ import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import classNames from 'classnames';
 
-import {Validation} from '../../helpers/validation';
 import {generateID} from '../../helpers/strings';
 
 import styles from './styles.scss';
@@ -16,18 +15,26 @@ class Input extends Component {
         this.id = props.id || generateID();
     }
 
-    componentDidUpdate() {
-        const {formStore, validation, value} = this.props;
+    onChange(e) {
+        const {formStore, onChange} = this.props;
 
-        if (!(validation instanceof Validation)) {
+        if (formStore.getValidation(this.id)) {
+            formStore.validateInput(this.id, e.target.value);
+        }
+
+        onChange && onChange(e);
+    }
+
+    componentDidUpdate() {
+        const {formStore, value} = this.props;
+
+        const validation = formStore.getValidation(this.id);
+
+        if (!validation) {
             return true;
         }
 
-        if (validation.validate(value)) {
-            formStore.setError(this.id, validation.message);
-        } else {
-            formStore.deleteError(this.id);
-        }
+        return formStore.validateInput(this.id, value);
     }
 
     render() {
@@ -39,7 +46,7 @@ class Input extends Component {
                 [styles.hasError]: !!error,
             })}>
                 {label && <label className={styles.label} htmlFor={this.id}>{label}</label>}
-                <input id={this.id} type={type} value={value}/>
+                <input id={this.id} type={type} value={value} onChange={e => this.onChange(e)}/>
                 {error && <p className={styles.error}>{error}</p>}
             </div>
         )

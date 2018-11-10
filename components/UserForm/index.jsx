@@ -1,7 +1,10 @@
 import {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 
+import Input from '../Input';
+
 import styles from './styles.scss';
+import {USER_EMAIL, USER_NAME, USER_PHONE} from '../../consts/forms';
 
 @inject('userStore')
 @observer
@@ -22,9 +25,24 @@ class UserForm extends Component {
         const {userStore: {name, email, phone}} = this.props;
         return (
             <div className={styles.wrapper}>
-                <input type="text" placeholder={'Jméno'} value={name} onChange={this.handleUserNameChange}/>
-                <input type="text" placeholder={'Email'} value={email} onChange={this.handleUserEmailChange}/>
-                <input type="text" placeholder={'Telefon'} value={phone} onChange={this.handleUserPhoneChange}/>
+                <Input
+                    id={USER_NAME}
+                    onChange={this.handleUserNameChange}
+                    placeholder={'Jméno'}
+                    value={name}
+                />
+                <Input
+                    id={USER_EMAIL}
+                    onChange={this.handleUserEmailChange}
+                    placeholder={'Email'}
+                    value={email}
+                />
+                <Input
+                    id={USER_PHONE}
+                    onChange={this.handleUserPhoneChange}
+                    placeholder={'Telefon'}
+                    value={phone}
+                />
             </div>
         );
     }

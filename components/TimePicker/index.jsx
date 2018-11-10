@@ -4,10 +4,7 @@ import {inject, observer} from 'mobx-react';
 import classNames from 'classnames';
 import moment from 'moment';
 
-import {arrayFillRange} from '../../helpers/arrays';
-import {isSameDayFromMoment} from '../../helpers/dates';
 import {generateID} from '../../helpers/strings';
-import {Validation} from '../../helpers/validation';
 
 import './styles.scss';
 import styles from './timepicker.scss';
@@ -15,8 +12,6 @@ import styles from './timepicker.scss';
 @inject('formStore')
 @observer
 class TimePicker extends Component {
-    date = moment();
-
     // TODO: make HOC with constructor and componentDidUpdate
     constructor(props) {
         super(props);
@@ -24,34 +19,21 @@ class TimePicker extends Component {
         this.id = props.id || generateID();
     }
 
-    getDisabledHours = () => {
-        return; //TODO
+    //TODO
+    getDisabledHours = () => {};
 
-        const {day} = this.props;
-
-        if (!day || !isSameDayFromMoment(day, this.date)) {
-            return;
-        }
-
-        return arrayFillRange(0, this.date.hour() - 1);
-    };
-
-    getDisabledMinutes = hours => {
-
-    };
+    getDisabledMinutes = hours => {};
 
     componentDidUpdate() {
-        const {formStore, validation, value} = this.props;
+        const {formStore, value} = this.props;
 
-        if (!validation || !validation.validate) {
+        const validation = formStore.getValidation(this.id);
+
+        if (!validation) {
             return true;
         }
 
-        if (validation.validate(value)) {
-            formStore.deleteError(this.id);
-        } else {
-            formStore.setError(this.id, validation.message);
-        }
+        return formStore.validateInput(this.id, value);
     }
 
     render() {

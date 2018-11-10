@@ -15,14 +15,32 @@ import styles from './styles.scss';
 @inject('formStore', 'reservationStore')
 @observer
 class ReservationStep1 extends Component {
+    formId = 'reservation-step-1';
+
+    constructor(props) {
+        super(props);
+
+        const {formStore} = props;
+
+        formStore.setForm(this.formId);
+        formStore.addFormValidation(this.formId, START_DATE, new Validation(VALIDATE.IS_TIME_FILLED));
+        formStore.addFormValidation(this.formId, END_DATE, new Validation(VALIDATE.IS_TIME_FILLED));
+    }
+
     handleButtonClick = async () => {
         const {formStore, reservationStore} = this.props;
         const {reservation: {end, start}} = reservationStore;
 
-        if (
-            formStore.hasError(START_DATE)
-            || formStore.hasError(END_DATE)
-        ) {
+        if (!formStore.validateForm(this.formId, {
+            [START_DATE]: start,
+            [END_DATE]: end,
+        })) {
+            return;
+        }
+
+        if (start >= end) {
+            alert('spatny cas');
+
             return;
         }
 
@@ -42,12 +60,8 @@ class ReservationStep1 extends Component {
     };
 
     handleStartTimeChange = value => {
-        const {formStore, reservationStore} = this.props;
+        const {reservationStore} = this.props;
         const {reservation: {start}} = reservationStore;
-
-        if (formStore.hasError(START_DATE)) {
-            return;
-        }
 
         const change = moment(start);
         change.hour(value.hour());
@@ -57,12 +71,8 @@ class ReservationStep1 extends Component {
     };
 
     handleEndTimeChange = value => {
-        const {formStore, reservationStore} = this.props;
+        const {reservationStore} = this.props;
         const {reservation: {end}} = reservationStore;
-
-        if (formStore.hasError(END_DATE)) {
-            return;
-        }
 
         const change = moment(end);
         change.hour(value.hour());
@@ -89,7 +99,6 @@ class ReservationStep1 extends Component {
                             id={START_DATE}
                             onChange={this.handleStartTimeChange}
                             showSecond={false}
-                            validation={new Validation(VALIDATE.IS_TIME_FILLED)}
                             value={start}
                         />
                         <small>{formStore.getError(START_DATE)}</small>
@@ -100,7 +109,6 @@ class ReservationStep1 extends Component {
                             id={END_DATE}
                             onChange={this.handleEndTimeChange}
                             showSecond={false}
-                            validation={new Validation(VALIDATE.IS_TIME_FILLED)}
                             value={end}
                         />
                         <small>{formStore.getError(END_DATE)}</small>

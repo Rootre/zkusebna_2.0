@@ -31,6 +31,14 @@ const resolvers = {
                                 [Op.lt]: until,
                             },
                         },
+                        {
+                            since: {
+                                [Op.lt]: since,
+                            },
+                            until: {
+                                [Op.gt]: until,
+                            },
+                        },
                     ]
                 }
             });

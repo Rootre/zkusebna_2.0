@@ -50,6 +50,7 @@ class ReservationStep1 extends Component {
             const reserved_items = await getReservedItemsForRange(start.toString(), end.toString());
 
             if (Array.isArray(reserved_items)) {
+                reservationStore.deleteAllExcludedReservationItems();
                 reserved_items.forEach(({reservationItems}) => {
                     reservationItems.forEach(({item_id}) => reservationStore.setReservationExcludedItem(item_id));
                 });

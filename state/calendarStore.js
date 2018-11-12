@@ -1,4 +1,5 @@
 import {action, computed, observable} from 'mobx';
+import moment from 'moment';
 
 export class CalendarStore {
     @observable

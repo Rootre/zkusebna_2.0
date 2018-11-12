@@ -17,6 +17,9 @@ import {getQuery, mutateQuery} from './api';
 export function createNewReservation(variables) {
     return mutateQuery({
         mutation: createNewReservationMutation,
+        refetchQueries: [{
+            query: getCalendarReservationsInRangeQuery
+        }],
         variables,
     }).then(result => result.data.createNewReservation);
 }

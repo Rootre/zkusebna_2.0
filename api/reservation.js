@@ -4,6 +4,10 @@ import {getReservationByIdQuery} from '../data/queries/getReservationByIdQuery.g
 import {getReservedItemsInRangeQuery} from '../data/queries/getReservedItemsInRangeQuery.graphql';
 import {getQuery, mutateQuery} from './api';
 
+import {getStore as getCalendarStore} from '../state/calendarStore';
+
+const calendarStore = getCalendarStore();
+
 /**
  * @param {object} variables
  * @param {number} variables.discount_id
@@ -17,9 +21,23 @@ import {getQuery, mutateQuery} from './api';
 export function createNewReservation(variables) {
     return mutateQuery({
         mutation: createNewReservationMutation,
-        refetchQueries: [{
-            query: getCalendarReservationsInRangeQuery
-        }],
+        update: (proxy, {data: {createNewReservation}}) => {
+            console.log('proxy',proxy);
+            try {
+                const data = proxy.readQuery({
+                    query: getCalendarReservationsInRangeQuery,
+                    variables: {
+                        since: calendarStore.currentMonthFirstDay.toString(),
+                        until: calendarStore.currentMonthLastDay.toString(),
+                    },
+                });
+                console.log('data', data);
+            } catch (e) {
+                console.error(e);
+            }
+            //data.reservationsInRange.push(createNewReservation);
+            //proxy.writeQuery({ query, data });
+        },
         variables,
     }).then(result => result.data.createNewReservation);
 }

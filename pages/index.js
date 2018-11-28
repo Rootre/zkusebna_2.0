@@ -20,6 +20,8 @@ import {getAllDiscounts} from '../api/discounts';
 import {getAllItems} from '../api/item';
 import {getCalendarReservationsInRange} from '../api/reservation';
 
+import {client} from '../data/apollo';
+
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
 const discountStore = getDiscountStore();
@@ -51,6 +53,7 @@ class Index extends Component {
         super(props);
 
         const {
+            apolloCache,
             categories,
             categoryStore,
             discounts,
@@ -75,6 +78,10 @@ class Index extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log(this.props.apolloCache);
+    }
+
     render() {
         return (
             <div>
@@ -91,7 +98,7 @@ class Index extends Component {
 }
 
 export default class extends Component {
-    static async getInitialProps() {
+    static async getInitialProps({req}) {
         const categories = await getAllCategories();
         const discounts = await getAllDiscounts();
         const items = await getAllItems();
@@ -101,6 +108,7 @@ export default class extends Component {
         );
 
         return {
+            apolloCache: JSON.stringify(client.extract()).replace(/</g, '\\u003c'),
             categories,
             calendar_reservations,
             discounts,

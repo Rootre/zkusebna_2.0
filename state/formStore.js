@@ -58,11 +58,12 @@ export class FormStore {
     }
     validateForm(id, values) {
         let isValid = true;
+
         [...this.forms.get(id).keys()].forEach(validationId => {
             if (!this.validateInput(validationId, values[validationId])) {
                 isValid = false;
             }
-        })
+        });
 
         return isValid;
     }

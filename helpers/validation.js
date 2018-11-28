@@ -1,3 +1,5 @@
+import {removeAccents} from './strings';
+
 export const VALIDATE = {
     IS_TIME_FILLED: Symbol('is-time-filled'),
     NOT_EMPTY: Symbol('not-empty'),
@@ -13,7 +15,7 @@ const RULES = {
     },
     [VALIDATE.IS_NAME]: {
         message: 'Uveďte jméno i příjmení',
-        validate: value => value.match(/^[a-z]{2,} ([a-z]{2,} ?){1,}$/ig),
+        validate: value => removeAccents(value).match(/^[a-z]{2,} ([a-z]{2,} ?){1,}$/ig),
     },
     [VALIDATE.IS_PHONE]: {
         message: 'Telefonní číslo nemá správný formát',

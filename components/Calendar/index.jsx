@@ -9,6 +9,8 @@ import NewReservation from '../NewReservation';
 
 import {getCalendarReservationsInRange, getReservationById} from '../../api/reservation';
 
+import {getDatabaseTimeFromMoment} from '../../helpers/dates';
+
 import {EVENT_POPUP, NEW_RESERVATION_POPUP} from '../../consts/popup';
 
 import styles from './style.scss';
@@ -29,8 +31,8 @@ class Calendar extends Component {
 
         try {
             const calendar_reservations = await getCalendarReservationsInRange(
-                calendarStore.currentMonthFirstDay.toString(),
-                calendarStore.currentMonthLastDay.toString(),
+                getDatabaseTimeFromMoment(calendarStore.currentMonthFirstDayAsMoment),
+                getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
             );
             reservationStore.setCurrentReservations(calendar_reservations);
         }

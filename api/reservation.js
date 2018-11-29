@@ -4,6 +4,8 @@ import {getReservationByIdQuery} from '../data/queries/getReservationByIdQuery.g
 import {getReservedItemsInRangeQuery} from '../data/queries/getReservedItemsInRangeQuery.graphql';
 import {getQuery, mutateQuery} from './api';
 
+import {getDatabaseTimeFromMoment} from '../helpers/dates';
+
 import {getStore as getCalendarStore} from '../state/calendarStore';
 
 const calendarStore = getCalendarStore();
@@ -21,22 +23,31 @@ const calendarStore = getCalendarStore();
 export function createNewReservation(variables) {
     return mutateQuery({
         mutation: createNewReservationMutation,
-        update: (proxy, {data: {createNewReservation}}) => {
-            console.log('proxy',proxy);
+        update: (store, {data: {createNewReservation}}) => {
+            console.log('before', store.data.data.ROOT_QUERY['reservationsInRange({"since":"2018-11-01 00:00:00","until":"2018-11-30 23:59:59"})']);
             try {
-                const data = proxy.readQuery({
+                const reservations = store.readQuery({
                     query: getCalendarReservationsInRangeQuery,
                     variables: {
-                        since: calendarStore.currentMonthFirstDay.toString(),
-                        until: calendarStore.currentMonthLastDay.toString(),
+                        since: getDatabaseTimeFromMoment(calendarStore.currentMonthFirstDayAsMoment),
+                        until: getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
                     },
                 });
-                console.log('data', data);
+
+                reservations.reservationsInRange.push(createNewReservation);
+
+                store.writeQuery({
+                    data: reservations,
+                    query: getCalendarReservationsInRangeQuery,
+                    variables: {
+                        since: getDatabaseTimeFromMoment(calendarStore.currentMonthFirstDayAsMoment),
+                        until: getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
+                    },
+                });
+                console.log('after', store.data.data.ROOT_QUERY['reservationsInRange({"since":"2018-11-01 00:00:00","until":"2018-11-30 23:59:59"})']);
             } catch (e) {
                 console.error(e);
             }
-            //data.reservationsInRange.push(createNewReservation);
-            //proxy.writeQuery({ query, data });
         },
         variables,
     }).then(result => result.data.createNewReservation);

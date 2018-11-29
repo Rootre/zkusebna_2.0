@@ -63,7 +63,7 @@ const resolvers = {
         },
     },
     Mutation: {
-        createNewReservation(_, args) {
+        createNewReservation(_, args, foo) {
             return Reservation.create(args);
         },
         createNewUser(_, args) {

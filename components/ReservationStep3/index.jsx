@@ -7,7 +7,7 @@ import Reservation from '../Reservation';
 
 import {createNewReservation, createReservationItems} from '../../api/reservation';
 import {getUserByCredentials, createNewUser} from '../../api/user';
-import {getDatabseTimeFromMoment} from '../../helpers/dates';
+import {getDatabaseTimeFromMoment} from '../../helpers/dates';
 
 import styles from './styles.scss';
 import {getPriceWithDiscount} from "../../helpers/reservation";
@@ -47,8 +47,8 @@ class ReservationStep3 extends Component {
                 discount_id: currentDiscount.id,
                 name,
                 price: getPriceWithDiscount(priceSummary, currentDiscount.value),
-                since: getDatabseTimeFromMoment(start),
-                until: getDatabseTimeFromMoment(end),
+                since: getDatabaseTimeFromMoment(start),
+                until: getDatabaseTimeFromMoment(end),
                 user_id: user.id,
             };
 

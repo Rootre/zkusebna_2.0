@@ -15,6 +15,8 @@ import {getStore as getReservationStore} from '../state/reservationStore';
 import {getStore as getUserStore} from '../state/userStore';
 import {getStore as getVisualStore} from '../state/visualStore';
 
+import {getDatabaseTimeFromMoment} from '../helpers/dates';
+
 import {getAllCategories} from '../api/category';
 import {getAllDiscounts} from '../api/discounts';
 import {getAllItems} from '../api/item';
@@ -102,8 +104,8 @@ export default class extends Component {
         const discounts = await getAllDiscounts();
         const items = await getAllItems();
         const calendar_reservations = await getCalendarReservationsInRange(
-            calendarStore.currentMonthFirstDay.toString(),
-            calendarStore.currentMonthLastDay.toString(),
+            getDatabaseTimeFromMoment(calendarStore.currentMonthFirstDayAsMoment),
+            getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
         );
 
         return {

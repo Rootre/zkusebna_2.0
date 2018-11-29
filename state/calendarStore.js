@@ -17,6 +17,14 @@ export class CalendarStore {
     get currentMonthLastDay() {
         return new Date(this.current_day.getFullYear(), this.current_day.getMonth() + 1, 0);
     }
+    @computed
+    get currentMonthFirstDayAsMoment() {
+        return moment(this.current_day).startOf('month');
+    }
+    @computed
+    get currentMonthLastDayAsMoment() {
+        return moment(this.current_day).endOf('month');
+    }
 
     @action
     setCurrentDay(day) {

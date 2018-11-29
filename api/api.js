@@ -1,4 +1,4 @@
-import {client} from '../data/apollo';
+import {getClient} from '../data/apollo';
 import {NETWORK_STATUS} from '../consts/apollo';
 
 /**
@@ -9,7 +9,7 @@ import {NETWORK_STATUS} from '../consts/apollo';
  * @returns {Promise<ApolloQueryResult<any> | void>}
  */
 export function getQuery(query) {
-    return client.query(query).then(result => {
+    return getClient().query(query).then(result => {
         if (result.networkStatus !== NETWORK_STATUS.READY) {
             console.log('Apollo fetch not ready', result);
         }
@@ -26,7 +26,7 @@ export function getQuery(query) {
  * @returns {Promise<ApolloQueryResult<any> | void>}
  */
 export function mutateQuery(mutation) {
-    return client
+    return getClient()
         .mutate(mutation)
         .catch(error => console.error('Apollo failed to update', error));
 }

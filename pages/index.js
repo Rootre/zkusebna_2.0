@@ -20,7 +20,7 @@ import {getAllDiscounts} from '../api/discounts';
 import {getAllItems} from '../api/item';
 import {getCalendarReservationsInRange} from '../api/reservation';
 
-import {client} from '../data/apollo';
+import {getClient, hydrateCache} from 'Data/apollo';
 
 const calendarStore = getCalendarStore();
 const categoryStore = getCategoryStore();
@@ -76,10 +76,9 @@ class Index extends Component {
         if (Array.isArray(items)) {
             itemStore.setItems(items);
         }
-    }
-
-    componentDidMount() {
-        console.log(this.props.apolloCache);
+        if (apolloCache) {
+            hydrateCache(JSON.parse(apolloCache));
+        }
     }
 
     render() {
@@ -108,7 +107,7 @@ export default class extends Component {
         );
 
         return {
-            apolloCache: JSON.stringify(client.extract()).replace(/</g, '\\u003c'),
+            apolloCache: req && JSON.stringify(getClient().extract()).replace(/</g, '\\u003c'),
             categories,
             calendar_reservations,
             discounts,

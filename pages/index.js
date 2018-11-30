@@ -108,6 +108,8 @@ export default class extends Component {
             getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
         );
 
+console.log(calendar_reservations);
+
         return {
             apolloCache: req && JSON.stringify(getClient().extract()).replace(/</g, '\\u003c'),
             categories,

@@ -1,6 +1,6 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import {typeDefs} from './data/schema';
+import typeDefs from './data/typeDefs';
 import resolvers from './data/resolvers';
 
 const GRAPHQL_PORT = 3003;

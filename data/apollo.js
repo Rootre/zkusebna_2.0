@@ -10,8 +10,8 @@ import {ApolloLink} from 'apollo-link';
 let _cache = new InMemoryCache();
 let _client = null;
 
-export function hydrateCache(hydration) {
-    _cache = new InMemoryCache().restore(hydration);
+export function hydrateCache(cache) {
+    _cache = new InMemoryCache().restore(cache);
 }
 
 export function getClient() {

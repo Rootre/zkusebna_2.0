@@ -80,6 +80,8 @@ class Calendar extends Component {
             visualStore,
         } = this.props;
 
+        console.log(current_reservations);
+
         return <div className={styles.wrapper}>
             {visualStore.current_popup === EVENT_POPUP && (
                 <Popup>

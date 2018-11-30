@@ -1,7 +1,4 @@
-import {makeExecutableSchema} from 'graphql-tools'
-import resolvers from './resolvers'
-
-export const typeDefs = `
+const typeDefs = `
 type Query {
   actionById(id: ID!): Action
   allCategories: [Category]
@@ -97,6 +94,4 @@ type User {
 }
 `;
 
-const schema = makeExecutableSchema({typeDefs, resolvers});
-
-export default schema;
+export default typeDefs;

@@ -24,7 +24,6 @@ export function createNewReservation(variables) {
     return mutateQuery({
         mutation: createNewReservationMutation,
         update: (store, {data: {createNewReservation}}) => {
-            console.log('before', store.data.data.ROOT_QUERY['reservationsInRange({"since":"2018-11-01 00:00:00","until":"2018-11-30 23:59:59"})']);
             try {
                 const reservations = store.readQuery({
                     query: getCalendarReservationsInRangeQuery,
@@ -44,7 +43,6 @@ export function createNewReservation(variables) {
                         until: getDatabaseTimeFromMoment(calendarStore.currentMonthLastDayAsMoment),
                     },
                 });
-                console.log('after', store.data.data.ROOT_QUERY['reservationsInRange({"since":"2018-11-01 00:00:00","until":"2018-11-30 23:59:59"})']);
             } catch (e) {
                 console.error(e);
             }

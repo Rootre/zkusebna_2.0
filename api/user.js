@@ -23,6 +23,23 @@ export function getUserByCredentials(email, phone, name) {
 export function createNewUser(email, phone, name) {
     return mutateQuery({
         mutation: createNewUserMutation,
+        update: (store, {data: {createNewUser}}) => {
+            try {
+                store.writeQuery({
+                    data: {
+                        userByCredentials: createNewUser,
+                    },
+                    query: getUserByCredentialsQuery,
+                    variables: {
+                        email,
+                        phone,
+                        name,
+                    },
+                });
+            } catch (e) {
+                console.error(e);
+            }
+        },
         variables: {
             email,
             phone,

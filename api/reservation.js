@@ -24,6 +24,7 @@ export function createNewReservation(variables) {
     return mutateQuery({
         mutation: createNewReservationMutation,
         update: (store, {data: {createNewReservation}}) => {
+
             try {
                 const reservations = store.readQuery({
                     query: getCalendarReservationsInRangeQuery,
@@ -73,12 +74,12 @@ export function createReservationItems(items) {
  */
 export function getCalendarReservationsInRange(since, until) {
     return getQuery({
+        fetchPolicy: typeof window === 'undefined' ? 'network-only' : 'cache-first',
         query: getCalendarReservationsInRangeQuery,
         variables: {
             since,
             until,
         },
-        fetchPolicy: typeof window === 'undefined' ? 'network-only' : 'cache-first',
     }).then(result => result.data.reservationsInRange);
 }
 
@@ -94,7 +95,6 @@ export function getReservedItemsForRange(since, until) {
             since,
             until,
         },
-        fetchPolicy: typeof window === 'undefined' ? 'network-only' : 'cache-first',
     }).then(result => result.data.reservationsInRange);
 }
 

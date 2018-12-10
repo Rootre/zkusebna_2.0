@@ -1,4 +1,4 @@
-query getReservedItemsInRangeQuery($since: String!, $until: String!) {
+query getReservedItemsInRangeQuery($since: Date!, $until: Date!) {
 	reservationsInRange(since: $since, until: $until) {
 	    reservationItems {
 	        item_id

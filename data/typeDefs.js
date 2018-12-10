@@ -4,19 +4,21 @@ type Query {
   allCategories: [Category]
   allDiscounts: [Discount]
   allItems: [Item]
-  reservationsInRange(since: String!, until: String!): [Reservation]
+  reservationsInRange(since: Date!, until: Date!): [Reservation]
   itemById(id: ID!): Item
   reservationById(id: ID!): Reservation
   userByCredentials(email: String!, phone: String!, name: String): User
   userById(id: ID!): User
 }
 type Mutation {
-  createNewReservation(discount_id: ID!, name: String!, price: Int!, since: String!, until: String!, user_id: ID!): Reservation
+  createNewReservation(discount_id: ID!, name: String!, price: Int!, since: Date!, until: Date!, user_id: ID!): Reservation
   createReservationItems(items: [ReservationItemInput!]!): [ReservationItem]
   createNewUser(email: String!, phone: String!, name: String!): User
   updateItemName(id: ID!, name: String!): Item
   updateItemPrice(id: ID!, price: Int!): Item
 }
+
+scalar Date
 
 input ReservationItemInput {
   item_id: ID
@@ -70,8 +72,8 @@ type Reservation {
   user_id: ID
   approved: Boolean
   archived: Boolean
-  since: String
-  until: String
+  since: Date
+  until: Date
   price: Int
   name: String
   repeated: Int

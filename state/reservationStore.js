@@ -17,7 +17,7 @@ export class ReservationStore {
     current_reservation = {};
     /**
      * user created reservation
-     * @type {{end: null, excluded_items: ObservableMap<any>, items: ObservableMap<any>, name: string, start: null}}
+     * @type {{end: null|moment, excluded_items: ObservableMap<any>, items: ObservableMap<any>, name: string, start: null|moment}}
      */
     @observable.shallow
     reservation = {

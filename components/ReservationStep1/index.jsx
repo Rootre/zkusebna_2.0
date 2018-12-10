@@ -8,6 +8,7 @@ import TimePicker from '../TimePicker';
 import {getReservedItemsForRange} from 'Api/reservation';
 
 import {END_DATE, START_DATE} from '../../consts/forms';
+import {getDatabaseTimeFromMoment} from '../../helpers/dates';
 import {VALIDATE, Validation} from '../../helpers/validation';
 
 import styles from './styles.scss';
@@ -47,7 +48,10 @@ class ReservationStep1 extends Component {
         reservationStore.setNextStep();
 
         try {
-            const reserved_items = await getReservedItemsForRange(start.toString(), end.toString());
+            const reserved_items = await getReservedItemsForRange(
+                getDatabaseTimeFromMoment(start),
+                getDatabaseTimeFromMoment(end),
+            );
 
             if (Array.isArray(reserved_items)) {
                 reservationStore.deleteAllExcludedReservationItems();

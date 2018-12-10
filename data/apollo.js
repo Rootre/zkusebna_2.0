@@ -11,7 +11,7 @@ let _cache = new InMemoryCache();
 let _client = null;
 
 export function hydrateCache(cache) {
-    _cache = new InMemoryCache().restore(cache);
+    _cache.restore(cache);
 }
 
 export function getClient() {

@@ -1,5 +1,9 @@
 import {Discount, Reservation, ReservationItem, Item, User, Admin, Category, Action, Image} from './connectors';
+import {GraphQLScalarType} from 'graphql';
+import moment from 'moment';
 import {Op} from 'sequelize';
+
+import {getDatabaseTimeFromMoment} from '../helpers/dates.js';
 
 const resolvers = {
     Query: {
@@ -79,6 +83,21 @@ const resolvers = {
             return Item.update({price}, {where: {id}})
         },
     },
+
+
+    Date: new GraphQLScalarType({
+        name: 'Date',
+        description: 'Date custom scalar type',
+        parseValue(value) {
+            return value; // value from the client
+        },
+        serialize(value) {
+            return getDatabaseTimeFromMoment(moment(value)); // value sent to the client
+        },
+        parseLiteral(ast) {
+            return ast.value;
+        },
+    }),
 
 
     Action: {

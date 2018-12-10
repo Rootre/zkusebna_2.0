@@ -78,6 +78,7 @@ export function getCalendarReservationsInRange(since, until) {
             since,
             until,
         },
+        fetchPolicy: typeof window === 'undefined' ? 'network-only' : 'cache-first',
     }).then(result => result.data.reservationsInRange);
 }
 
@@ -93,6 +94,7 @@ export function getReservedItemsForRange(since, until) {
             since,
             until,
         },
+        fetchPolicy: typeof window === 'undefined' ? 'network-only' : 'cache-first',
     }).then(result => result.data.reservationsInRange);
 }
 

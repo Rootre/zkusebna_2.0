@@ -5,8 +5,8 @@ import {getQuery} from './api';
 /**
  * @returns {Promise<resolvers.Query.allItems>}
  */
-export async function getAllItems() {
-    return await getQuery({
+export function getAllItems() {
+    return getQuery({
         query: getAllItemsQuery,
     }).then(result => result.data.allItems);
 }

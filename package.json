@@ -19,7 +19,7 @@
     "apollo-link": "^1.2.4",
     "apollo-link-error": "^1.1.2",
     "apollo-link-http": "^1.5.7",
-    "apollo-server-express": "^2.2.5",
+    "apollo-server-express": "^2.14.2",
     "es6-promise": "^4.2.2",
     "express": "^4.16.3",
     "graphql": "^14.0.2",

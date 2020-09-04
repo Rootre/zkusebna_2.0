@@ -50,7 +50,7 @@
     "emit-file-loader": "^0.0.1",
     "jsdoc": "^3.5.5",
     "mobx-react-devtools": "^4.2.15",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "postcss-loader": "^2.1.3",
     "raw-loader": "^0.5.1",
     "react-svg-loader": "^2.1.0",
